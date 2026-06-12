@@ -63,6 +63,8 @@ func main() {
 		linker_.Init(command_line_parser)
 		linker_.Link()
 
+		program.RunPimdlMramPatchIfPresent(command_line_parser.StringParameter("bin_dirpath"))
+
 		task := new(program.Task)
 		task.Init(command_line_parser)
 

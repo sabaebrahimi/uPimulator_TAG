@@ -1,0 +1,17 @@
+{
+  "anchor": "DPU_MRAM_HEAP_POINTER",
+  "segments": [
+    {
+      "symbol": "lut_table",
+      "path": "pimdl_segments/lut_table.bin"
+    },
+    {
+      "symbol": "input_index",
+      "path": "pimdl_segments/input_index.bin"
+    },
+    {
+      "path": "pimdl_segments/custom_tail.bin",
+      "offset_bytes": 384
+    }
+  ]
+}
