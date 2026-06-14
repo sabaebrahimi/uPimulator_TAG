@@ -1,6 +1,7 @@
 package compiler
 
 import (
+	"os"
 	"os/exec"
 	"path/filepath"
 	"strconv"
@@ -33,12 +34,7 @@ func (this *Compiler) Build() {
 	docker_dirpath := filepath.Join(this.root_dirpath, "docker")
 
 	command := exec.Command("docker", "build", "-t", "bongjoonhyun/upimulator", docker_dirpath)
-
-	err := command.Run()
-
-	if err != nil {
-		panic(err)
-	}
+	this.Run(command)
 }
 
 func (this *Compiler) Compile() {
@@ -62,12 +58,7 @@ func (this *Compiler) CompileBenchmark() {
 		"--num_tasklets",
 		strconv.Itoa(this.num_tasklets),
 	)
-
-	err := command.Run()
-
-	if err != nil {
-		panic(err)
-	}
+	this.Run(command)
 }
 
 func (this *Compiler) CompileSdk() {
@@ -84,10 +75,14 @@ func (this *Compiler) CompileSdk() {
 		"--num_tasklets",
 		strconv.Itoa(this.num_tasklets),
 	)
+	this.Run(command)
+}
 
-	err := command.Run()
+func (this *Compiler) Run(command *exec.Cmd) {
+	command.Stdout = os.Stdout
+	command.Stderr = os.Stderr
 
-	if err != nil {
+	if err := command.Run(); err != nil {
 		panic(err)
 	}
 }

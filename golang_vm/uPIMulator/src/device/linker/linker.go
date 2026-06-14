@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"uPIMulator/src/device/core"
 	"uPIMulator/src/device/linker/kernel"
 	"uPIMulator/src/device/linker/lexer"
@@ -189,7 +190,19 @@ func (this *Linker) HasResolved() bool {
 }
 
 func (this *Linker) ResolveSymbols() {
-	this.executable.AddSdkRelocatable(this.sdk_relocatables["misc.crt0"])
+	startup_relocatable := this.sdk_relocatables["misc.crt0"]
+	if startup_relocatable == nil {
+		for sdk_relocatable_name, sdk_relocatable := range this.sdk_relocatables {
+			if strings.HasSuffix(sdk_relocatable_name, ".crt0") {
+				startup_relocatable = sdk_relocatable
+				break
+			}
+		}
+	}
+	if startup_relocatable == nil {
+		panic("failed to resolve startup symbol: missing misc.crt0 relocatable in sdk/build; SDK build likely failed or generated a different layout")
+	}
+	this.executable.AddSdkRelocatable(startup_relocatable)
 
 	for !this.HasResolved() {
 		for unresolved_symbol, _ := range this.executable.Liveness().UnresolvedSymbols() {

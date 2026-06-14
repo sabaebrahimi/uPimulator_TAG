@@ -50,7 +50,10 @@ __SEQREAD_INIT(seqreader_buffer_t cache, __mram_ptr void *mram_addr, seqreader_t
 void *
 __SEQREAD_GET(void *ptr, uint32_t inc, seqreader_t *reader)
 {
-    return (void *)__builtin_dpu_seqread_get((uintptr_t)ptr, inc, reader, PAGE_SIZE);
+    /* Compatibility path for SDK/compiler variants where
+     * __builtin_dpu_seqread_get is unavailable. */
+    __mram_ptr void *mram_ptr = __SEQREAD_TELL(ptr, reader);
+    return __SEQREAD_SEEK((__mram_ptr void *)((uintptr_t)mram_ptr + inc), reader);
 }
 
 void *
