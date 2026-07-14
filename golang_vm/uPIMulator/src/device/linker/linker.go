@@ -42,7 +42,10 @@ func (this *Linker) Init(command_line_parser *misc.CommandLineParser) {
 }
 
 func (this *Linker) InitBenchmarkRelocatable() {
-	benchmark_build_dirpath := filepath.Join(this.root_dirpath, "benchmark", "build")
+	benchmark_build_dirpath := os.Getenv("UPIM_BENCH_BUILD_DIR")
+	if benchmark_build_dirpath == "" {
+		benchmark_build_dirpath = filepath.Join(this.root_dirpath, "benchmark", "build")
+	}
 
 	assembly_path := filepath.Join(
 		benchmark_build_dirpath,

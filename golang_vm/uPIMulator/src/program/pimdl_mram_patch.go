@@ -8,7 +8,15 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"uPIMulator/src/misc"
 )
+
+// pimdlMRAMBaseAnchor is a synthetic anchor whose VA is the MRAM image base
+// (mram.bin[0] maps to MRAM address config.MramOffset). Real symbols in
+// addresses.txt are absolute VAs in this same space, so a segment's byte offset
+// into mram.bin is symbolVA - MramOffset. This anchor is always resolvable,
+// unlike a linked symbol name that may not appear in addresses.txt.
+const pimdlMRAMBaseAnchor = "MRAM_BASE"
 
 // pimdlMRAMManifestName, if present under bin_dirpath after link, triggers a
 // segment-oriented patch of mram.bin (no full-image precompute). PIM-DL (or
@@ -43,8 +51,17 @@ type pimdlMRAMPatch struct {
 	Path        string `json:"path"`
 }
 
-func RunPimdlMramPatchIfPresent(binDirpath string) {
-	manifestPath := filepath.Join(binDirpath, pimdlMRAMManifestName)
+// RunPimdlMramPatchIfPresent splices external segment files into the linker-produced
+// mram.bin (always in binDirpath). The manifest and its segment files are read from
+// patchDirpath; if patchDirpath is empty it falls back to binDirpath. patchDirpath is
+// kept separate because the simulator wipes binDirpath at startup, which would delete
+// any externally-placed patch inputs before this hook runs.
+func RunPimdlMramPatchIfPresent(binDirpath string, patchDirpath string) {
+	if patchDirpath == "" {
+		patchDirpath = binDirpath
+	}
+
+	manifestPath := filepath.Join(patchDirpath, pimdlMRAMManifestName)
 	if _, err := os.Stat(manifestPath); err != nil {
 		return
 	}
@@ -59,7 +76,7 @@ func RunPimdlMramPatchIfPresent(binDirpath string) {
 		panic(err)
 	}
 	if manifest.Anchor == "" {
-		manifest.Anchor = "DPU_MRAM_HEAP_POINTER"
+		manifest.Anchor = pimdlMRAMBaseAnchor
 	}
 
 	addressesPath := filepath.Join(binDirpath, "addresses.txt")
@@ -71,19 +88,27 @@ func RunPimdlMramPatchIfPresent(binDirpath string) {
 		panic(err)
 	}
 
-	anchorVA, ok := addresses[manifest.Anchor]
-	if !ok {
-		panic(fmt.Errorf(
-			"pimdl mram patch: anchor %q not found in addresses.txt",
-			manifest.Anchor,
-		))
+	var anchorVA int64
+	if manifest.Anchor == pimdlMRAMBaseAnchor {
+		config_loader := new(misc.ConfigLoader)
+		config_loader.Init()
+		anchorVA = config_loader.MramOffset()
+	} else {
+		var ok bool
+		anchorVA, ok = addresses[manifest.Anchor]
+		if !ok {
+			panic(fmt.Errorf(
+				"pimdl mram patch: anchor %q not found in addresses.txt",
+				manifest.Anchor,
+			))
+		}
 	}
 
 	for _, seg := range manifest.Segments {
 		if seg.Path == "" {
 			panic(errors.New("pimdl mram patch: segment path is empty"))
 		}
-		segPath := filepath.Join(binDirpath, seg.Path)
+		segPath := filepath.Join(patchDirpath, seg.Path)
 		payload, err := os.ReadFile(segPath)
 		if err != nil {
 			panic(err)

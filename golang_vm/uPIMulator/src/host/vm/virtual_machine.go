@@ -4,7 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"os"
 	"path/filepath"
+	"strconv"
 	"uPIMulator/src/device/core"
 	"uPIMulator/src/device/simulator/channel"
 	"uPIMulator/src/device/simulator/dpu"
@@ -48,6 +50,14 @@ type VirtualMachine struct {
 
 	prepare_xfer_buf map[*dpu.Dpu]int64
 	push_xfer        map[*bank.TransferCommand]bool
+
+	// Host↔MRAM transfer timing (Phase A). Populated by SimulateMemory and
+	// the PIM-DL co-sim H2D/D2H paths; emitted into log.txt via Dump().
+	stat_factory *misc.StatFactory
+
+	// Separate from bin_dirpath (wiped at startup). Used to size/stage the
+	// timed HOST_TO_DEVICE transfers for lut_table / input_index.
+	pimdl_patch_dirpath string
 }
 
 func (this *VirtualMachine) Init(command_line_parser *misc.CommandLineParser) {
@@ -96,6 +106,11 @@ func (this *VirtualMachine) Init(command_line_parser *misc.CommandLineParser) {
 
 	this.prepare_xfer_buf = make(map[*dpu.Dpu]int64)
 	this.push_xfer = make(map[*bank.TransferCommand]bool)
+
+	this.stat_factory = new(misc.StatFactory)
+	this.stat_factory.Init("HostTransfer")
+
+	this.pimdl_patch_dirpath = command_line_parser.StringParameter("pimdl_patch_dirpath")
 }
 
 func (this *VirtualMachine) Fini() {
@@ -3464,7 +3479,26 @@ func (this *VirtualMachine) DpuTransfer() {
 	offset_value := this.arena.Pool().Memory().Read(offset.Address(), offset.Size()).SignedValue()
 	size_value := this.arena.Pool().Memory().Read(size.Address(), size.Size()).SignedValue()
 
+	// MRAM transfers (numeric base) go through the host↔MRAM timing model.
+	// WRAM transfers (string symbol names) stay functional-only: the DSL routes
+	// those through the WRAM path, which has no TransferCommand timing.
+	need_checkpoint := false
+	var mram_xfer_bytes int64
+	var mram_xfer_count int64
 	for _, dpu_ := range this.Dpus() {
+		if _, pointer_found := this.prepare_xfer_buf[dpu_]; pointer_found {
+			if direction_value == 0 &&
+				base_.TypeVariable().TypeVariableType() != type_system.STRING {
+				need_checkpoint = true
+				break
+			}
+		}
+	}
+	if need_checkpoint {
+		this.Checkpoint()
+	}
+
+	for flat_id, dpu_ := range this.Dpus() {
 		if pointer_value, pointer_found := this.prepare_xfer_buf[dpu_]; pointer_found {
 			delete(this.prepare_xfer_buf, dpu_)
 
@@ -3487,10 +3521,18 @@ func (this *VirtualMachine) DpuTransfer() {
 						TransferToWram(wram_address+offset_value, byte_stream.Size(), byte_stream)
 				} else {
 					base_value := this.arena.Pool().Memory().Read(base_.Address(), base_.Size()).SignedValue()
-
-					byte_stream := this.PrepareByteStream(pointer_value, size_value)
-
-					dpu_.Dma().TransferToMram(base_value+offset_value, size_value, byte_stream)
+					channel_id, rank_id, dpu_id := this.dpuCoords(flat_id)
+					this.enqueueMramTransfer(
+						bank.HOST_TO_DEVICE,
+						pointer_value,
+						channel_id,
+						rank_id,
+						dpu_id,
+						base_value+offset_value,
+						size_value,
+					)
+					mram_xfer_bytes += size_value
+					mram_xfer_count++
 				}
 			} else if direction_value == 1 {
 				if base_.TypeVariable().TypeVariableType() == type_system.STRING {
@@ -3508,14 +3550,36 @@ func (this *VirtualMachine) DpuTransfer() {
 					this.arena.Pool().Memory().Write(pointer_value, size_value, byte_stream)
 				} else {
 					base_value := this.arena.Pool().Memory().Read(base_.Address(), base_.Size()).SignedValue()
-
-					byte_stream := dpu_.Dma().TransferFromMram(base_value+offset_value, size_value)
-					this.arena.Pool().Memory().Write(pointer_value, size_value, byte_stream)
+					channel_id, rank_id, dpu_id := this.dpuCoords(flat_id)
+					this.enqueueMramTransfer(
+						bank.DEVICE_TO_HOST,
+						pointer_value,
+						channel_id,
+						rank_id,
+						dpu_id,
+						base_value+offset_value,
+						size_value,
+					)
+					mram_xfer_bytes += size_value
+					mram_xfer_count++
 				}
 			} else {
 				err := errors.New("direction value is not 0 nor 1")
 				panic(err)
 			}
+		}
+	}
+
+	if len(this.push_xfer) > 0 {
+		cycles := this.SimulateMemory()
+		if direction_value == 0 {
+			this.stat_factory.Increment("h2d_cycle", cycles)
+			this.stat_factory.Increment("h2d_bytes", mram_xfer_bytes)
+			this.stat_factory.Increment("num_h2d", mram_xfer_count)
+		} else {
+			this.stat_factory.Increment("d2h_cycle", cycles)
+			this.stat_factory.Increment("d2h_bytes", mram_xfer_bytes)
+			this.stat_factory.Increment("num_d2h", mram_xfer_count)
 		}
 	}
 
@@ -3631,6 +3695,11 @@ func (this *VirtualMachine) DpuCopyFrom() {
 }
 
 func (this *VirtualMachine) DpuLaunch() {
+	// Co-sim: charge HOST_TO_DEVICE cycles for lut_table / input_index before
+	// the kernel runs. Data is already in MRAM via the mram-patch; this path
+	// re-drives the same bytes through the timed transfer model.
+	this.SimulatePimdlHostToDeviceTransfers()
+
 	config_loader := new(misc.ConfigLoader)
 	config_loader.Init()
 
@@ -3816,8 +3885,11 @@ func (this *VirtualMachine) PrepareByteStream(
 	return byte_stream
 }
 
-func (this *VirtualMachine) SimulateMemory() {
+func (this *VirtualMachine) SimulateMemory() int64 {
+	cycles := int64(0)
 	for len(this.push_xfer) > 0 {
+		cycles++
+
 		thread_pool := new(core.ThreadPool)
 		thread_pool.Init()
 
@@ -3869,9 +3941,74 @@ func (this *VirtualMachine) SimulateMemory() {
 			}
 		}
 	}
+
+	this.stat_factory.Increment("transfer_cycle", cycles)
+	return cycles
+}
+
+// DumpPimdlOutput extracts the ported PIM-DL LUT kernel's DPU-tiled output_data
+// from simulated MRAM so the offline co-simulation can bit-match it against
+// PIM-DL native's dumped output. It is a no-op unless PIMDL_OUTPUT_BYTES is set
+// (the co-sim run script sets it to N_STILE_SIZE*FEATURE_STILE_SIZE*OUTPUT_SIZE
+// for the projection being run). Uses the timed DEVICE_TO_HOST transfer path
+// (Phase A) so readback cycles appear in HostTransfer_* stats, then writes raw
+// little-endian bytes to bin_dirpath/pimdl_output.bin.
+func (this *VirtualMachine) DumpPimdlOutput() {
+	bytes_str := os.Getenv("PIMDL_OUTPUT_BYTES")
+	if bytes_str == "" {
+		return
+	}
+
+	num_bytes, err := strconv.ParseInt(bytes_str, 10, 64)
+	if err != nil || num_bytes <= 0 {
+		return
+	}
+
+	output_va, found := this.task.Addresses()["output_data"]
+	if !found {
+		fmt.Printf("pimdl: PIMDL_OUTPUT_BYTES set but output_data symbol not found; skipping dump\n")
+		return
+	}
+
+	dpus := this.Dpus()
+	if len(dpus) == 0 {
+		return
+	}
+
+	host_buf := this.arena.NewPointer(num_bytes)
+	channel_id, rank_id, dpu_id := this.dpuCoords(0)
+	this.enqueueMramTransfer(
+		bank.DEVICE_TO_HOST,
+		host_buf.Address(),
+		channel_id,
+		rank_id,
+		dpu_id,
+		output_va,
+		num_bytes,
+	)
+	cycles := this.SimulateMemory()
+	this.stat_factory.Increment("d2h_cycle", cycles)
+	this.stat_factory.Increment("d2h_bytes", num_bytes)
+	this.stat_factory.Increment("num_d2h", 1)
+
+	byte_stream := this.arena.Pool().Memory().Read(host_buf.Address(), num_bytes)
+
+	raw := make([]byte, byte_stream.Size())
+	for i := int64(0); i < byte_stream.Size(); i++ {
+		raw[i] = byte_stream.Get(int(i))
+	}
+
+	path := filepath.Join(this.bin_dirpath, "pimdl_output.bin")
+	if write_err := os.WriteFile(path, raw, 0644); write_err != nil {
+		panic(write_err)
+	}
+	fmt.Printf("pimdl: dumped %d bytes of output_data (VA=%d) to pimdl_output.bin "+
+		"(d2h_cycle=%d)\n", len(raw), output_va, cycles)
 }
 
 func (this *VirtualMachine) Dump() {
+	this.DumpPimdlOutput()
+
 	file_dumper := new(misc.FileDumper)
 	file_dumper.Init(filepath.Join(this.bin_dirpath, "log.txt"))
 
@@ -3887,6 +4024,7 @@ func (this *VirtualMachine) Dump() {
 		lines = append(lines, dpu_.MemoryController().RowBuffer().StatFactory().ToLines()...)
 	}
 
+	lines = append(lines, this.stat_factory.ToLines()...)
 	lines = append(lines, this.memory_controller.MemoryScheduler().StatFactory().ToLines()...)
 
 	for _, vm_channel := range this.memory_controller.VmChannels() {

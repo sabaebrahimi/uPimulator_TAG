@@ -37,11 +37,11 @@ func main() {
 			if remove_err != nil {
 				panic(remove_err)
 			}
+		}
 
-			mkdir_err := os.MkdirAll(bin_dirpath, os.ModePerm)
-			if mkdir_err != nil {
-				panic(mkdir_err)
-			}
+		mkdir_err := os.MkdirAll(bin_dirpath, os.ModePerm)
+		if mkdir_err != nil {
+			panic(mkdir_err)
 		}
 
 		args_filepath := filepath.Join(bin_dirpath, "args.txt")
@@ -55,15 +55,24 @@ func main() {
 		options_file_dumper.Init(options_filepath)
 		options_file_dumper.WriteLines([]string{command_line_parser.StringifyOptions()})
 
-		compiler_ := new(compiler.Compiler)
-		compiler_.Init(command_line_parser)
-		compiler_.Compile()
+		// skip_compile != 0 reuses prebuilt DPU/SDK assembly under benchmark/build and
+		// sdk/build instead of invoking the UPMEM SDK toolchain in Docker. Used by the
+		// PIM-DL co-simulation flow, which compiles the DPU kernels with a local SDK
+		// (see tools/build_dpu_local.sh) and does not have Docker available.
+		if command_line_parser.IntParameter("skip_compile") == 0 {
+			compiler_ := new(compiler.Compiler)
+			compiler_.Init(command_line_parser)
+			compiler_.Compile()
+		}
 
 		linker_ := new(linker.Linker)
 		linker_.Init(command_line_parser)
 		linker_.Link()
 
-		program.RunPimdlMramPatchIfPresent(command_line_parser.StringParameter("bin_dirpath"))
+		program.RunPimdlMramPatchIfPresent(
+			command_line_parser.StringParameter("bin_dirpath"),
+			command_line_parser.StringParameter("pimdl_patch_dirpath"),
+		)
 
 		task := new(program.Task)
 		task.Init(command_line_parser)
@@ -131,6 +140,16 @@ func InitCommandLineParser() *misc.CommandLineParser {
 
 	command_line_parser.AddOption(misc.STRING, "bin_dirpath",
 		"/home/via/uPIMulator/golang_vm/uPIMulator/bin", "path to the bin directory")
+
+	// PIM-DL co-simulation: directory holding pimdl_mram_patch.json + segment .bin
+	// files used to splice PIM-DL's dumped LUT/index data into the linked mram.bin.
+	// Kept separate from bin_dirpath because bin_dirpath is wiped at startup.
+	// Empty (default) falls back to bin_dirpath for backward compatibility.
+	command_line_parser.AddOption(misc.STRING, "pimdl_patch_dirpath", "",
+		"path to the PIM-DL mram patch directory (manifest + segments)")
+
+	command_line_parser.AddOption(misc.INT, "skip_compile", "0",
+		"skip the Docker/UPMEM compile step and reuse prebuilt benchmark/build + sdk/build assembly")
 
 	command_line_parser.AddOption(misc.INT, "logic_frequency", "350", "DPU logic frequency in MHz")
 	command_line_parser.AddOption(misc.INT, "memory_frequency", "2400",

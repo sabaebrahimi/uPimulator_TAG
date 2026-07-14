@@ -1,5 +1,5 @@
 {
-  "anchor": "DPU_MRAM_HEAP_POINTER",
+  "anchor": "MRAM_BASE",
   "segments": [
     {
       "symbol": "lut_table",
