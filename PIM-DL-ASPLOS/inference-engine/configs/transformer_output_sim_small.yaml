@@ -1,0 +1,88 @@
+network_params:
+  # input size
+  seq_len: 128
+  batch_size: 1
+  # feature size (BERT-base)
+  head_num: 12
+  head_dim: 64
+  token_dim: 768
+  ffn_hidden_dim: 3072
+  layer_num: 12
+
+system_params:
+  # simulator-friendly DPU count
+  dpu_num: 16
+  nr_tasklets: 16
+  qkv_lut_pim_binary: "./build/bin/dpu_bin_qkv"
+  o_lut_pim_binary: "./build/bin/dpu_bin_o"
+  ffn1_lut_pim_binary: "./build/bin/dpu_bin_ffn1"
+  ffn2_lut_pim_binary: "./build/bin/dpu_bin_ffn2"
+  # for cpu
+  num_threads: 40
+
+kernel_params:
+  # for qkv lut
+  # LUT quantization factors, overwritten by model.npz values in model run
+  qkv_scale: 0.1
+  qkv_bias: 0.2
+  # amm params
+  qkv_num_codebook: 512
+  qkv_num_centroid: 16
+  # sub lut tiling params (input_parallelism * lut_parallelism == dpu_num)
+  qkv_input_parallelism: 2
+  qkv_lut_parallelism: 8
+  # micro kernel params
+  # 0: nfc, 1: ncf, 2: fnc, 3: fcn, 4: cnf, 5: cfn
+  qkv_loop_order: 0
+  # 0: static lut table, 1: fine grain, 2: coarse grain
+  qkv_lut_load_type: 2
+  qkv_n_mtile_size: 64
+  qkv_feature_mtile_size: 32
+  qkv_cb_mtile_size: 128
+  qkv_feature_load_tile_size: 8
+  qkv_cb_load_tile_size: 128
+
+  # for o lut
+  o_scale: 0.1
+  o_bias: 0.2
+  o_num_codebook: 512
+  o_num_centroid: 16
+  o_input_parallelism: 2
+  o_lut_parallelism: 8
+  o_loop_order: 0
+  o_lut_load_type: 2
+  o_n_mtile_size: 64
+  o_feature_mtile_size: 32
+  o_cb_mtile_size: 128
+  o_feature_load_tile_size: 8
+  o_cb_load_tile_size: 128
+
+  # for ffn1 lut
+  ffn1_scale: 0.1
+  ffn1_bias: 0.2
+  ffn1_num_codebook: 512
+  ffn1_num_centroid: 16
+  ffn1_input_parallelism: 2
+  ffn1_lut_parallelism: 8
+  ffn1_loop_order: 0
+  ffn1_lut_load_type: 2
+  ffn1_n_mtile_size: 64
+  ffn1_feature_mtile_size: 32
+  ffn1_cb_mtile_size: 128
+  ffn1_feature_load_tile_size: 8
+  ffn1_cb_load_tile_size: 128
+
+  # for ffn2 lut
+  ffn2_scale: 0.1
+  ffn2_bias: 0.2
+  ffn2_num_codebook: 2048
+  ffn2_num_centroid: 16
+  ffn2_input_parallelism: 2
+  ffn2_lut_parallelism: 8
+  ffn2_loop_order: 0
+  ffn2_lut_load_type: 2
+  ffn2_n_mtile_size: 64
+  ffn2_feature_mtile_size: 32
+  ffn2_cb_mtile_size: 128
+  ffn2_feature_load_tile_size: 8
+  ffn2_cb_load_tile_size: 128

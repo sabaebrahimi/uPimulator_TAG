@@ -1,0 +1,240 @@
+-- CMAKE_SYSTEM_PROCESSOR: x86_64
+-- x86 detected
+-- Linux detected
+-- Configuring done (0.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/build
+[  2%] Building C object src/dpu/CMakeFiles/dpu_bin_ffn1.dir/pim_lut_kernel.c.o
+[  1%] Building C object src/dpu/CMakeFiles/dpu_bin_o.dir/pim_lut_kernel.c.o
+[  4%] Building C object src/dpu/CMakeFiles/dpu_bin_ffn2.dir/pim_lut_kernel.c.o
+[  5%] Building C object src/dpu/CMakeFiles/dpu_bin_qkv.dir/pim_lut_kernel.c.o
+[  8%] Built target cnpy-static
+[ 11%] Built target ggml
+[ 14%] Built target cnpy
+[ 17%] Built target example1
+[ 63%] Built target yaml-cpp
+[ 69%] Built target yaml-cpp-sandbox
+[ 69%] Built target yaml-cpp-parse
+[ 72%] Built target yaml-cpp-read
+[ 75%] Built target tuner
+[ 78%] Building CXX object src/host/CMakeFiles/host.dir/parser.cpp.o
+[ 78%] Building CXX object src/host/CMakeFiles/host.dir/index_calc_host.cpp.o
+[ 79%] Building CXX object src/host/CMakeFiles/host.dir/transformer_layer.cpp.o
+[ 81%] Building CXX object src/host/CMakeFiles/host.dir/amm_host.cpp.o
+[ 84%] Building CXX object src/host/CMakeFiles/host.dir/pim_lut_host.cpp.o
+[ 84%] Building CXX object src/host/CMakeFiles/host.dir/transformer_model.cpp.o
+[ 85%] Linking C executable ../../bin/dpu_bin_o
+[ 86%] Linking C executable ../../bin/dpu_bin_qkv
+[ 88%] Linking C executable ../../bin/dpu_bin_ffn1
+[ 89%] Linking C executable ../../bin/dpu_bin_ffn2
+[ 89%] Built target dpu_bin_qkv
+[ 89%] Built target dpu_bin_o
+[ 89%] Built target dpu_bin_ffn2
+[ 89%] Built target dpu_bin_ffn1
+[ 91%] Linking CXX shared library ../../lib/libhost.so
+[ 91%] Built target host
+[ 92%] Building CXX object test/CMakeFiles/test_transformer.dir/test_transformer.cpp.o
+[ 94%] Building CXX object test/CMakeFiles/test_transformer_layer.dir/test_transformer_layer.cpp.o
+[ 95%] Building CXX object test/CMakeFiles/test_amm.dir/test_amm.cpp.o
+[ 97%] Linking CXX executable ../bin/test_transformer_layer
+[ 97%] Built target test_transformer_layer
+[ 98%] Linking CXX executable ../bin/test_amm
+[ 98%] Built target test_amm
+[100%] Linking CXX executable ../bin/test_transformer
+[100%] Built target test_transformer
+----------Transformer Params----------
+thread num 40
+layer num 12
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 2304, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 288, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------O LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 96, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 3072, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 384, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 3072
+num codebook 2048, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 2048, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 96, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------Attention Params----------
+seq len 128, batch size 1, n 128
+head num 12, head dim 64, token dim 768
+dpu num 16, input parallelism 2, lut parallelism 8
+n tile size 64, token tile size 96
+num threads 40
+-----------------------------------
+parameter parsing time 0.000617
+weight initialization time 0.287654
+dpu allocate time 0.001976
+--------------------------------------------
+input initialization time 0.000312
+amm time 48.001143, non amm time 0.012306
+attention reorder time 0.000455, attention cpu compute time 0.005118
+post o reorder+norm+residual time 0.001176, gelu+ffn1 reorder time 0.004416, post ffn2 reorder+norm+residual time 0.001061
+tensor allocation overhead time 0.000019, other non amm time 0.000061
+iteration 0, inference time 48.013471
+--------------------------------------------
+input initialization time 0.000642
+amm time 48.089002, non amm time 0.015645
+attention reorder time 0.000668, attention cpu compute time 0.005769
+post o reorder+norm+residual time 0.001046, gelu+ffn1 reorder time 0.007146, post ffn2 reorder+norm+residual time 0.000994
+tensor allocation overhead time 0.000011, other non amm time 0.000011
+iteration 1, inference time 48.104673
+--------------------------------------------
+input initialization time 0.000734
+amm time 49.239694, non amm time 0.021215
+attention reorder time 0.000623, attention cpu compute time 0.008886
+post o reorder+norm+residual time 0.001048, gelu+ffn1 reorder time 0.009004, post ffn2 reorder+norm+residual time 0.001632
+tensor allocation overhead time 0.000008, other non amm time 0.000015
+iteration 2, inference time 49.260932
+--------------------------------------------
+input initialization time 0.000661
+amm time 52.533326, non amm time 0.014908
+attention reorder time 0.000613, attention cpu compute time 0.009081
+post o reorder+norm+residual time 0.000826, gelu+ffn1 reorder time 0.003416, post ffn2 reorder+norm+residual time 0.000946
+tensor allocation overhead time 0.000008, other non amm time 0.000018
+iteration 3, inference time 52.548259
+--------------------------------------------
+input initialization time 0.000814
+amm time 48.521454, non amm time 0.024694
+attention reorder time 0.000811, attention cpu compute time 0.014355
+post o reorder+norm+residual time 0.000907, gelu+ffn1 reorder time 0.007567, post ffn2 reorder+norm+residual time 0.000972
+tensor allocation overhead time 0.000015, other non amm time 0.000067
+iteration 4, inference time 48.546175
+--------------------------------------------
+input initialization time 0.000812
+amm time 48.090302, non amm time 0.022175
+attention reorder time 0.000460, attention cpu compute time 0.009883
+post o reorder+norm+residual time 0.001077, gelu+ffn1 reorder time 0.009732, post ffn2 reorder+norm+residual time 0.000999
+tensor allocation overhead time 0.000012, other non amm time 0.000012
+iteration 5, inference time 48.112505
+--------------------------------------------
+input initialization time 0.000604
+amm time 48.326579, non amm time 0.018720
+attention reorder time 0.000727, attention cpu compute time 0.007131
+post o reorder+norm+residual time 0.000871, gelu+ffn1 reorder time 0.009145, post ffn2 reorder+norm+residual time 0.000816
+tensor allocation overhead time 0.000011, other non amm time 0.000019
+iteration 6, inference time 48.345320
+--------------------------------------------
+input initialization time 0.000573
+amm time 48.340840, non amm time 0.033760
+attention reorder time 0.000813, attention cpu compute time 0.024986
+post o reorder+norm+residual time 0.000925, gelu+ffn1 reorder time 0.006290, post ffn2 reorder+norm+residual time 0.000719
+tensor allocation overhead time 0.000010, other non amm time 0.000017
+iteration 7, inference time 48.374618
+--------------------------------------------
+input initialization time 0.000615
+amm time 49.278751, non amm time 0.017823
+attention reorder time 0.000667, attention cpu compute time 0.007288
+post o reorder+norm+residual time 0.001024, gelu+ffn1 reorder time 0.007963, post ffn2 reorder+norm+residual time 0.000853
+tensor allocation overhead time 0.000009, other non amm time 0.000019
+iteration 8, inference time 49.296595
+--------------------------------------------
+input initialization time 0.000656
+amm time 48.640170, non amm time 0.015568
+attention reorder time 0.000728, attention cpu compute time 0.004771
+post o reorder+norm+residual time 0.000849, gelu+ffn1 reorder time 0.008228, post ffn2 reorder+norm+residual time 0.000972
+tensor allocation overhead time 0.000009, other non amm time 0.000011
+iteration 9, inference time 48.655762
+--------------------------------------------
+input initialization time 0.000688
+amm time 48.462569, non amm time 0.016545
+attention reorder time 0.000647, attention cpu compute time 0.006074
+post o reorder+norm+residual time 0.001020, gelu+ffn1 reorder time 0.007881, post ffn2 reorder+norm+residual time 0.000904
+tensor allocation overhead time 0.000010, other non amm time 0.000010
+iteration 10, inference time 48.479137
+--------------------------------------------
+input initialization time 0.000741
+amm time 48.758188, non amm time 0.016541
+attention reorder time 0.000668, attention cpu compute time 0.007561
+post o reorder+norm+residual time 0.001018, gelu+ffn1 reorder time 0.006218, post ffn2 reorder+norm+residual time 0.001053
+tensor allocation overhead time 0.000011, other non amm time 0.000012
+iteration 11, inference time 48.774752
+--------------------------------------------
+input initialization time 0.000568
+amm time 49.185629, non amm time 0.019100
+attention reorder time 0.000762, attention cpu compute time 0.006042
+post o reorder+norm+residual time 0.000913, gelu+ffn1 reorder time 0.008553, post ffn2 reorder+norm+residual time 0.002803
+tensor allocation overhead time 0.000015, other non amm time 0.000012
+iteration 12, inference time 49.204753
+--------------------------------------------
+input initialization time 0.001553
+amm time 48.355975, non amm time 0.023072
+attention reorder time 0.000592, attention cpu compute time 0.003978
+post o reorder+norm+residual time 0.001057, gelu+ffn1 reorder time 0.016204, post ffn2 reorder+norm+residual time 0.001214
+tensor allocation overhead time 0.000011, other non amm time 0.000016
+iteration 13, inference time 48.379074
+--------------------------------------------
+input initialization time 0.000774
+amm time 50.333277, non amm time 0.015717
+attention reorder time 0.000772, attention cpu compute time 0.007259
+post o reorder+norm+residual time 0.000943, gelu+ffn1 reorder time 0.005847, post ffn2 reorder+norm+residual time 0.000876
+tensor allocation overhead time 0.000009, other non amm time 0.000011
+iteration 14, inference time 50.349019
+--------------------------------------------
+10 rounds' average inference time 48.797153
+tasklet num 16
+n 128, seq len 128, batch size 1
+token din 768, ffn hidden dim 3072
+----------QKV LUT Params----------
+num codebook 512, num centroid 16, loop order 0, lut load type 2
+input parallelism 2, lut parallelism 8, n stile 64, feature stile 288
+n mtile 64, feature mtile 32, cb mtile 128
+feature load tile 8, cb load tile 128
+----------O LUT Params----------
+num codebook 512, num centroid 16, loop order 0, lut load type 2
+input parallelism 2, lut parallelism 8, n stile 64, feature stile 96
+n mtile 64, feature mtile 32, cb mtile 128
+feature load tile 8, cb load tile 128
+----------FFN1 LUT Params----------
+num codebook 512, num centroid 16, loop order 0, lut load type 2
+input parallelism 2, lut parallelism 8, n stile 64, feature stile 384
+n mtile 64, feature mtile 32, cb mtile 128
+feature load tile 8, cb load tile 128
+----------FFN2 LUT Params----------
+num codebook 2048, num centroid 16, loop order 0, lut load type 2
+input parallelism 2, lut parallelism 8, n stile 64, feature stile 96
+n mtile 64, feature mtile 32, cb mtile 128
+feature load tile 8, cb load tile 128

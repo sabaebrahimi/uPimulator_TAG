@@ -1,0 +1,120 @@
+-- CMAKE_SYSTEM_PROCESSOR: x86_64
+-- x86 detected
+-- Linux detected
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/build
+[  2%] Built target dpu_bin_qkv
+[  8%] Built target cnpy-static
+[  8%] Built target cnpy
+[ 11%] Built target dpu_bin_ffn1
+[ 14%] Built target ggml
+[ 17%] Built target dpu_bin_ffn2
+[ 20%] Built target dpu_bin_o
+[ 23%] Built target example1
+[ 69%] Built target yaml-cpp
+[ 75%] Built target yaml-cpp-sandbox
+[ 75%] Built target tuner
+[ 81%] Built target yaml-cpp-parse
+[ 81%] Built target yaml-cpp-read
+[ 91%] Built target host
+[ 94%] Built target test_transformer_layer
+[ 97%] Built target test_transformer
+[100%] Built target test_amm
+----------Transformer Params----------
+thread num 40
+layer num 12
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 2304, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 288, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------O LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 96, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 3072, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 384, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 3072
+num codebook 2048, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 2048, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 96, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------Attention Params----------
+seq len 128, batch size 1, n 128
+head num 12, head dim 64, token dim 768
+dpu num 16, input parallelism 2, lut parallelism 8
+n tile size 64, token tile size 96
+num threads 40
+-----------------------------------
+finish parameter parsing
+weight file is found, load weights from file.
+finish weight initialization
+finish dpu allocation
+inference start
+inference end
+e2e_inference_time_s 630.147808
+e2e_inference_time_ms 630147.807837
+e2e_tokens_per_s 0.203127
+avg_layer_time_ms 52512.317320
+output_sample -nan
+tasklet num 16
+n 128, seq len 128, batch size 1
+token din 768, ffn hidden dim 3072
+----------QKV LUT Params----------
+num codebook 512, num centroid 16, loop order 0, lut load type 2
+input parallelism 2, lut parallelism 8, n stile 64, feature stile 288
+n mtile 64, feature mtile 32, cb mtile 128
+feature load tile 8, cb load tile 128
+----------O LUT Params----------
+num codebook 512, num centroid 16, loop order 0, lut load type 2
+input parallelism 2, lut parallelism 8, n stile 64, feature stile 96
+n mtile 64, feature mtile 32, cb mtile 128
+feature load tile 8, cb load tile 128
+----------FFN1 LUT Params----------
+num codebook 512, num centroid 16, loop order 0, lut load type 2
+input parallelism 2, lut parallelism 8, n stile 64, feature stile 384
+n mtile 64, feature mtile 32, cb mtile 128
+feature load tile 8, cb load tile 128
+----------FFN2 LUT Params----------
+num codebook 2048, num centroid 16, loop order 0, lut load type 2
+input parallelism 2, lut parallelism 8, n stile 64, feature stile 96
+n mtile 64, feature mtile 32, cb mtile 128
+feature load tile 8, cb load tile 128

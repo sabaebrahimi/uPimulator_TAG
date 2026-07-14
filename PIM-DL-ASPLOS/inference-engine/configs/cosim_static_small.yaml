@@ -1,0 +1,107 @@
+# uPIMulator TAG co-simulation config (Phase 1).
+#
+# STATIC (lut_load_type=0) + NFC (loop_order=0), downscaled so each projection's
+# whole static LUT tile fits uPIMulator's 128 KB DPU WRAM. NUM_CENTROID and the
+# n_stile/n_mtile geometry are kept at the real sim_small values.
+#
+# Sizes are bounded by the REAL DPU WRAM of 64 KB (uPIMulator models 128 KB, but the
+# STATIC LUT buffer must also link into PIM-DL's native 64 KB DPU binary alongside 16
+# tasklet stacks). The whole static LUT tile = feature_stile*num_codebook*num_centroid
+# bytes must stay <= ~32 KB; these configs keep every LUT <= 24 KB.
+#
+# Derivations (run_layer.py):
+#   n            = seq_len * batch_size            = 128
+#   n_stile      = n / input_parallelism           = 128 / 2  = 64
+#   feature_stile(QKV)  = token_dim*3 / lut_par     = 384 / 8  = 48
+#   feature_stile(O)    = token_dim   / lut_par     = 128 / 8  = 16
+#   feature_stile(FFN1) = ffn_hidden  / lut_par     = 256 / 8  = 32
+#   feature_stile(FFN2) = token_dim   / lut_par     = 128 / 8  = 16
+#
+# Resulting (num_codebook, feature_stile) signatures — these tag the emitter dumps
+# and MUST match the uPIMulator benchmark dpu/CMakeLists.txt tile macros:
+#   QKV  -> cb=32, fs=48   (benchmark PIMDL,      LUT 24 KB)
+#   O    -> cb=32, fs=16   (benchmark PIMDL_O,    LUT  8 KB)
+#   FFN1 -> cb=32, fs=32   (benchmark PIMDL_FFN1, LUT 16 KB)
+#   FFN2 -> cb=64, fs=16   (benchmark PIMDL_FFN2, LUT 16 KB)
+
+network_params:
+  # input size:  n = seq_len * batch_size = 128  ->  n_stile = 128 / input_parallelism(2) = 64
+  seq_len: 128
+  batch_size: 1
+  # feature size (downscaled BERT-base): token_dim = head_num * head_dim
+  head_num: 2
+  head_dim: 64
+  token_dim: 128
+  ffn_hidden_dim: 256
+  layer_num: 1
+
+system_params:
+  # input_parallelism * lut_parallelism == dpu_num  (2 * 8 == 16)
+  dpu_num: 16
+  nr_tasklets: 16
+  qkv_lut_pim_binary: "./build/bin/dpu_bin_qkv"
+  o_lut_pim_binary: "./build/bin/dpu_bin_o"
+  ffn1_lut_pim_binary: "./build/bin/dpu_bin_ffn1"
+  ffn2_lut_pim_binary: "./build/bin/dpu_bin_ffn2"
+  num_threads: 40
+
+kernel_params:
+  # ---- QKV LUT  (signature cb=32, fs=48; LUT 24 KB) ----
+  qkv_scale: 0.1
+  qkv_bias: 0.2
+  qkv_num_codebook: 32
+  qkv_num_centroid: 16
+  qkv_input_parallelism: 2
+  qkv_lut_parallelism: 8
+  qkv_loop_order: 0        # 0: nfc
+  qkv_lut_load_type: 0     # 0: static lut table
+  qkv_n_mtile_size: 64
+  qkv_feature_mtile_size: 24
+  qkv_cb_mtile_size: 16
+  qkv_feature_load_tile_size: 8   # unused for static
+  qkv_cb_load_tile_size: 16       # unused for static
+
+  # ---- O LUT  (signature cb=32, fs=16; LUT 8 KB) ----
+  o_scale: 0.1
+  o_bias: 0.2
+  o_num_codebook: 32
+  o_num_centroid: 16
+  o_input_parallelism: 2
+  o_lut_parallelism: 8
+  o_loop_order: 0
+  o_lut_load_type: 0
+  o_n_mtile_size: 64
+  o_feature_mtile_size: 16
+  o_cb_mtile_size: 16
+  o_feature_load_tile_size: 8
+  o_cb_load_tile_size: 16
+
+  # ---- FFN1 LUT  (signature cb=32, fs=32; LUT 16 KB) ----
+  ffn1_scale: 0.1
+  ffn1_bias: 0.2
+  ffn1_num_codebook: 32
+  ffn1_num_centroid: 16
+  ffn1_input_parallelism: 2
+  ffn1_lut_parallelism: 8
+  ffn1_loop_order: 0
+  ffn1_lut_load_type: 0
+  ffn1_n_mtile_size: 64
+  ffn1_feature_mtile_size: 16
+  ffn1_cb_mtile_size: 16
+  ffn1_feature_load_tile_size: 8
+  ffn1_cb_load_tile_size: 16
+
+  # ---- FFN2 LUT  (signature cb=64, fs=16; LUT 16 KB) ----
+  ffn2_scale: 0.1
+  ffn2_bias: 0.2
+  ffn2_num_codebook: 64
+  ffn2_num_centroid: 16
+  ffn2_input_parallelism: 2
+  ffn2_lut_parallelism: 8
+  ffn2_loop_order: 0
+  ffn2_lut_load_type: 0
+  ffn2_n_mtile_size: 64
+  ffn2_feature_mtile_size: 16
+  ffn2_cb_mtile_size: 16
+  ffn2_feature_load_tile_size: 8
+  ffn2_cb_load_tile_size: 16

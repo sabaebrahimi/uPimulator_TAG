@@ -1,0 +1,400 @@
+Command:
+python run_layer.py \
+  --transformer_config_file ./configs/transformer_output_sim_small.yaml \
+  --need_compile \
+  --need_breakdown \
+  --breakdown_type 0
+
+export UPMEM_PROFILE_BASE=backend=simulator
+export PIMDL_MODEL_CTX_MB=1024
+export PIMDL_LAYER_CTX_MB=512
+export PIMDL_DATA_CTX_MB=1024
+
+----------Transformer Params----------
+thread num 40
+layer num 12
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 2304, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 288, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------O LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 96, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 3072, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 384, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 3072
+num codebook 2048, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 2048, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 96, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------Attention Params----------
+seq len 128, batch size 1, n 128
+head num 12, head dim 64, token dim 768
+dpu num 16, input parallelism 2, lut parallelism 8
+n tile size 64, token tile size 96
+num threads 40
+-----------------------------------
+parameter parsing time 0.000779
+weight initialization time 0.270978
+dpu allocate time 0.007213
+--------------------------------------------
+input initialization time 0.000366
+index calculation time 0.003052
+other latency 0.000768, data transfer latency 0.004426, pim kernel latency 9.868173
+index calculation time 0.004653
+other latency 0.001194, data transfer latency 0.006042, pim kernel latency 21.078813
+index calculation time 0.006507
+other latency 0.002083, data transfer latency 0.012045, pim kernel latency 35.774478
+index calculation time 0.013458
+other latency 0.002743, data transfer latency 0.018181, pim kernel latency 50.173949
+iteration 0, inference time 50.238515
+--------------------------------------------
+input initialization time 0.000693
+index calculation time 0.016258
+other latency 0.003467, data transfer latency 0.023371, pim kernel latency 61.505089
+index calculation time 0.017961
+other latency 0.004074, data transfer latency 0.025518, pim kernel latency 73.021784
+index calculation time 0.022052
+other latency 0.005055, data transfer latency 0.032599, pim kernel latency 88.631873
+index calculation time 0.028700
+other latency 0.005385, data transfer latency 0.043047, pim kernel latency 104.011982
+iteration 1, inference time 53.902169
+--------------------------------------------
+input initialization time 0.000627
+index calculation time 0.030635
+other latency 0.006177, data transfer latency 0.047804, pim kernel latency 115.571788
+index calculation time 0.032491
+other latency 0.006683, data transfer latency 0.049944, pim kernel latency 127.215540
+index calculation time 0.034947
+other latency 0.007600, data transfer latency 0.057100, pim kernel latency 142.509308
+index calculation time 0.042678
+other latency 0.008116, data transfer latency 0.064544, pim kernel latency 157.571556
+iteration 2, inference time 53.619818
+--------------------------------------------
+input initialization time 0.000611
+index calculation time 0.044720
+other latency 0.008877, data transfer latency 0.069533, pim kernel latency 169.114518
+index calculation time 0.046743
+other latency 0.009271, data transfer latency 0.071438, pim kernel latency 180.399236
+index calculation time 0.048683
+other latency 0.010157, data transfer latency 0.077284, pim kernel latency 195.097899
+index calculation time 0.055006
+other latency 0.010568, data transfer latency 0.084361, pim kernel latency 209.928955
+iteration 3, inference time 52.406869
+--------------------------------------------
+input initialization time 0.000697
+index calculation time 0.057467
+other latency 0.011177, data transfer latency 0.089445, pim kernel latency 221.675908
+index calculation time 0.059449
+other latency 0.011538, data transfer latency 0.091326, pim kernel latency 233.607898
+index calculation time 0.062733
+other latency 0.012345, data transfer latency 0.098208, pim kernel latency 248.959979
+index calculation time 0.070015
+other latency 0.012740, data transfer latency 0.107116, pim kernel latency 264.068331
+iteration 4, inference time 54.200270
+--------------------------------------------
+input initialization time 0.000604
+index calculation time 0.071826
+other latency 0.013566, data transfer latency 0.111564, pim kernel latency 275.220833
+index calculation time 0.073867
+other latency 0.014384, data transfer latency 0.113600, pim kernel latency 286.369534
+index calculation time 0.076083
+other latency 0.015265, data transfer latency 0.119736, pim kernel latency 302.016872
+index calculation time 0.083948
+other latency 0.015703, data transfer latency 0.128820, pim kernel latency 317.114486
+iteration 5, inference time 53.103304
+--------------------------------------------
+input initialization time 0.000760
+index calculation time 0.086058
+other latency 0.016589, data transfer latency 0.134160, pim kernel latency 328.286542
+index calculation time 0.087893
+other latency 0.016917, data transfer latency 0.136130, pim kernel latency 339.547345
+index calculation time 0.089824
+other latency 0.017843, data transfer latency 0.142108, pim kernel latency 355.295350
+index calculation time 0.098343
+other latency 0.018207, data transfer latency 0.150190, pim kernel latency 370.640659
+iteration 6, inference time 53.585204
+--------------------------------------------
+input initialization time 0.000711
+index calculation time 0.100019
+other latency 0.018958, data transfer latency 0.154887, pim kernel latency 382.388372
+index calculation time 0.101944
+other latency 0.019396, data transfer latency 0.157022, pim kernel latency 393.824094
+index calculation time 0.103662
+other latency 0.020300, data transfer latency 0.162600, pim kernel latency 409.542841
+index calculation time 0.112657
+other latency 0.020730, data transfer latency 0.172113, pim kernel latency 425.067830
+iteration 7, inference time 54.483559
+--------------------------------------------
+input initialization time 0.000495
+index calculation time 0.114637
+other latency 0.021433, data transfer latency 0.176797, pim kernel latency 436.648583
+index calculation time 0.116891
+other latency 0.021840, data transfer latency 0.178684, pim kernel latency 447.773210
+index calculation time 0.118592
+other latency 0.023000, data transfer latency 0.184747, pim kernel latency 463.251846
+index calculation time 0.126113
+other latency 0.023371, data transfer latency 0.191684, pim kernel latency 478.644517
+iteration 8, inference time 53.630347
+--------------------------------------------
+input initialization time 0.000662
+index calculation time 0.128082
+other latency 0.024110, data transfer latency 0.196474, pim kernel latency 490.477416
+index calculation time 0.130320
+other latency 0.024478, data transfer latency 0.198302, pim kernel latency 501.614983
+index calculation time 0.132074
+other latency 0.025350, data transfer latency 0.204387, pim kernel latency 517.325880
+index calculation time 0.140173
+other latency 0.025674, data transfer latency 0.212172, pim kernel latency 533.279453
+iteration 9, inference time 54.689666
+--------------------------------------------
+input initialization time 0.000589
+index calculation time 0.141843
+other latency 0.026397, data transfer latency 0.216458, pim kernel latency 544.835109
+index calculation time 0.144957
+other latency 0.026697, data transfer latency 0.219553, pim kernel latency 555.934827
+index calculation time 0.147142
+other latency 0.027474, data transfer latency 0.225237, pim kernel latency 571.233204
+index calculation time 0.153489
+other latency 0.027848, data transfer latency 0.232477, pim kernel latency 585.721685
+iteration 10, inference time 52.494563
+--------------------------------------------
+input initialization time 0.000751
+index calculation time 0.155592
+other latency 0.028460, data transfer latency 0.237068, pim kernel latency 597.639745
+index calculation time 0.157581
+other latency 0.028928, data transfer latency 0.238974, pim kernel latency 609.293951
+index calculation time 0.159725
+other latency 0.029894, data transfer latency 0.245303, pim kernel latency 624.124506
+index calculation time 0.166372
+other latency 0.030250, data transfer latency 0.252035, pim kernel latency 639.602905
+iteration 11, inference time 53.931344
+--------------------------------------------
+input initialization time 0.000588
+index calculation time 0.168527
+other latency 0.030916, data transfer latency 0.256646, pim kernel latency 652.179143
+index calculation time 0.170274
+other latency 0.031317, data transfer latency 0.258373, pim kernel latency 663.763581
+index calculation time 0.172648
+other latency 0.032175, data transfer latency 0.265309, pim kernel latency 679.250936
+index calculation time 0.179967
+other latency 0.032568, data transfer latency 0.271648, pim kernel latency 694.573510
+iteration 12, inference time 55.023885
+--------------------------------------------
+input initialization time 0.000631
+index calculation time 0.182363
+other latency 0.033260, data transfer latency 0.276182, pim kernel latency 706.341195
+index calculation time 0.184689
+other latency 0.033619, data transfer latency 0.278090, pim kernel latency 718.100735
+index calculation time 0.186960
+other latency 0.034408, data transfer latency 0.284011, pim kernel latency 733.098413
+index calculation time 0.195044
+other latency 0.034789, data transfer latency 0.290488, pim kernel latency 747.919951
+iteration 13, inference time 53.396770
+--------------------------------------------
+input initialization time 0.000624
+index calculation time 0.196868
+other latency 0.035621, data transfer latency 0.295208, pim kernel latency 759.597614
+index calculation time 0.198822
+other latency 0.036242, data transfer latency 0.297241, pim kernel latency 771.922139
+index calculation time 0.201255
+other latency 0.037219, data transfer latency 0.303435, pim kernel latency 787.205526
+index calculation time 0.209313
+other latency 0.037640, data transfer latency 0.311846, pim kernel latency 803.001705
+iteration 14, inference time 55.142712
+--------------------------------------------
+10 rounds' average inference time 53.948135
+
+
+-------------------------------------------------------------------------------------------------------
+----------Transformer Params----------
+thread num 40
+layer num 12
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 2304, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 288, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------O LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 96, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 3072, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 384, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 3072
+num codebook 2048, num centroid 16, sub vec len 1
+n stile size 64, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 2048, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 96, n stile size 64
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------Attention Params----------
+seq len 128, batch size 1, n 128
+head num 12, head dim 64, token dim 768
+dpu num 16, input parallelism 2, lut parallelism 8
+n tile size 64, token tile size 96
+num threads 40
+-----------------------------------
+parameter parsing time 0.000633
+weight initialization time 0.298627
+dpu allocate time 0.002312
+--------------------------------------------
+input initialization time 0.000527
+amm time 51.158952, non amm time 0.018547
+iteration 0, inference time 51.177514
+--------------------------------------------
+input initialization time 0.000515
+amm time 102.676468, non amm time 0.030334
+iteration 1, inference time 51.529348
+--------------------------------------------
+input initialization time 0.000542
+amm time 154.975625, non amm time 0.045075
+iteration 2, inference time 52.313911
+--------------------------------------------
+input initialization time 0.000668
+amm time 207.683026, non amm time 0.053600
+iteration 3, inference time 52.715939
+--------------------------------------------
+input initialization time 0.000507
+amm time 265.060635, non amm time 0.069124
+iteration 4, inference time 57.393150
+--------------------------------------------
+input initialization time 0.001276
+amm time 330.007501, non amm time 0.087838
+iteration 5, inference time 64.965596
+--------------------------------------------
+input initialization time 0.003246
+amm time 388.322510, non amm time 0.118627
+iteration 6, inference time 58.345814
+--------------------------------------------
+input initialization time 0.000706
+amm time 440.959337, non amm time 0.141060
+iteration 7, inference time 52.659275
+--------------------------------------------
+input initialization time 0.000464
+amm time 493.603734, non amm time 0.150937
+iteration 8, inference time 52.654285
+--------------------------------------------
+input initialization time 0.000598
+amm time 546.377736, non amm time 0.165216
+iteration 9, inference time 52.788293
+--------------------------------------------
+input initialization time 0.000609
+amm time 598.298316, non amm time 0.178757
+iteration 10, inference time 51.934132
+--------------------------------------------
+input initialization time 0.000457
+amm time 650.347572, non amm time 0.191087
+iteration 11, inference time 52.061602
+--------------------------------------------
+input initialization time 0.000661
+amm time 702.828350, non amm time 0.206196
+iteration 12, inference time 52.495903
+--------------------------------------------
+input initialization time 0.000702
+amm time 756.125244, non amm time 0.217302
+iteration 13, inference time 53.308013
+--------------------------------------------
+input initialization time 0.000574
+amm time 813.980574, non amm time 0.238017
+iteration 14, inference time 57.876060
+--------------------------------------------
+10 rounds' average inference time 54.908897
+tasklet num 16
+n 128, seq len 128, batch size 1
+token din 768, ffn hidden dim 3072
+----------QKV LUT Params----------
+num codebook 512, num centroid 16, loop order 0, lut load type 2
+input parallelism 2, lut parallelism 8, n stile 64, feature stile 288
+n mtile 64, feature mtile 32, cb mtile 128
+feature load tile 8, cb load tile 128
+----------O LUT Params----------
+num codebook 512, num centroid 16, loop order 0, lut load type 2
+input parallelism 2, lut parallelism 8, n stile 64, feature stile 96
+n mtile 64, feature mtile 32, cb mtile 128
+feature load tile 8, cb load tile 128
+----------FFN1 LUT Params----------
+num codebook 512, num centroid 16, loop order 0, lut load type 2
+input parallelism 2, lut parallelism 8, n stile 64, feature stile 384
+n mtile 64, feature mtile 32, cb mtile 128
+feature load tile 8, cb load tile 128
+----------FFN2 LUT Params----------
+num codebook 2048, num centroid 16, loop order 0, lut load type 2
+input parallelism 2, lut parallelism 8, n stile 64, feature stile 96
+n mtile 64, feature mtile 32, cb mtile 128
+feature load tile 8, cb load tile 128
+
