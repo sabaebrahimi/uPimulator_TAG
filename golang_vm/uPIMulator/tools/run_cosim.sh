@@ -17,6 +17,9 @@
 #   SKIP_COMPILE=1 (default)  reuse prebuilt DPU/SDK assembly (Docker-free);
 #                             run tools/build_dpu_local.sh first.
 #   SKIP_COMPILE=0            let uPIMulator compile via Docker/UPMEM.
+#   COSIM_XFER_MODE=fixed_bw  (default) paper size/BW transfer model — safe for 16 DPUs.
+#   COSIM_XFER_MODE=cycle     cycle-accurate SimulateMemory — ONLY safe with 1 DPU.
+#   NUM_CHANNELS / NUM_RANKS_PER_CHANNEL / NUM_DPUS_PER_RANK  topology (default 1×2×8=16).
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -26,6 +29,13 @@ DUMP_DIR="$(cd "${DUMP_DIR}" && pwd)"
 PROJECTIONS=("$@"); [[ ${#PROJECTIONS[@]} -eq 0 ]] && PROJECTIONS=(qkv o ffn1 ffn2)
 
 SKIP_COMPILE="${SKIP_COMPILE:-1}"
+# Match cosim_static_small.yaml dpu_num=16 (2 ranks × 8 DPUs/rank, UPMEM-like).
+NUM_CHANNELS="${NUM_CHANNELS:-1}"
+NUM_RANKS_PER_CHANNEL="${NUM_RANKS_PER_CHANNEL:-2}"
+NUM_DPUS_PER_RANK="${NUM_DPUS_PER_RANK:-8}"
+# fixed_bw is mandatory for multi-DPU; cycle-accurate xfer OOMs at 16 DPUs.
+COSIM_XFER_MODE="${COSIM_XFER_MODE:-fixed_bw}"
+export COSIM_XFER_MODE
 BIN_DIR="${ROOT}/bin_cosim"
 LOG_DIR="${ROOT}/cosim_logs"
 UPIM="${ROOT}/build/uPIMulator"
@@ -33,6 +43,15 @@ mkdir -p "${BIN_DIR}"
 rm -rf "${LOG_DIR}" && mkdir -p "${LOG_DIR}"
 BENCH_BUILD_DIR="${BENCH_BUILD_DIR:-${ROOT}/benchmark/build_user}"
 export UPIM_BENCH_BUILD_DIR="${UPIM_BENCH_BUILD_DIR:-${BENCH_BUILD_DIR}}"
+
+TOTAL_DPUS=$((NUM_CHANNELS * NUM_RANKS_PER_CHANNEL * NUM_DPUS_PER_RANK))
+echo "co-sim topology: ${NUM_CHANNELS} ch × ${NUM_RANKS_PER_CHANNEL} rank × ${NUM_DPUS_PER_RANK} dpu = ${TOTAL_DPUS} DPUs"
+echo "co-sim xfer mode: ${COSIM_XFER_MODE}"
+if [[ "${COSIM_XFER_MODE}" == "cycle" && "${TOTAL_DPUS}" -gt 1 ]]; then
+    echo "WARNING: COSIM_XFER_MODE=cycle with ${TOTAL_DPUS} DPUs can crash the machine; forcing fixed_bw."
+    COSIM_XFER_MODE=fixed_bw
+    export COSIM_XFER_MODE
+fi
 
 [[ -x "${UPIM}" ]] || { echo "building simulator..."; (cd "${ROOT}" && go build -o build/uPIMulator ./src); }
 
@@ -60,7 +79,9 @@ for proj in "${PROJECTIONS[@]}"; do
         --root_dirpath "${ROOT}" \
         --bin_dirpath "${BIN_DIR}" \
         --pimdl_patch_dirpath "${PATCH_DIR}" \
-        --num_channels 1 --num_ranks_per_channel 1 --num_dpus_per_rank 1 \
+        --num_channels "${NUM_CHANNELS}" \
+        --num_ranks_per_channel "${NUM_RANKS_PER_CHANNEL}" \
+        --num_dpus_per_rank "${NUM_DPUS_PER_RANK}" \
         --num_tasklets 16 --skip_compile "${SKIP_COMPILE}" --verbose 0
     t3="$(now_ms)"
 

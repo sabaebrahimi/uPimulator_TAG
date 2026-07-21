@@ -1,5 +1,0 @@
-projection=ffn2
-prepare_ms=124
-simulate_ms=16854
-check_ms=110
-host_total_ms=17094

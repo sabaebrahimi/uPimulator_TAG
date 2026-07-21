@@ -58,6 +58,10 @@ type VirtualMachine struct {
 	// Separate from bin_dirpath (wiped at startup). Used to size/stage the
 	// timed HOST_TO_DEVICE transfers for lut_table / input_index.
 	pimdl_patch_dirpath string
+
+	// Used to convert the paper fixed-bandwidth transfer model into
+	// HostTransfer_*_cycle counts (cycles @ memory clock).
+	memory_frequency_mhz int64
 }
 
 func (this *VirtualMachine) Init(command_line_parser *misc.CommandLineParser) {
@@ -111,6 +115,7 @@ func (this *VirtualMachine) Init(command_line_parser *misc.CommandLineParser) {
 	this.stat_factory.Init("HostTransfer")
 
 	this.pimdl_patch_dirpath = command_line_parser.StringParameter("pimdl_patch_dirpath")
+	this.memory_frequency_mhz = command_line_parser.IntParameter("memory_frequency")
 }
 
 func (this *VirtualMachine) Fini() {
@@ -3975,23 +3980,34 @@ func (this *VirtualMachine) DumpPimdlOutput() {
 		return
 	}
 
-	host_buf := this.arena.NewPointer(num_bytes)
-	channel_id, rank_id, dpu_id := this.dpuCoords(0)
-	this.enqueueMramTransfer(
-		bank.DEVICE_TO_HOST,
-		host_buf.Address(),
-		channel_id,
-		rank_id,
-		dpu_id,
-		output_va,
-		num_bytes,
-	)
-	cycles := this.SimulateMemory()
-	this.stat_factory.Increment("d2h_cycle", cycles)
-	this.stat_factory.Increment("d2h_bytes", num_bytes)
-	this.stat_factory.Increment("num_d2h", 1)
+	// Always extract DPU 0 functionally for the bit-match dump.
+	byte_stream := dpus[0].Dma().TransferFromMram(output_va, num_bytes)
 
-	byte_stream := this.arena.Pool().Memory().Read(host_buf.Address(), num_bytes)
+	// Charge D2H timing for all DPUs. Default fixed-BW (safe). Optional
+	// COSIM_XFER_MODE=cycle only for 1 DPU (multi-DPU cycle xfer can OOM).
+	num_dpus := len(dpus)
+	if this.pimdlXferMode() == "cycle" && num_dpus == 1 {
+		host_buf := this.arena.NewPointer(num_bytes)
+		channel_id, rank_id, dpu_id := this.dpuCoords(0)
+		this.enqueueMramTransfer(
+			bank.DEVICE_TO_HOST,
+			host_buf.Address(),
+			channel_id,
+			rank_id,
+			dpu_id,
+			output_va,
+			num_bytes,
+		)
+		cycles := this.SimulateMemory()
+		this.stat_factory.Increment("d2h_cycle", cycles)
+		this.stat_factory.Increment("d2h_bytes", num_bytes)
+		this.stat_factory.Increment("num_d2h", 1)
+		this.stat_factory.Increment("xfer_model_cycle", 1)
+		byte_stream = this.arena.Pool().Memory().Read(host_buf.Address(), num_bytes)
+		fmt.Printf("pimdl: cycle D2H %d bytes (d2h_cycle=%d)\n", num_bytes, cycles)
+	} else {
+		this.chargeFixedBandwidthTransfer("d2h", num_bytes, num_dpus)
+	}
 
 	raw := make([]byte, byte_stream.Size())
 	for i := int64(0); i < byte_stream.Size(); i++ {
@@ -4002,8 +4018,9 @@ func (this *VirtualMachine) DumpPimdlOutput() {
 	if write_err := os.WriteFile(path, raw, 0644); write_err != nil {
 		panic(write_err)
 	}
-	fmt.Printf("pimdl: dumped %d bytes of output_data (VA=%d) to pimdl_output.bin "+
-		"(d2h_cycle=%d)\n", len(raw), output_va, cycles)
+	fmt.Printf("pimdl: dumped %d bytes of output_data (VA=%d) from DPU 0 "+
+		"(%d DPUs, xfer_mode=%s)\n",
+		len(raw), output_va, num_dpus, this.pimdlXferMode())
 }
 
 func (this *VirtualMachine) Dump() {

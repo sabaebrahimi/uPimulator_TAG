@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <dpu.h>
 
-#define NUM_DPUS 1
+#define NUM_DPUS 16
 #define NUM_TASKLETS 16
 
 struct dpu_arguments_t {

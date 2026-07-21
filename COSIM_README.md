@@ -76,10 +76,11 @@ To use the stock Docker/UPMEM compile instead of the local build, run with
 `SKIP_COMPILE=0 tools/run_cosim.sh ...` (and omit `build_dpu_local.sh`).
 
 ## Notes
-- uPIMulator runs one DPU per config; the bit-match is DPU 0's shard vs PIM-DL's DPU 0.
-- Host↔MRAM **data-transfer cycles are charged** (Phase A): timed HOST_TO_DEVICE for
-  `lut_table`/`input_index` before launch, and timed DEVICE_TO_HOST for `output_data`
-  readback. Look for `HostTransfer_*` in `bin_cosim/log.txt` (`h2d_cycle`, `d2h_cycle`,
-  `transfer_cycle`, `*_bytes`). The mram-patch still supplies functional correctness;
-  the timed path re-drives the same bytes through uPIMulator's DRAM model.
+- Default topology is **16 DPUs** (`1×2×8`, matching `cosim_static_small.yaml`); bit-match
+  is still DPU 0's shard vs PIM-DL's DPU 0.
+- Host↔DPU **data-transfer** uses the classic uPIMulator **fixed-bandwidth** model by
+  default (`COSIM_XFER_MODE=fixed_bw`: H2D 0.2957 GB/s, D2H 0.0627 GB/s per DPU). See
+  `HostTransfer_*` in `log.txt`. Do **not** use `COSIM_XFER_MODE=cycle` with many DPUs —
+  cycle-accurate `SimulateMemory` for 16-way xfers can exhaust host RAM.
+- For cycle-accurate xfer validation only: `NUM_CHANNELS=1 NUM_RANKS_PER_CHANNEL=1 NUM_DPUS_PER_RANK=1 COSIM_XFER_MODE=cycle tools/run_cosim.sh ...`
 - Host **reorder** timing (strided CPU scatter/gather) and TAG remain the next phase.

@@ -4,9 +4,17 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"uPIMulator/src/encoding"
 	"uPIMulator/src/host/vm/dram/bank"
+)
+
+// Paper / upmem_reg_model CPU↔DPU channel bandwidths (GB/s per DPU).
+// Parallel push_xfer wall time ≈ per-DPU shard size / BW (equal shards).
+const (
+	pimdlH2DBandwidthGBps = 0.2957
+	pimdlD2HBandwidthGBps = 0.0627
 )
 
 // dpuCoords maps a flat DPU index (order of VirtualMachine.Dpus()) onto the
@@ -44,14 +52,77 @@ func (this *VirtualMachine) enqueueMramTransfer(
 	this.push_xfer[transfer_command] = true
 }
 
-// SimulatePimdlHostToDeviceTransfers charges HOST_TO_DEVICE cycles for the
-// co-sim LUT/index payloads. Active only when PIMDL_OUTPUT_BYTES is set (same
-// gate as DumpPimdlOutput) and a patch directory with segment files exists.
-//
-// The mram-patch has already placed the correct bytes in MRAM before DpuLoad;
-// this path re-drives those same bytes through the timed transfer model so
-// co-sim reports the host→DPU data-transfer overhead that the dump-based
-// handoff previously skipped.
+// pimdlXferMode returns "fixed_bw" (default, safe for multi-DPU) or "cycle".
+// Cycle-accurate SimulateMemory for many DPUs can OOM the host (thread-pool
+// per cycle × DPU count × transfer length); refuse that unless explicitly
+// forced and only recommend it for 1 DPU.
+func (this *VirtualMachine) pimdlXferMode() string {
+	mode := strings.ToLower(strings.TrimSpace(os.Getenv("COSIM_XFER_MODE")))
+	if mode == "" {
+		mode = "fixed_bw"
+	}
+	if mode == "cycle" && len(this.Dpus()) > 1 {
+		fmt.Printf("pimdl: COSIM_XFER_MODE=cycle is unsafe with %d DPUs "+
+			"(can exhaust RAM); falling back to fixed_bw. "+
+			"Use 1 DPU for cycle-accurate xfer.\n", len(this.Dpus()))
+		return "fixed_bw"
+	}
+	return mode
+}
+
+// bytesToMemCycles converts a wall-time from the fixed-BW model into memory
+// cycles at the configured DPU MRAM / transfer clock.
+func (this *VirtualMachine) bytesToMemCycles(nbytes int64, gbps float64) int64 {
+	if nbytes <= 0 || gbps <= 0 || this.memory_frequency_mhz <= 0 {
+		return 0
+	}
+	// t_sec = nbytes / (gbps * 2^30); cycles = t_sec * mhz * 1e6
+	secs := float64(nbytes) / (gbps * float64(int64(1)<<30))
+	return int64(secs * float64(this.memory_frequency_mhz) * 1e6)
+}
+
+// chargeFixedBandwidthTransfer records HostTransfer_* stats using the classic
+// uPIMulator size/BW model (HPCA'24 Table I). No SimulateMemory.
+func (this *VirtualMachine) chargeFixedBandwidthTransfer(
+	direction string, // "h2d" or "d2h"
+	per_dpu_bytes int64,
+	num_dpus int,
+) {
+	if per_dpu_bytes <= 0 || num_dpus <= 0 {
+		return
+	}
+
+	var gbps float64
+	if direction == "h2d" {
+		gbps = pimdlH2DBandwidthGBps
+	} else {
+		gbps = pimdlD2HBandwidthGBps
+	}
+
+	// Parallel xfer: wall ≈ per-DPU size / BW (all DPUs same shard size).
+	cycles := this.bytesToMemCycles(per_dpu_bytes, gbps)
+	total_bytes := per_dpu_bytes * int64(num_dpus)
+
+	this.stat_factory.Increment("transfer_cycle", cycles)
+	if direction == "h2d" {
+		this.stat_factory.Increment("h2d_cycle", cycles)
+		this.stat_factory.Increment("h2d_bytes", total_bytes)
+		this.stat_factory.Increment("num_h2d", int64(num_dpus))
+	} else {
+		this.stat_factory.Increment("d2h_cycle", cycles)
+		this.stat_factory.Increment("d2h_bytes", total_bytes)
+		this.stat_factory.Increment("num_d2h", int64(num_dpus))
+	}
+	this.stat_factory.Increment("xfer_model_fixed_bw", 1)
+
+	fmt.Printf("pimdl: fixed-BW %s: %d B/DPU × %d DPUs -> wall_cycle=%d "+
+		"(bw=%.4f GB/s, total_bytes=%d)\n",
+		direction, per_dpu_bytes, num_dpus, cycles, gbps, total_bytes)
+}
+
+// SimulatePimdlHostToDeviceTransfers accounts for HOST_TO_DEVICE of lut/index.
+// Default: paper fixed-BW model (safe). Optional COSIM_XFER_MODE=cycle uses
+// SimulateMemory but only for 1 DPU.
 func (this *VirtualMachine) SimulatePimdlHostToDeviceTransfers() {
 	if os.Getenv("PIMDL_OUTPUT_BYTES") == "" {
 		return
@@ -68,6 +139,7 @@ func (this *VirtualMachine) SimulatePimdlHostToDeviceTransfers() {
 		{"input_index", filepath.Join("pimdl_segments", "input_index.bin")},
 	}
 
+	var per_dpu_bytes int64
 	type staged struct {
 		symbol  string
 		va      int64
@@ -79,63 +151,71 @@ func (this *VirtualMachine) SimulatePimdlHostToDeviceTransfers() {
 	for _, seg := range segments {
 		va, found := this.task.Addresses()[seg.symbol]
 		if !found {
-			fmt.Printf("pimdl: timed H2D skipped for %s (symbol missing)\n", seg.symbol)
+			fmt.Printf("pimdl: H2D skipped for %s (symbol missing)\n", seg.symbol)
 			continue
 		}
 		path := filepath.Join(this.pimdl_patch_dirpath, seg.rel)
 		payload, err := os.ReadFile(path)
 		if err != nil {
-			fmt.Printf("pimdl: timed H2D skipped for %s (%v)\n", seg.symbol, err)
+			fmt.Printf("pimdl: H2D skipped for %s (%v)\n", seg.symbol, err)
 			continue
 		}
 		if len(payload) == 0 {
 			continue
 		}
+		per_dpu_bytes += int64(len(payload))
 
-		host_buf := this.arena.NewPointer(int64(len(payload)))
-		byte_stream := new(encoding.ByteStream)
-		byte_stream.Init()
-		for _, b := range payload {
-			byte_stream.Append(b)
+		if this.pimdlXferMode() == "cycle" {
+			host_buf := this.arena.NewPointer(int64(len(payload)))
+			byte_stream := new(encoding.ByteStream)
+			byte_stream.Init()
+			for _, b := range payload {
+				byte_stream.Append(b)
+			}
+			this.arena.Pool().Memory().Write(host_buf.Address(), int64(len(payload)), byte_stream)
+			staged_segs = append(staged_segs, staged{
+				symbol:  seg.symbol,
+				va:      va,
+				payload: payload,
+				host_va: host_buf.Address(),
+			})
 		}
-		this.arena.Pool().Memory().Write(host_buf.Address(), int64(len(payload)), byte_stream)
-
-		staged_segs = append(staged_segs, staged{
-			symbol:  seg.symbol,
-			va:      va,
-			payload: payload,
-			host_va: host_buf.Address(),
-		})
 	}
 
-	if len(staged_segs) == 0 {
+	if per_dpu_bytes == 0 {
 		return
 	}
 
-	this.Checkpoint()
-
-	var total_bytes int64
-	for _, seg := range staged_segs {
-		for flat_id := range this.Dpus() {
-			channel_id, rank_id, dpu_id := this.dpuCoords(flat_id)
-			this.enqueueMramTransfer(
-				bank.HOST_TO_DEVICE,
-				seg.host_va,
-				channel_id,
-				rank_id,
-				dpu_id,
-				seg.va,
-				int64(len(seg.payload)),
-			)
-			total_bytes += int64(len(seg.payload))
-		}
-		this.stat_factory.Increment("num_h2d", int64(len(this.Dpus())))
+	num_dpus := len(this.Dpus())
+	if num_dpus == 0 {
+		return
 	}
 
+	if this.pimdlXferMode() != "cycle" {
+		this.chargeFixedBandwidthTransfer("h2d", per_dpu_bytes, num_dpus)
+		return
+	}
+
+	// 1-DPU cycle-accurate path only.
+	this.Checkpoint()
+	var total_bytes int64
+	for _, seg := range staged_segs {
+		channel_id, rank_id, dpu_id := this.dpuCoords(0)
+		this.enqueueMramTransfer(
+			bank.HOST_TO_DEVICE,
+			seg.host_va,
+			channel_id,
+			rank_id,
+			dpu_id,
+			seg.va,
+			int64(len(seg.payload)),
+		)
+		total_bytes += int64(len(seg.payload))
+		this.stat_factory.Increment("num_h2d", 1)
+	}
 	cycles := this.SimulateMemory()
 	this.stat_factory.Increment("h2d_cycle", cycles)
 	this.stat_factory.Increment("h2d_bytes", total_bytes)
-
-	fmt.Printf("pimdl: timed H2D transfer %d bytes across %d segment(s) (h2d_cycle=%d)\n",
-		total_bytes, len(staged_segs), cycles)
+	this.stat_factory.Increment("xfer_model_cycle", 1)
+	fmt.Printf("pimdl: cycle H2D transfer %d bytes (h2d_cycle=%d)\n", total_bytes, cycles)
 }
