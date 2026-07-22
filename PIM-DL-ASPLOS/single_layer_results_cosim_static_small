@@ -1,0 +1,413 @@
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+----------Transformer Params----------
+thread num 40
+layer num 1
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 128
+num codebook 32, num centroid 16, sub vec len 4
+n stile size 64, cb mtile size 16
+lut kernel params:
+n 128, output feature len 384, num codebook 32, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 48, n stile size 64
+n mtile size 64, feature mtile size 24, cb mtile size 16
+lut load type 0, feature load tile size 8, cb load tile size 16
+----------O LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 128
+num codebook 32, num centroid 16, sub vec len 4
+n stile size 64, cb mtile size 16
+lut kernel params:
+n 128, output feature len 128, num codebook 32, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 16, n stile size 64
+n mtile size 64, feature mtile size 16, cb mtile size 16
+lut load type 0, feature load tile size 8, cb load tile size 16
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 128
+num codebook 32, num centroid 16, sub vec len 4
+n stile size 64, cb mtile size 16
+lut kernel params:
+n 128, output feature len 256, num codebook 32, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 32, n stile size 64
+n mtile size 64, feature mtile size 16, cb mtile size 16
+lut load type 0, feature load tile size 8, cb load tile size 16
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 40
+n 128, input feature len 256
+num codebook 64, num centroid 16, sub vec len 4
+n stile size 64, cb mtile size 16
+lut kernel params:
+n 128, output feature len 128, num codebook 64, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 40, dpu num 16
+input parallelism 2, lut parallelism 8, feature stile size 16, n stile size 64
+n mtile size 64, feature mtile size 16, cb mtile size 16
+lut load type 0, feature load tile size 8, cb load tile size 16
+----------Attention Params----------
+seq len 128, batch size 1, n 128
+head num 2, head dim 64, token dim 128
+dpu num 16, input parallelism 2, lut parallelism 8
+n tile size 64, token tile size 16
+num threads 40
+-----------------------------------
+parameter parsing time 0.000472
+weight initialization time 0.006101
+dpu allocate time 0.000916
+--------------------------------------------
+input initialization time 0.000113
+index calculation time 0.000377
+other latency 0.000272, data transfer latency 0.001200, pim kernel latency 0.063954
+index calculation time 0.000569
+other latency 0.001309, data transfer latency 0.002029, pim kernel latency 0.080414
+index calculation time 0.001304
+other latency 0.001435, data transfer latency 0.002575, pim kernel latency 0.111516
+index calculation time 0.001717
+other latency 0.001591, data transfer latency 0.002984, pim kernel latency 0.141304
+iteration 0, inference time 0.148364
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000156
+index calculation time 0.001995
+other latency 0.001720, data transfer latency 0.003453, pim kernel latency 0.209102
+index calculation time 0.002473
+other latency 0.001858, data transfer latency 0.003838, pim kernel latency 0.224630
+index calculation time 0.002933
+other latency 0.001979, data transfer latency 0.004347, pim kernel latency 0.256372
+index calculation time 0.003127
+other latency 0.002121, data transfer latency 0.005321, pim kernel latency 0.288589
+iteration 1, inference time 0.152721
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.003318
+other latency 0.002292, data transfer latency 0.005792, pim kernel latency 0.352301
+index calculation time 0.003509
+other latency 0.002614, data transfer latency 0.006205, pim kernel latency 0.368061
+index calculation time 0.003653
+other latency 0.002742, data transfer latency 0.006572, pim kernel latency 0.398499
+index calculation time 0.003860
+other latency 0.003069, data transfer latency 0.007004, pim kernel latency 0.428095
+iteration 2, inference time 0.143407
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000209
+index calculation time 0.004403
+other latency 0.004026, data transfer latency 0.007470, pim kernel latency 0.495418
+index calculation time 0.004663
+other latency 0.004141, data transfer latency 0.007864, pim kernel latency 0.512826
+index calculation time 0.004807
+other latency 0.005411, data transfer latency 0.010550, pim kernel latency 0.556807
+index calculation time 0.005224
+other latency 0.005728, data transfer latency 0.011600, pim kernel latency 0.593388
+iteration 3, inference time 0.174829
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000177
+index calculation time 0.005661
+other latency 0.005975, data transfer latency 0.024827, pim kernel latency 0.711694
+index calculation time 0.006279
+other latency 0.009810, data transfer latency 0.025636, pim kernel latency 0.740272
+index calculation time 0.006586
+other latency 0.009966, data transfer latency 0.026077, pim kernel latency 0.777690
+index calculation time 0.006882
+other latency 0.010643, data transfer latency 0.026469, pim kernel latency 0.810583
+iteration 4, inference time 0.239394
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000124
+index calculation time 0.007057
+other latency 0.011662, data transfer latency 0.026888, pim kernel latency 0.882800
+index calculation time 0.007432
+other latency 0.013312, data transfer latency 0.027372, pim kernel latency 0.904427
+index calculation time 0.007709
+other latency 0.013598, data transfer latency 0.029722, pim kernel latency 0.953298
+index calculation time 0.008220
+other latency 0.013791, data transfer latency 0.030437, pim kernel latency 0.993081
+iteration 5, inference time 0.191657
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000184
+index calculation time 0.008590
+other latency 0.014097, data transfer latency 0.030898, pim kernel latency 1.079271
+index calculation time 0.008810
+other latency 0.014291, data transfer latency 0.031292, pim kernel latency 1.100950
+index calculation time 0.009063
+other latency 0.014447, data transfer latency 0.034352, pim kernel latency 1.139976
+index calculation time 0.009869
+other latency 0.016118, data transfer latency 0.034777, pim kernel latency 1.177672
+iteration 6, inference time 0.199164
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000205
+index calculation time 0.010256
+other latency 0.016356, data transfer latency 0.036119, pim kernel latency 1.254746
+index calculation time 0.010464
+other latency 0.016602, data transfer latency 0.036506, pim kernel latency 1.272171
+index calculation time 0.010650
+other latency 0.017005, data transfer latency 0.036949, pim kernel latency 1.308782
+index calculation time 0.010942
+other latency 0.018087, data transfer latency 0.037523, pim kernel latency 1.343988
+iteration 7, inference time 0.172765
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000159
+index calculation time 0.011147
+other latency 0.018440, data transfer latency 0.038003, pim kernel latency 1.431361
+index calculation time 0.011440
+other latency 0.018615, data transfer latency 0.038394, pim kernel latency 1.450217
+index calculation time 0.011625
+other latency 0.019708, data transfer latency 0.038800, pim kernel latency 1.488495
+index calculation time 0.011933
+other latency 0.019837, data transfer latency 0.039206, pim kernel latency 1.522504
+iteration 8, inference time 0.183574
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000123
+index calculation time 0.012118
+other latency 0.020375, data transfer latency 0.039577, pim kernel latency 1.593323
+index calculation time 0.012280
+other latency 0.021198, data transfer latency 0.039907, pim kernel latency 1.608400
+index calculation time 0.012469
+other latency 0.021366, data transfer latency 0.040319, pim kernel latency 1.646672
+index calculation time 0.012746
+other latency 0.021536, data transfer latency 0.041190, pim kernel latency 1.688018
+iteration 9, inference time 0.170596
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000431
+index calculation time 0.013185
+other latency 0.021695, data transfer latency 0.041807, pim kernel latency 1.777468
+index calculation time 0.013378
+other latency 0.021847, data transfer latency 0.042143, pim kernel latency 1.797995
+index calculation time 0.013532
+other latency 0.023002, data transfer latency 0.043679, pim kernel latency 1.843884
+index calculation time 0.014164
+other latency 0.023159, data transfer latency 0.044132, pim kernel latency 1.891541
+iteration 10, inference time 0.210245
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000780
+index calculation time 0.014446
+other latency 0.023645, data transfer latency 0.044623, pim kernel latency 1.982033
+index calculation time 0.014703
+other latency 0.023801, data transfer latency 0.045437, pim kernel latency 2.004371
+index calculation time 0.014952
+other latency 0.024127, data transfer latency 0.045945, pim kernel latency 2.048318
+index calculation time 0.016075
+other latency 0.024944, data transfer latency 0.046393, pim kernel latency 2.084817
+iteration 11, inference time 0.199847
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000151
+index calculation time 0.016816
+other latency 0.026172, data transfer latency 0.046884, pim kernel latency 2.155746
+index calculation time 0.017120
+other latency 0.027084, data transfer latency 0.047330, pim kernel latency 2.175444
+index calculation time 0.017310
+other latency 0.027295, data transfer latency 0.047747, pim kernel latency 2.211162
+index calculation time 0.017776
+other latency 0.028828, data transfer latency 0.048341, pim kernel latency 2.246556
+iteration 12, inference time 0.169968
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000159
+index calculation time 0.017994
+other latency 0.029387, data transfer latency 0.048817, pim kernel latency 2.314884
+index calculation time 0.018169
+other latency 0.030097, data transfer latency 0.049214, pim kernel latency 2.330358
+index calculation time 0.018310
+other latency 0.030607, data transfer latency 0.049648, pim kernel latency 2.365317
+index calculation time 0.018548
+other latency 0.031769, data transfer latency 0.050010, pim kernel latency 2.401444
+iteration 13, inference time 0.160962
+pimdl_cosim_dump: wrote 24576 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 12288 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_qkv_cb32_fs48.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_o_cb32_fs16.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn1_cb32_fs32.bin
+pimdl_cosim_dump: wrote 16384 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/lut_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 8192 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/index_ffn2_cb64_fs16.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/cosim_dumps/output_ffn2_cb64_fs16.bin
+--------------------------------------------
+input initialization time 0.000324
+index calculation time 0.018846
+other latency 0.032284, data transfer latency 0.052485, pim kernel latency 2.473954
+index calculation time 0.019053
+other latency 0.032417, data transfer latency 0.052769, pim kernel latency 2.492958
+index calculation time 0.019221
+other latency 0.032634, data transfer latency 0.053554, pim kernel latency 2.531897
+index calculation time 0.019741
+other latency 0.032939, data transfer latency 0.054708, pim kernel latency 2.569245
+iteration 14, inference time 0.175697
+--------------------------------------------
+10 rounds' average inference time 0.183447
