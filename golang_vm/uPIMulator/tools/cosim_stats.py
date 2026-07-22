@@ -123,34 +123,38 @@ def parse_pimdl_single_layer(results_path: str) -> Dict[str, Dict[str, float | N
         ffn1_reorder = statistics.mean(gelu_ffn1_reorder_iters)
         ffn2_reorder = statistics.mean(post_ffn2_reorder_iters)
 
+        # PIM-DL prints wall times in seconds; report columns are milliseconds.
+        def s_to_ms(v: float) -> float:
+            return v * 1000.0
+
         out_fallback: Dict[str, Dict[str, float | None]] = {
             "qkv": {
                 "index_calc_ms": None,
-                "other_ms": qkv_cpu + alloc_share + other_share,
+                "other_ms": s_to_ms(qkv_cpu + alloc_share + other_share),
                 "data_transfer_ms": None,
                 "pim_kernel_ms": None,
-                "reorder_ms": qkv_reorder,
+                "reorder_ms": s_to_ms(qkv_reorder),
             },
             "o": {
                 "index_calc_ms": None,
-                "other_ms": alloc_share + other_share,
+                "other_ms": s_to_ms(alloc_share + other_share),
                 "data_transfer_ms": None,
                 "pim_kernel_ms": None,
-                "reorder_ms": o_reorder,
+                "reorder_ms": s_to_ms(o_reorder),
             },
             "ffn1": {
                 "index_calc_ms": None,
-                "other_ms": alloc_share + other_share,
+                "other_ms": s_to_ms(alloc_share + other_share),
                 "data_transfer_ms": None,
                 "pim_kernel_ms": None,
-                "reorder_ms": ffn1_reorder,
+                "reorder_ms": s_to_ms(ffn1_reorder),
             },
             "ffn2": {
                 "index_calc_ms": None,
-                "other_ms": alloc_share + other_share,
+                "other_ms": s_to_ms(alloc_share + other_share),
                 "data_transfer_ms": None,
                 "pim_kernel_ms": None,
-                "reorder_ms": ffn2_reorder,
+                "reorder_ms": s_to_ms(ffn2_reorder),
             },
         }
         for p in PROJS:
@@ -213,13 +217,20 @@ def parse_pimdl_single_layer(results_path: str) -> Dict[str, Dict[str, float | N
         "ffn1": statistics.mean(gelu_ffn1_reorder_iters) if gelu_ffn1_reorder_iters else None,
         "ffn2": statistics.mean(post_ffn2_reorder_iters) if post_ffn2_reorder_iters else None,
     }
+    # PIM-DL prints wall times in seconds; report columns are milliseconds.
+    def s_to_ms(v: float) -> float:
+        return v * 1000.0
+
+    reorder_map_ms = {
+        p: (s_to_ms(v) if v is not None else None) for p, v in reorder_map.items()
+    }
     for p in PROJS:
         out[p] = {
-            "index_calc_ms": statistics.mean(by_proj_idx[p]),
-            "other_ms": statistics.mean(by_proj_oth[p]),
-            "data_transfer_ms": statistics.mean(by_proj_dat[p]),
-            "pim_kernel_ms": statistics.mean(by_proj_ker[p]),
-            "reorder_ms": reorder_map[p],
+            "index_calc_ms": s_to_ms(statistics.mean(by_proj_idx[p])),
+            "other_ms": s_to_ms(statistics.mean(by_proj_oth[p])),
+            "data_transfer_ms": s_to_ms(statistics.mean(by_proj_dat[p])),
+            "pim_kernel_ms": s_to_ms(statistics.mean(by_proj_ker[p])),
+            "reorder_ms": reorder_map_ms[p],
         }
         out[p]["host_total_ms"] = (
             out[p]["index_calc_ms"] + out[p]["other_ms"] + out[p]["data_transfer_ms"]

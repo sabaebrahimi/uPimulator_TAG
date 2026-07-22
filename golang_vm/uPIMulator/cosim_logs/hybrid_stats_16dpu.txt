@@ -1,0 +1,11 @@
+warning: no detailed reorder lines found in PIM-DL results. Regenerate with --need_breakdown --breakdown_type 1 to populate reorder columns.
+Projection      host_idx_ms host_other_ms host_xfer_ms host_total_ms host_reorder_ms reorder/host upim_logic_ms upim_mem_ms upim_pim_ms upim_xfer_ms upim_h2d_ms upim_d2h_ms host_vs_upim_ratio
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+qkv             0.342      0.478      1.564      2.384          -          -      3.320      2.905      3.320      0.273      0.090      0.183            0.718x
+o               0.276      0.707      0.473      1.455          -          -      0.535      0.468      0.535      0.100      0.039      0.061            2.720x
+ffn1            0.252      0.422      0.993      1.667          -          -      1.014      0.887      1.014      0.186      0.065      0.122            1.645x
+ffn2            0.447      0.589      0.617      1.653          -          -      1.011      0.885      1.011      0.138      0.077      0.061            1.635x
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+TOTAL               -          -          -      7.159          -          -          -          -      5.880      0.697          -          -            1.217x
+
+Wrote CSV: cosim_logs/hybrid_stats_16dpu.csv
