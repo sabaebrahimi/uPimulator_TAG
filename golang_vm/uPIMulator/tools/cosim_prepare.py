@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
-Stage PIM-DL's emitted per-DPU snapshot for one projection into a uPIMulator
-mram-patch directory: copies the LUT/index shards to pimdl_segments/ and writes
-pimdl_mram_patch.json (anchored at MRAM_BASE, targeting the named MRAM symbols).
+Stage PIM-DL's emitted per-DPU snapshot and optional boundary transfer trace for
+one projection into a uPIMulator mram-patch directory: copies the LUT/index
+shards to pimdl_segments/, writes pimdl_mram_patch.json (anchored at MRAM_BASE,
+targeting the named MRAM symbols), and copies
+pimdl_xfer_trace_<projection>.jsonl when the emitter produced it.
 
 Prints PIMDL_OUTPUT_BYTES=<n> so the caller can export it for the simulator run
 (the Go dump writes exactly that many bytes of output_data to pimdl_output.bin).
@@ -59,6 +61,14 @@ def main():
     shutil.copyfile(src_lut, os.path.join(seg_dir, "lut_table.bin"))
     shutil.copyfile(src_index, os.path.join(seg_dir, "input_index.bin"))
 
+    trace_name = f"pimdl_xfer_trace_{args.projection}.jsonl"
+    src_trace = os.path.join(args.dump_dir, trace_name)
+    dst_trace = os.path.join(args.patch_dir, trace_name)
+    if os.path.exists(src_trace):
+        shutil.copyfile(src_trace, dst_trace)
+    elif os.environ.get("COSIM_XFER_MODE", "").lower() == "trace_cycle":
+        sys.exit(f"error: missing transfer trace {src_trace} (run run_cosim_emit.py first)")
+
     manifest = {
         "anchor": "MRAM_BASE",
         "segments": [
@@ -74,6 +84,8 @@ def main():
     # stdout is machine-readable for the orchestrator.
     print(f"BENCHMARK={bench}")
     print(f"PIMDL_OUTPUT_BYTES={output_bytes}")
+    if os.path.exists(dst_trace):
+        print(f"PIMDL_XFER_TRACE_PATH={dst_trace}")
 
 
 if __name__ == "__main__":

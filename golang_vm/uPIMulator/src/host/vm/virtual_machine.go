@@ -59,6 +59,12 @@ type VirtualMachine struct {
 	// timed HOST_TO_DEVICE transfers for lut_table / input_index.
 	pimdl_patch_dirpath string
 
+	// Optional JSONL transfer trace. trace_cycle replays it through the real
+	// host↔MRAM controller while retaining the existing fixed_bw/cycle modes.
+	pimdl_xfer_trace_path string
+	pimdl_trace_checked   bool
+	pimdl_transfer_trace  *pimdlTransferTrace
+
 	// Used to convert the paper fixed-bandwidth transfer model into
 	// HostTransfer_*_cycle counts (cycles @ memory clock).
 	memory_frequency_mhz int64
@@ -115,6 +121,9 @@ func (this *VirtualMachine) Init(command_line_parser *misc.CommandLineParser) {
 	this.stat_factory.Init("HostTransfer")
 
 	this.pimdl_patch_dirpath = command_line_parser.StringParameter("pimdl_patch_dirpath")
+	this.pimdl_xfer_trace_path = command_line_parser.StringParameter("pimdl_xfer_trace_path")
+	this.pimdl_trace_checked = false
+	this.pimdl_transfer_trace = nil
 	this.memory_frequency_mhz = command_line_parser.IntParameter("memory_frequency")
 }
 
@@ -3701,8 +3710,8 @@ func (this *VirtualMachine) DpuCopyFrom() {
 
 func (this *VirtualMachine) DpuLaunch() {
 	// Co-sim: charge HOST_TO_DEVICE cycles for lut_table / input_index before
-	// the kernel runs. Data is already in MRAM via the mram-patch; this path
-	// re-drives the same bytes through the timed transfer model.
+	// the kernel runs. trace_cycle stages the current MRAM bytes so this
+	// accounting pass cannot change the functional kernel inputs.
 	this.SimulatePimdlHostToDeviceTransfers()
 
 	config_loader := new(misc.ConfigLoader)
@@ -3959,6 +3968,8 @@ func (this *VirtualMachine) SimulateMemory() int64 {
 // (Phase A) so readback cycles appear in HostTransfer_* stats, then writes raw
 // little-endian bytes to bin_dirpath/pimdl_output.bin.
 func (this *VirtualMachine) DumpPimdlOutput() {
+	traceReplayed := this.replayPimdlTransferTrace("d2h")
+
 	bytes_str := os.Getenv("PIMDL_OUTPUT_BYTES")
 	if bytes_str == "" {
 		return
@@ -3986,7 +3997,10 @@ func (this *VirtualMachine) DumpPimdlOutput() {
 	// Charge D2H timing for all DPUs. Default fixed-BW (safe). Optional
 	// COSIM_XFER_MODE=cycle only for 1 DPU (multi-DPU cycle xfer can OOM).
 	num_dpus := len(dpus)
-	if this.pimdlXferMode() == "cycle" && num_dpus == 1 {
+	if traceReplayed {
+		// Trace D2H events already used the controller. Keep this direct MRAM
+		// read only for the legacy PIM-DL bit-match artifact.
+	} else if this.pimdlXferMode() == "cycle" && num_dpus == 1 {
 		host_buf := this.arena.NewPointer(num_bytes)
 		channel_id, rank_id, dpu_id := this.dpuCoords(0)
 		this.enqueueMramTransfer(

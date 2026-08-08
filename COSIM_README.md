@@ -1,9 +1,9 @@
 # PIM-DL ↔ uPIMulator Co-Simulation (Phase 1)
 
-Offline artifact-handoff co-simulation for the TAG project. PIM-DL native is the
-ground-truth host that runs the full transformer ping-pong; uPIMulator replays each
-PIM↔host **projection boundary** (QKV, O, FFN1, FFN2) on its cycle-accurate DPU+MRAM
-and **bit-matches** its DPU output against PIM-DL's. uPIMulator's output is only
+Trace-driven co-simulation for the TAG project. PIM-DL native is the ground-truth
+host that runs the full transformer ping-pong; uPIMulator replays each PIM↔host
+**projection boundary** (QKV, O, FFN1, FFN2) on its cycle-accurate DPU+MRAM and
+**bit-matches** its DPU output against PIM-DL's. uPIMulator's output is only
 cross-checked, never fed forward, so the four boundaries are independent units.
 
 Phase 1 delivers: the ported LUT kernel, the four projection microbenchmarks,
@@ -56,7 +56,14 @@ cd PIM-DL-ASPLOS/inference-engine
 python3 run_cosim_emit.py --dump_dir cosim_dumps
 # -> cosim_dumps/{lut,index,output}_cb{CB}_fs{FS}.bin  for each projection
 #    (qkv cb32_fs48 | o cb32_fs16 | ffn1 cb32_fs32 | ffn2 cb64_fs16)
+# -> cosim_dumps/pimdl_xfer_trace_{qkv,o,ffn1,ffn2}.jsonl
 ```
+
+Each `pimdl_xfer_trace_<boundary>.jsonl` is deterministic and begins with its own
+topology header. Its transfer batches are local to that projection and always begin at
+zero (`0` = LUT H2D, `1` = index H2D, `2` = output D2H), so it can be replayed by one
+uPIMulator per-projection invocation. Each following line records one per-DPU transfer
+submitted by PIM-DL; all offsets are byte offsets from the corresponding host buffer.
 
 ### 2. uPIMulator — replay + bit-match
 ```bash

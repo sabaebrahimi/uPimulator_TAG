@@ -148,6 +148,9 @@ func InitCommandLineParser() *misc.CommandLineParser {
 	command_line_parser.AddOption(misc.STRING, "pimdl_patch_dirpath", "",
 		"path to the PIM-DL mram patch directory (manifest + segments)")
 
+	command_line_parser.AddOption(misc.STRING, "pimdl_xfer_trace_path", "",
+		"path to the PIM-DL JSONL transfer trace (defaults to the benchmark boundary trace in pimdl_patch_dirpath)")
+
 	command_line_parser.AddOption(misc.INT, "skip_compile", "0",
 		"skip the Docker/UPMEM compile step and reuse prebuilt benchmark/build + sdk/build assembly")
 

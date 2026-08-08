@@ -156,6 +156,10 @@ func (this *Task) Addresses() map[string]int64 {
 	return this.addresses
 }
 
+func (this *Task) Benchmark() string {
+	return this.benchmark
+}
+
 func (this *Task) Values() map[string]int64 {
 	return this.values
 }

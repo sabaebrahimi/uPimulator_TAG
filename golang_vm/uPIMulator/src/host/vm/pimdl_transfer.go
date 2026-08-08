@@ -52,7 +52,8 @@ func (this *VirtualMachine) enqueueMramTransfer(
 	this.push_xfer[transfer_command] = true
 }
 
-// pimdlXferMode returns "fixed_bw" (default, safe for multi-DPU) or "cycle".
+// pimdlXferMode returns fixed_bw (default), cycle (legacy single-DPU replay),
+// or trace_cycle (multi-DPU JSONL trace replay).
 // Cycle-accurate SimulateMemory for many DPUs can OOM the host (thread-pool
 // per cycle × DPU count × transfer length); refuse that unless explicitly
 // forced and only recommend it for 1 DPU.
@@ -121,9 +122,12 @@ func (this *VirtualMachine) chargeFixedBandwidthTransfer(
 }
 
 // SimulatePimdlHostToDeviceTransfers accounts for HOST_TO_DEVICE of lut/index.
-// Default: paper fixed-BW model (safe). Optional COSIM_XFER_MODE=cycle uses
-// SimulateMemory but only for 1 DPU.
+// trace_cycle replays a JSONL transfer trace when available; otherwise the
+// historical fixed-BW and single-DPU cycle paths remain unchanged.
 func (this *VirtualMachine) SimulatePimdlHostToDeviceTransfers() {
+	if this.pimdlXferMode() == "trace_cycle" && this.replayPimdlTransferTrace("h2d") {
+		return
+	}
 	if os.Getenv("PIMDL_OUTPUT_BYTES") == "" {
 		return
 	}

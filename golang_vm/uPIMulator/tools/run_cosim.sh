@@ -2,7 +2,8 @@
 #
 # Orchestrate the PIM-DL <-> uPIMulator offline co-simulation for the four projection
 # boundaries. For each projection:
-#   1) stage PIM-DL's emitted LUT/index shard into a patch dir (cosim_prepare.py)
+#   1) stage PIM-DL's emitted LUT/index shard and boundary trace into a patch dir
+#      (cosim_prepare.py)
 #   2) run the ported kernel on uPIMulator's cycle-accurate DPU+MRAM, injecting that
 #      data via the mram-patch and dumping the DPU-tiled output (pimdl_output.bin)
 #   3) bit-match the simulated output against PIM-DL's dumped reference (cosim_check.py)
@@ -19,6 +20,8 @@
 #   SKIP_COMPILE=0            let uPIMulator compile via Docker/UPMEM.
 #   COSIM_XFER_MODE=fixed_bw  (default) paper size/BW transfer model — safe for 16 DPUs.
 #   COSIM_XFER_MODE=cycle     cycle-accurate SimulateMemory — ONLY safe with 1 DPU.
+#   COSIM_XFER_MODE=trace_cycle  replay each projection's
+#                             pimdl_xfer_trace_<projection>.jsonl from DUMP_DIR.
 #   NUM_CHANNELS / NUM_RANKS_PER_CHANNEL / NUM_DPUS_PER_RANK  topology (default 1×2×8=16).
 set -euo pipefail
 
@@ -66,11 +69,15 @@ for proj in "${PROJECTIONS[@]}"; do
     rm -rf "${PATCH_DIR}"; mkdir -p "${PATCH_DIR}"
     t_proj_start="$(now_ms)"
 
-    # 1) stage data; capture BENCHMARK + PIMDL_OUTPUT_BYTES from stdout
+    # 1) stage data and trace; capture machine-readable preparation variables.
     t0="$(now_ms)"
     prep_out="$(python3 "${TOOLS}/cosim_prepare.py" "${proj}" --dump_dir "${DUMP_DIR}" --patch_dir "${PATCH_DIR}")"
     t1="$(now_ms)"
-    eval "${prep_out}"   # sets BENCHMARK, PIMDL_OUTPUT_BYTES
+    eval "${prep_out}"   # sets BENCHMARK, PIMDL_OUTPUT_BYTES, PIMDL_XFER_TRACE_PATH
+    xfer_trace_args=()
+    if [[ -n "${PIMDL_XFER_TRACE_PATH:-}" ]]; then
+        xfer_trace_args=(--pimdl_xfer_trace_path "${PIMDL_XFER_TRACE_PATH}")
+    fi
 
     # 2) run the simulator (bin dir is wiped by the sim; patch dir is separate)
     t2="$(now_ms)"
@@ -82,6 +89,7 @@ for proj in "${PROJECTIONS[@]}"; do
         --num_channels "${NUM_CHANNELS}" \
         --num_ranks_per_channel "${NUM_RANKS_PER_CHANNEL}" \
         --num_dpus_per_rank "${NUM_DPUS_PER_RANK}" \
+        "${xfer_trace_args[@]}" \
         --num_tasklets 16 --skip_compile "${SKIP_COMPILE}" --verbose 0
     t3="$(now_ms)"
 
