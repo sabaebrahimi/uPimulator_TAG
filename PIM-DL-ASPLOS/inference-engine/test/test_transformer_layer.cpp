@@ -320,12 +320,15 @@ int main(int argc, char** argv)
     ////////////////////////////////////////////// DPU allocate
 
     time1 = W_time();
-    dpu_set_t dpu_set;
+    dpu_set_t dpu_set = {};
     uint32_t allocated_dpu_num;
-    if(transformer_params.attention_params.dpu_num == NR_DPUS_PER_RANK)
-        allocated_dpu_num = allocate_rank(&dpu_set, transformer_params.attention_params.dpu_num / NR_DPUS_PER_RANK);
-    else
-        allocated_dpu_num = allocate_dpu(&dpu_set, transformer_params.attention_params.dpu_num);
+    if(std::getenv("PIMDL_HOST_REPLAY_DIR") == nullptr)
+    {
+        if(transformer_params.attention_params.dpu_num == NR_DPUS_PER_RANK)
+            allocated_dpu_num = allocate_rank(&dpu_set, transformer_params.attention_params.dpu_num / NR_DPUS_PER_RANK);
+        else
+            allocated_dpu_num = allocate_dpu(&dpu_set, transformer_params.attention_params.dpu_num);
+    }
     time2 = W_time();
     printf("dpu allocate time %.6f\n", time2-time1);
 

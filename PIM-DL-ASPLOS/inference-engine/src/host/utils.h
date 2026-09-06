@@ -9,6 +9,9 @@ struct transformer_time
 	double non_amm_latency = 0.;
 	double attention_reorder_latency = 0.;
 	double attention_cpu_compute_latency = 0.;
+	double o_reorder_latency = 0.;
+	double ffn1_reorder_latency = 0.;
+	double ffn2_reorder_latency = 0.;
 	double post_o_reorder_norm_residual_latency = 0.;
 	double gelu_plus_ffn1_reorder_latency = 0.;
 	double post_ffn2_reorder_norm_residual_latency = 0.;

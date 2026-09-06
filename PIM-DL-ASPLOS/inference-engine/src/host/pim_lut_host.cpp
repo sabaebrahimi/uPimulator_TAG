@@ -5,15 +5,15 @@ extern "C"{
 #include <vector>
 #include <iostream>
 #include <cstring>
+#include <cstdio>
+#include <cstdlib>
+#include <cstdint>
 
 #include "pim_lut_host.h"
 #include "utils.h"
 #include "dpu_common.h"
 
 #ifdef PIMDL_COSIM_DUMP
-#include <cstdio>
-#include <cstdlib>
-#include <cstdint>
 // Co-simulation emitter (uPIMulator TAG project).
 // Dumps the exact per-DPU bytes exchanged with the DPUs at a projection boundary so
 // uPIMulator can replay the same kernel on its cycle-accurate DPU+MRAM and bit-match.
@@ -116,6 +116,43 @@ static void pimdl_cosim_trace_transfer(bool trace_enabled, uint64_t batch, const
     fclose(f);
 }
 #endif
+
+// Host-only timing reuses one saved DPU shard and replicates it across the
+// configured layout. Values do not affect the fixed-shape host operations.
+static bool pimdl_host_replay(LUTParams lut_params, output_data_type* output)
+{
+    const char* dir = getenv("PIMDL_HOST_REPLAY_DIR");
+    if(dir == nullptr)
+        return false;
+    const char* tag = getenv("PIMDL_COSIM_DUMP_TAG");
+    if(tag == nullptr || tag[0] == '\0')
+    {
+        fprintf(stderr, "PIMDL host replay: missing projection tag\n");
+        exit(EXIT_FAILURE);
+    }
+
+    char path[1024];
+    snprintf(path, sizeof(path), "%s/output_%s_cb%u_fs%u.bin", dir, tag,
+             lut_params.num_codebook, lut_params.feature_stile_size);
+    FILE* f = fopen(path, "rb");
+    if(f == nullptr)
+    {
+        fprintf(stderr, "PIMDL host replay: cannot open %s\n", path);
+        exit(EXIT_FAILURE);
+    }
+
+    const size_t shard_elements = (size_t)lut_params.n_stile_size * lut_params.feature_stile_size;
+    if(fread(output, sizeof(output_data_type), shard_elements, f) != shard_elements || fgetc(f) != EOF)
+    {
+        fprintf(stderr, "PIMDL host replay: invalid shard size in %s\n", path);
+        fclose(f);
+        exit(EXIT_FAILURE);
+    }
+    fclose(f);
+    for(uint32_t dpu = 1; dpu < lut_params.dpu_num; ++dpu)
+        memcpy(output + dpu * shard_elements, output, shard_elements * sizeof(output_data_type));
+    return true;
+}
 
 
 void prepare_parameters(dpu_set_t* dpu_set, dpu_arguments_t* dpu_arguments)
@@ -258,23 +295,27 @@ void pim_lut(LUTParams lut_params, dpu_set_t* dpu_set,
     time1 = W_time();
 #endif
     // buffer to hold output lut data
-    output_data_type* output_lut_data = new output_data_type[sizeof(output_data_type) * lut_params.n * lut_params.output_feature_len];
+    output_data_type* output_lut_data = new output_data_type[(size_t)lut_params.n * lut_params.output_feature_len];
 #ifdef AMM_BREAKDOWN
     time2 = W_time();
     amm_profiles.other_latency += time2 - time1;
 #endif
+    // Replay injection replaces DPU work and is intentionally outside host timing.
+    const bool host_replay = pimdl_host_replay(lut_params, output_lut_data);
 
 #ifdef AMM_BREAKDOWN
     time1 = W_time();
 #endif
     // load lut table into DPUs
-    prepare_lut_table(lut_params, dpu_set, lut_table);
+    if(!host_replay)
+        prepare_lut_table(lut_params, dpu_set, lut_table);
 #ifdef PIMDL_COSIM_DUMP
     // DPU 0's LUT shard == lut_table[0 .. table_offset]; matches uPIMulator
     // lut_table[FEATURE_STILE_SIZE*NUM_CODEBOOK*NUM_CENTROID] (int8).
-    pimdl_cosim_dump("lut", lut_params.num_codebook, lut_params.feature_stile_size,
-        lut_table,
-        (size_t)lut_params.feature_stile_size * lut_params.num_centroid * lut_params.num_codebook * sizeof(lut_data_type));
+    if(!host_replay)
+        pimdl_cosim_dump("lut", lut_params.num_codebook, lut_params.feature_stile_size,
+            lut_table,
+            (size_t)lut_params.feature_stile_size * lut_params.num_centroid * lut_params.num_codebook * sizeof(lut_data_type));
 #endif
 #ifdef AMM_BREAKDOWN
     time2 = W_time();
@@ -285,14 +326,16 @@ void pim_lut(LUTParams lut_params, dpu_set_t* dpu_set,
     time1 = W_time();
 #endif
     // load inputs into DPUs
-    prepare_input_index(lut_params, dpu_set, input_index);
+    if(!host_replay)
+        prepare_input_index(lut_params, dpu_set, input_index);
 #ifdef PIMDL_COSIM_DUMP
     // DPU 0's index shard == input_index[0 .. input_offset], AFTER the STATIC
     // pre-multiply (index *= feature_stile_size); matches uPIMulator
     // input_index[N_STILE_SIZE*NUM_CODEBOOK] (uint16).
-    pimdl_cosim_dump("index", lut_params.num_codebook, lut_params.feature_stile_size,
-        input_index,
-        (size_t)lut_params.n_stile_size * lut_params.num_codebook * sizeof(index_data_type));
+    if(!host_replay)
+        pimdl_cosim_dump("index", lut_params.num_codebook, lut_params.feature_stile_size,
+            input_index,
+            (size_t)lut_params.n_stile_size * lut_params.num_codebook * sizeof(index_data_type));
 #endif
 #ifdef AMM_BREAKDOWN
     time2 = W_time();
@@ -303,7 +346,8 @@ void pim_lut(LUTParams lut_params, dpu_set_t* dpu_set,
     time1 = W_time();
 #endif
     // launch kernel
-    DPU_ASSERT(dpu_launch(*dpu_set, DPU_SYNCHRONOUS));
+    if(!host_replay)
+        DPU_ASSERT(dpu_launch(*dpu_set, DPU_SYNCHRONOUS));
 #ifdef AMM_BREAKDOWN
     time2 = W_time();
     amm_profiles.kernel_latency += time2 - time1;
@@ -316,26 +360,30 @@ void pim_lut(LUTParams lut_params, dpu_set_t* dpu_set,
     uint32_t output_offset = lut_params.n_stile_size * lut_params.feature_stile_size;
 #ifdef PIMDL_COSIM_DUMP
     const size_t transfer_bytes = sizeof(output_data_type) * (size_t)output_offset;
-    const bool trace_enabled = pimdl_cosim_begin_transfer(lut_params.dpu_num, 2);
+    const bool trace_enabled = !host_replay && pimdl_cosim_begin_transfer(lut_params.dpu_num, 2);
 #endif
     uint32_t each_dpu;
     dpu_set_t dpu;
-    DPU_FOREACH(*dpu_set, dpu, each_dpu)
+    if(!host_replay)
     {
-        DPU_ASSERT(dpu_prepare_xfer(dpu, &output_lut_data[output_offset * each_dpu]));
+        DPU_FOREACH(*dpu_set, dpu, each_dpu)
+        {
+            DPU_ASSERT(dpu_prepare_xfer(dpu, &output_lut_data[output_offset * each_dpu]));
 #ifdef PIMDL_COSIM_DUMP
-        pimdl_cosim_trace_transfer(trace_enabled, 2, "d2h", each_dpu, "output_data",
-                                   transfer_bytes, transfer_bytes * each_dpu, "output");
+            pimdl_cosim_trace_transfer(trace_enabled, 2, "d2h", each_dpu, "output_data",
+                                       transfer_bytes, transfer_bytes * each_dpu, "output");
 #endif
+        }
+        DPU_ASSERT(dpu_push_xfer(*dpu_set, DPU_XFER_FROM_DPU, "output_data", 0, sizeof(output_data_type) * output_offset, DPU_XFER_ASYNC));
+        dpu_sync(*dpu_set);
     }
-    DPU_ASSERT(dpu_push_xfer(*dpu_set, DPU_XFER_FROM_DPU, "output_data", 0, sizeof(output_data_type) * output_offset, DPU_XFER_ASYNC));
-    dpu_sync(*dpu_set);
 #ifdef PIMDL_COSIM_DUMP
     // DPU 0's DPU-tiled output BEFORE rescale/reorder == output_lut_data[0 .. output_offset];
     // this is the golden reference uPIMulator's simulated output_data must bit-match.
-    pimdl_cosim_dump("output", lut_params.num_codebook, lut_params.feature_stile_size,
-        output_lut_data,
-        (size_t)lut_params.n_stile_size * lut_params.feature_stile_size * sizeof(output_data_type));
+    if(!host_replay)
+        pimdl_cosim_dump("output", lut_params.num_codebook, lut_params.feature_stile_size,
+            output_lut_data,
+            (size_t)lut_params.n_stile_size * lut_params.feature_stile_size * sizeof(output_data_type));
 #endif
 #ifdef AMM_BREAKDOWN
     time2 = W_time();
@@ -377,5 +425,6 @@ void pim_lut(LUTParams lut_params, dpu_set_t* dpu_set,
     }
 #endif
 
-}
+    delete[] output_lut_data;
 
+}

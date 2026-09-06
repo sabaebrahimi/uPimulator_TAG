@@ -90,4 +90,32 @@ To use the stock Docker/UPMEM compile instead of the local build, run with
   `HostTransfer_*` in `log.txt`. Do **not** use `COSIM_XFER_MODE=cycle` with many DPUs —
   cycle-accurate `SimulateMemory` for 16-way xfers can exhaust host RAM.
 - For cycle-accurate xfer validation only: `NUM_CHANNELS=1 NUM_RANKS_PER_CHANNEL=1 NUM_DPUS_PER_RANK=1 COSIM_XFER_MODE=cycle tools/run_cosim.sh ...`
-- Host **reorder** timing (strided CPU scatter/gather) and TAG remain the next phase.
+- The TAG replacement model remains a next phase; this branch now measures the
+  baseline CPU reorder cost directly in PIM-DL.
+
+## Reproducible 1-DPU / 8-DPU results
+
+Run the complete small-transformer experiment with one command:
+
+```bash
+cd golang_vm/uPIMulator
+python3 tools/cosim_results.py
+```
+
+The runner uses the same 64-token transformer layer for both scenarios, keeps
+16 tasklets per DPU, measures host attention/reorder/other work in PIM-DL, and
+measures PIM plus host↔MRAM transfer cycles in uPIMulator. Every projection must
+bit-match PIM-DL before `cosim_results/results.csv` is written. Use `--resume`
+to reuse completed PIM-DL host measurements and compiled DPU assembly.
+
+For corrected host-only results, reuse the saved PIM output shards and skip
+uPimulator entirely:
+
+```bash
+python3 tools/host_results.py
+```
+
+This runs the production host path with identical one-thread settings for both
+layouts, reports all four reorder sites separately, and writes their total and
+percentage of host time to `cosim_results/host_only/results.csv`. The default
+result is the median of nine interleaved processes per layout.

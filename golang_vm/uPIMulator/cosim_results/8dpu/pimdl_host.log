@@ -1,0 +1,488 @@
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+----------Transformer Params----------
+thread num 1
+layer num 1
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 1
+n 64, input feature len 32
+num codebook 16, num centroid 16, sub vec len 2
+n stile size 64, cb mtile size 16
+lut kernel params:
+n 64, output feature len 96, num codebook 16, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 12, n stile size 64
+n mtile size 64, feature mtile size 4, cb mtile size 16
+lut load type 0, feature load tile size 8, cb load tile size 16
+----------O LUT Params----------
+index calc params:
+num_threads 1
+n 64, input feature len 32
+num codebook 16, num centroid 16, sub vec len 2
+n stile size 64, cb mtile size 16
+lut kernel params:
+n 64, output feature len 32, num codebook 16, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 4, n stile size 64
+n mtile size 64, feature mtile size 4, cb mtile size 16
+lut load type 0, feature load tile size 8, cb load tile size 16
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 1
+n 64, input feature len 32
+num codebook 16, num centroid 16, sub vec len 2
+n stile size 64, cb mtile size 16
+lut kernel params:
+n 64, output feature len 64, num codebook 16, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 8, n stile size 64
+n mtile size 64, feature mtile size 8, cb mtile size 16
+lut load type 0, feature load tile size 8, cb load tile size 16
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 1
+n 64, input feature len 64
+num codebook 32, num centroid 16, sub vec len 2
+n stile size 64, cb mtile size 16
+lut kernel params:
+n 64, output feature len 32, num codebook 32, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 4, n stile size 64
+n mtile size 64, feature mtile size 4, cb mtile size 16
+lut load type 0, feature load tile size 8, cb load tile size 16
+----------Attention Params----------
+seq len 64, batch size 1, n 64
+head num 1, head dim 32, token dim 32
+dpu num 8, input parallelism 1, lut parallelism 8
+n tile size 64, token tile size 4
+num threads 1
+-----------------------------------
+parameter parsing time 0.000695
+weight initialization time 0.001995
+dpu allocate time 0.001469
+--------------------------------------------
+input initialization time 0.000016
+index calculation time 0.000113
+other latency 0.000055, data transfer latency 0.000674, pim kernel latency 0.012911
+index calculation time 0.000209
+other latency 0.000076, data transfer latency 0.001260, pim kernel latency 0.015879
+index calculation time 0.000323
+other latency 0.000114, data transfer latency 0.001822, pim kernel latency 0.024151
+index calculation time 0.000550
+other latency 0.000136, data transfer latency 0.002432, pim kernel latency 0.033109
+amm time 0.037111, non amm time 0.000219
+attention reorder time 0.000015, attention cpu compute time 0.000061
+post o reorder+norm+residual time 0.000023, gelu+ffn1 reorder time 0.000046, post ffn2 reorder+norm+residual time 0.000021
+tensor allocation overhead time 0.000004, other non amm time 0.000049
+host breakdown: attention 0.000061, reorder 0.000041, other 0.000117
+iteration 0, inference time 0.037336
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000015
+index calculation time 0.000684
+other latency 0.000191, data transfer latency 0.003137, pim kernel latency 0.044424
+index calculation time 0.000792
+other latency 0.000208, data transfer latency 0.003766, pim kernel latency 0.049907
+index calculation time 0.000914
+other latency 0.000241, data transfer latency 0.004365, pim kernel latency 0.058021
+index calculation time 0.001141
+other latency 0.000257, data transfer latency 0.004982, pim kernel latency 0.066603
+amm time 0.037570, non amm time 0.000168
+attention reorder time 0.000009, attention cpu compute time 0.000074
+post o reorder+norm+residual time 0.000017, gelu+ffn1 reorder time 0.000041, post ffn2 reorder+norm+residual time 0.000016
+tensor allocation overhead time 0.000002, other non amm time 0.000009
+host breakdown: attention 0.000074, reorder 0.000027, other 0.000067
+iteration 1, inference time 0.037744
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000014
+index calculation time 0.001267
+other latency 0.000303, data transfer latency 0.005577, pim kernel latency 0.078529
+index calculation time 0.001370
+other latency 0.000319, data transfer latency 0.006150, pim kernel latency 0.082788
+index calculation time 0.001489
+other latency 0.000354, data transfer latency 0.007879, pim kernel latency 0.090848
+index calculation time 0.001709
+other latency 0.000366, data transfer latency 0.008476, pim kernel latency 0.099216
+amm time 0.037612, non amm time 0.000146
+attention reorder time 0.000009, attention cpu compute time 0.000057
+post o reorder+norm+residual time 0.000015, gelu+ffn1 reorder time 0.000041, post ffn2 reorder+norm+residual time 0.000015
+tensor allocation overhead time 0.000003, other non amm time 0.000006
+host breakdown: attention 0.000057, reorder 0.000026, other 0.000063
+iteration 2, inference time 0.037762
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000014
+index calculation time 0.001847
+other latency 0.000427, data transfer latency 0.009381, pim kernel latency 0.111320
+index calculation time 0.001942
+other latency 0.000452, data transfer latency 0.010079, pim kernel latency 0.116334
+index calculation time 0.002067
+other latency 0.000483, data transfer latency 0.010665, pim kernel latency 0.123654
+index calculation time 0.002280
+other latency 0.000503, data transfer latency 0.011249, pim kernel latency 0.131447
+amm time 0.036775, non amm time 0.000338
+attention reorder time 0.000028, attention cpu compute time 0.000219
+post o reorder+norm+residual time 0.000016, gelu+ffn1 reorder time 0.000034, post ffn2 reorder+norm+residual time 0.000016
+tensor allocation overhead time 0.000006, other non amm time 0.000019
+host breakdown: attention 0.000219, reorder 0.000046, other 0.000073
+iteration 3, inference time 0.037118
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000017
+index calculation time 0.002399
+other latency 0.000559, data transfer latency 0.011865, pim kernel latency 0.143032
+index calculation time 0.002508
+other latency 0.000578, data transfer latency 0.012423, pim kernel latency 0.148415
+index calculation time 0.002626
+other latency 0.000605, data transfer latency 0.012982, pim kernel latency 0.156572
+index calculation time 0.002852
+other latency 0.000626, data transfer latency 0.013557, pim kernel latency 0.163456
+amm time 0.035823, non amm time 0.000147
+attention reorder time 0.000009, attention cpu compute time 0.000056
+post o reorder+norm+residual time 0.000016, gelu+ffn1 reorder time 0.000037, post ffn2 reorder+norm+residual time 0.000016
+tensor allocation overhead time 0.000004, other non amm time 0.000009
+host breakdown: attention 0.000056, reorder 0.000026, other 0.000065
+iteration 4, inference time 0.035974
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000018
+index calculation time 0.002978
+other latency 0.000679, data transfer latency 0.014167, pim kernel latency 0.176941
+index calculation time 0.003082
+other latency 0.000698, data transfer latency 0.014741, pim kernel latency 0.181179
+index calculation time 0.003203
+other latency 0.000733, data transfer latency 0.015298, pim kernel latency 0.189736
+index calculation time 0.003422
+other latency 0.000753, data transfer latency 0.015906, pim kernel latency 0.196540
+amm time 0.036902, non amm time 0.000145
+attention reorder time 0.000010, attention cpu compute time 0.000057
+post o reorder+norm+residual time 0.000016, gelu+ffn1 reorder time 0.000036, post ffn2 reorder+norm+residual time 0.000017
+tensor allocation overhead time 0.000001, other non amm time 0.000008
+host breakdown: attention 0.000057, reorder 0.000028, other 0.000060
+iteration 5, inference time 0.037052
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000017
+index calculation time 0.003547
+other latency 0.000814, data transfer latency 0.016601, pim kernel latency 0.209111
+index calculation time 0.003649
+other latency 0.000833, data transfer latency 0.017160, pim kernel latency 0.213284
+index calculation time 0.003763
+other latency 0.000867, data transfer latency 0.017699, pim kernel latency 0.220263
+index calculation time 0.003984
+other latency 0.000889, data transfer latency 0.018286, pim kernel latency 0.227706
+amm time 0.034977, non amm time 0.000149
+attention reorder time 0.000010, attention cpu compute time 0.000060
+post o reorder+norm+residual time 0.000016, gelu+ffn1 reorder time 0.000033, post ffn2 reorder+norm+residual time 0.000017
+tensor allocation overhead time 0.000002, other non amm time 0.000011
+host breakdown: attention 0.000060, reorder 0.000028, other 0.000061
+iteration 6, inference time 0.035133
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000018
+index calculation time 0.004106
+other latency 0.000941, data transfer latency 0.018914, pim kernel latency 0.241609
+index calculation time 0.004212
+other latency 0.000961, data transfer latency 0.019483, pim kernel latency 0.247090
+index calculation time 0.004333
+other latency 0.000995, data transfer latency 0.020056, pim kernel latency 0.255780
+index calculation time 0.004558
+other latency 0.001018, data transfer latency 0.020725, pim kernel latency 0.264968
+amm time 0.041204, non amm time 0.000150
+attention reorder time 0.000010, attention cpu compute time 0.000057
+post o reorder+norm+residual time 0.000017, gelu+ffn1 reorder time 0.000038, post ffn2 reorder+norm+residual time 0.000017
+tensor allocation overhead time 0.000002, other non amm time 0.000009
+host breakdown: attention 0.000057, reorder 0.000027, other 0.000066
+iteration 7, inference time 0.041359
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000017
+index calculation time 0.004696
+other latency 0.001067, data transfer latency 0.021310, pim kernel latency 0.277397
+index calculation time 0.004796
+other latency 0.001088, data transfer latency 0.021852, pim kernel latency 0.281858
+index calculation time 0.004915
+other latency 0.001128, data transfer latency 0.022461, pim kernel latency 0.289750
+index calculation time 0.005147
+other latency 0.001152, data transfer latency 0.023135, pim kernel latency 0.298312
+amm time 0.037482, non amm time 0.000182
+attention reorder time 0.000009, attention cpu compute time 0.000055
+post o reorder+norm+residual time 0.000015, gelu+ffn1 reorder time 0.000075, post ffn2 reorder+norm+residual time 0.000017
+tensor allocation overhead time 0.000003, other non amm time 0.000008
+host breakdown: attention 0.000055, reorder 0.000029, other 0.000098
+iteration 8, inference time 0.037670
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000018
+index calculation time 0.005270
+other latency 0.001204, data transfer latency 0.023721, pim kernel latency 0.312334
+index calculation time 0.005373
+other latency 0.001224, data transfer latency 0.024284, pim kernel latency 0.317772
+index calculation time 0.005497
+other latency 0.001260, data transfer latency 0.024894, pim kernel latency 0.326348
+index calculation time 0.005717
+other latency 0.001280, data transfer latency 0.025479, pim kernel latency 0.333993
+amm time 0.039547, non amm time 0.000150
+attention reorder time 0.000009, attention cpu compute time 0.000057
+post o reorder+norm+residual time 0.000017, gelu+ffn1 reorder time 0.000040, post ffn2 reorder+norm+residual time 0.000016
+tensor allocation overhead time 0.000002, other non amm time 0.000009
+host breakdown: attention 0.000057, reorder 0.000027, other 0.000066
+iteration 9, inference time 0.039703
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000017
+index calculation time 0.005849
+other latency 0.001329, data transfer latency 0.026079, pim kernel latency 0.347556
+index calculation time 0.005960
+other latency 0.001346, data transfer latency 0.026656, pim kernel latency 0.351637
+index calculation time 0.006075
+other latency 0.001376, data transfer latency 0.027192, pim kernel latency 0.358488
+index calculation time 0.006296
+other latency 0.001392, data transfer latency 0.027763, pim kernel latency 0.366894
+amm time 0.036715, non amm time 0.000152
+attention reorder time 0.000010, attention cpu compute time 0.000056
+post o reorder+norm+residual time 0.000016, gelu+ffn1 reorder time 0.000039, post ffn2 reorder+norm+residual time 0.000022
+tensor allocation overhead time 0.000001, other non amm time 0.000008
+host breakdown: attention 0.000056, reorder 0.000027, other 0.000069
+iteration 10, inference time 0.036872
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000013
+index calculation time 0.006408
+other latency 0.001436, data transfer latency 0.028319, pim kernel latency 0.377070
+index calculation time 0.006507
+other latency 0.001463, data transfer latency 0.028932, pim kernel latency 0.381904
+index calculation time 0.006622
+other latency 0.001497, data transfer latency 0.029541, pim kernel latency 0.389316
+index calculation time 0.006842
+other latency 0.001517, data transfer latency 0.030123, pim kernel latency 0.397276
+amm time 0.034112, non amm time 0.000140
+attention reorder time 0.000008, attention cpu compute time 0.000054
+post o reorder+norm+residual time 0.000016, gelu+ffn1 reorder time 0.000036, post ffn2 reorder+norm+residual time 0.000016
+tensor allocation overhead time 0.000002, other non amm time 0.000008
+host breakdown: attention 0.000054, reorder 0.000026, other 0.000060
+iteration 11, inference time 0.034257
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000019
+index calculation time 0.006968
+other latency 0.001576, data transfer latency 0.030822, pim kernel latency 0.411056
+index calculation time 0.007074
+other latency 0.001594, data transfer latency 0.031820, pim kernel latency 0.416652
+index calculation time 0.007204
+other latency 0.001674, data transfer latency 0.033834, pim kernel latency 0.431496
+index calculation time 0.007606
+other latency 0.001713, data transfer latency 0.036366, pim kernel latency 0.446533
+amm time 0.058382, non amm time 0.000250
+attention reorder time 0.000009, attention cpu compute time 0.000056
+post o reorder+norm+residual time 0.000024, gelu+ffn1 reorder time 0.000115, post ffn2 reorder+norm+residual time 0.000031
+tensor allocation overhead time 0.000009, other non amm time 0.000006
+host breakdown: attention 0.000056, reorder 0.000045, other 0.000149
+iteration 12, inference time 0.058642
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000025
+index calculation time 0.007803
+other latency 0.001816, data transfer latency 0.038270, pim kernel latency 0.468727
+index calculation time 0.007928
+other latency 0.001838, data transfer latency 0.038987, pim kernel latency 0.473923
+index calculation time 0.008073
+other latency 0.001880, data transfer latency 0.039689, pim kernel latency 0.483752
+index calculation time 0.008346
+other latency 0.001901, data transfer latency 0.040409, pim kernel latency 0.492813
+amm time 0.052575, non amm time 0.000179
+attention reorder time 0.000011, attention cpu compute time 0.000068
+post o reorder+norm+residual time 0.000023, gelu+ffn1 reorder time 0.000042, post ffn2 reorder+norm+residual time 0.000023
+tensor allocation overhead time 0.000004, other non amm time 0.000008
+host breakdown: attention 0.000068, reorder 0.000037, other 0.000074
+iteration 13, inference time 0.052762
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 3072 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_qkv_cb16_fs12.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_o_cb16_fs4.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn1_cb16_fs8.bin
+pimdl_cosim_dump: wrote 2048 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/lut_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 4096 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/index_ffn2_cb32_fs4.bin
+pimdl_cosim_dump: wrote 1024 bytes to /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/8dpu/dumps/output_ffn2_cb32_fs4.bin
+--------------------------------------------
+input initialization time 0.000018
+index calculation time 0.008496
+other latency 0.001955, data transfer latency 0.041154, pim kernel latency 0.506896
+index calculation time 0.008591
+other latency 0.001970, data transfer latency 0.041663, pim kernel latency 0.511997
+index calculation time 0.008702
+other latency 0.001995, data transfer latency 0.042158, pim kernel latency 0.519541
+index calculation time 0.008887
+other latency 0.002012, data transfer latency 0.042680, pim kernel latency 0.525741
+amm time 0.036680, non amm time 0.000132
+attention reorder time 0.000007, attention cpu compute time 0.000051
+post o reorder+norm+residual time 0.000015, gelu+ffn1 reorder time 0.000035, post ffn2 reorder+norm+residual time 0.000014
+tensor allocation overhead time 0.000002, other non amm time 0.000008
+host breakdown: attention 0.000051, reorder 0.000023, other 0.000058
+iteration 14, inference time 0.036816
+--------------------------------------------
+10 rounds' average inference time 0.041027

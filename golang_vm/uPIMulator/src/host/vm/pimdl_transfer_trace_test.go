@@ -42,6 +42,19 @@ func TestLoadPimdlTransferTraceGroupsBatches(t *testing.T) {
 	}
 }
 
+func TestLoadPimdlTransferTraceAcceptsEmitterHeader(t *testing.T) {
+	trace, err := loadPimdlTransferTrace(writeTransferTrace(t,
+		`{"version":1,"type":"header","boundary":"qkv","num_dpus":1}`,
+		`{"version":1,"type":"transfer","boundary":"qkv","batch":0,"direction":"h2d","dpu":0,"symbol":"input","mram_offset":0,"bytes":8,"host_offset":0,"kind":"input"}`,
+	))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if trace.Boundary != "qkv" {
+		t.Fatalf("trace boundary = %q, want qkv", trace.Boundary)
+	}
+}
+
 func TestLoadPimdlTransferTraceAllowsDirectionChangesForOneBoundary(t *testing.T) {
 	trace, err := loadPimdlTransferTrace(writeTransferTrace(t,
 		`{"version":1,"type":"header","num_dpus":1}`,

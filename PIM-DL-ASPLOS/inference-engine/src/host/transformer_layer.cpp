@@ -190,15 +190,16 @@ ggml_tensor* pim_lut_attention(ggml_context* ctx, ggml_tensor* lut_qkv, ggml_ten
                                   + tmp_head_offset * attention_params.head_dim * attention_params.seq_len
                                   + tmp_batch_offset * attention_params.head_dim * attention_params.seq_len * attention_params.head_num;
                 
-                for(uint32_t tmp_offset=0; tmp_offset<attention_params.token_tile_size; ++tmp_offset)
+                for(uint32_t tmp_offset=0; tmp_offset<feature_mtile_size; ++tmp_offset)
                 {
-                    ((float*)V->data)[v_offset + tmp_offset*attention_params.seq_len] = tmp_dpu_v_tile[v_dpu_offset + tmp_dim];
+                    ((float*)V->data)[v_offset + tmp_offset*attention_params.seq_len] = tmp_dpu_v_tile[v_dpu_offset + tmp_offset];
                 }
 
                 tmp_seq_offset++;
                 if(tmp_seq_offset >= attention_params.seq_len)
                 {
                     tmp_seq_offset = 0;
+                    tmp_batch_offset++;
                 }
             }
 
@@ -288,6 +289,9 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
     double non_amm_base = transformer_profiles.non_amm_latency;
     double attn_reorder_base = transformer_profiles.attention_reorder_latency;
     double attn_cpu_base = transformer_profiles.attention_cpu_compute_latency;
+    double o_reorder_base = transformer_profiles.o_reorder_latency;
+    double ffn1_reorder_base = transformer_profiles.ffn1_reorder_latency;
+    double ffn2_reorder_base = transformer_profiles.ffn2_reorder_latency;
     double post_o_base = transformer_profiles.post_o_reorder_norm_residual_latency;
     double gelu_ffn1_reorder_base = transformer_profiles.gelu_plus_ffn1_reorder_latency;
     double post_ffn2_base = transformer_profiles.post_ffn2_reorder_norm_residual_latency;
@@ -325,9 +329,7 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
     time1 = W_time();
 #endif
     // step 1: QKV LUT
-#ifdef PIMDL_COSIM_DUMP
     setenv("PIMDL_COSIM_DUMP_TAG", "qkv", 1);
-#endif
 #ifdef TRANSFORMER_BREAKDOWN
     alloc_t0 = W_time();
 #endif
@@ -337,9 +339,7 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
 #endif
     load_binary(dpu_set, qkv_pim_bin);
     amm_host(dpu_set, ((float*)input->data), ((float*)layer_weight->qkv_centroid->data), ((lut_data_type*)layer_weight->qkv_lut_table->data), ((float*)layer_weight->qkv_bias->data), ((float*)lut_qkv->data), qkv_params.index_params, qkv_params.lut_params);
-#ifdef PIMDL_COSIM_DUMP
     unsetenv("PIMDL_COSIM_DUMP_TAG");
-#endif
 #ifdef TRANSFORMER_BREAKDOWN
     time2 = W_time();
     transformer_profiles.amm_latency += time2 - time1;
@@ -485,9 +485,7 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
     time1 = W_time();
 #endif
     // step 3: O projection
-#ifdef PIMDL_COSIM_DUMP
     setenv("PIMDL_COSIM_DUMP_TAG", "o", 1);
-#endif
 #ifdef TRANSFORMER_BREAKDOWN
     alloc_t0 = W_time();
 #endif
@@ -497,9 +495,7 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
 #endif
     load_binary(dpu_set, o_pim_bin);
     amm_host(dpu_set, ((float*)O_non_project->data), ((float*)layer_weight->o_centroid->data), ((lut_data_type*)layer_weight->o_lut_table->data), ((float*)layer_weight->o_bias->data), ((float*)O->data), o_params.index_params, o_params.lut_params);
-#ifdef PIMDL_COSIM_DUMP
     unsetenv("PIMDL_COSIM_DUMP_TAG");
-#endif
 #ifdef TRANSFORMER_BREAKDOWN
     time2 = W_time();
     transformer_profiles.amm_latency += time2 - time1;
@@ -524,6 +520,9 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
     
     if(!cosim_dump_only)
     {
+#ifdef TRANSFORMER_BREAKDOWN
+        double o_reorder_t0 = W_time();
+#endif
         // reorder data
         #pragma omp parallel for num_threads(transformer_params.num_threads)
         for(uint32_t tmp_row=0; tmp_row<o_params.lut_params.n; ++tmp_row)
@@ -549,6 +548,9 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
                 }
             }
         }
+#ifdef TRANSFORMER_BREAKDOWN
+        transformer_profiles.o_reorder_latency += W_time() - o_reorder_t0;
+#endif
 
         // step 4: Attention Norm
         struct ggml_tensor* normed_attention_output = norm(ctx, layer_weight->attention_norm, layer_weight->attention_norm_bias, ffn_input, attn_params);
@@ -581,9 +583,7 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
     time1 = W_time();
 #endif
     // step 6: FFN1 Lut
-#ifdef PIMDL_COSIM_DUMP
     setenv("PIMDL_COSIM_DUMP_TAG", "ffn1", 1);
-#endif
 #ifdef TRANSFORMER_BREAKDOWN
     alloc_t0 = W_time();
 #endif
@@ -593,9 +593,7 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
 #endif
     load_binary(dpu_set, ffn1_pim_bin);
     amm_host(dpu_set, ((float*)ffn_input->data), ((float*)layer_weight->ffn1_centroid->data), ((lut_data_type*)layer_weight->ffn1_lut_table->data), ((float*)layer_weight->ffn1_bias->data), ((float*)lut_ffn1->data), ffn1_params.index_params, ffn1_params.lut_params);
-#ifdef PIMDL_COSIM_DUMP
     unsetenv("PIMDL_COSIM_DUMP_TAG");
-#endif
 #ifdef TRANSFORMER_BREAKDOWN
     time2 = W_time();
     transformer_profiles.amm_latency += time2 - time1;
@@ -624,6 +622,9 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
     {
         struct ggml_tensor* lut_ffn1_activated = gelu(ctx, lut_ffn1, transformer_params.num_threads);
 
+#ifdef TRANSFORMER_BREAKDOWN
+        double ffn1_reorder_t0 = W_time();
+#endif
         // data reorder
         #pragma omp parallel for num_threads(transformer_params.num_threads)
         for(uint32_t tmp_row=0; tmp_row<ffn1_params.lut_params.n; ++tmp_row)
@@ -649,6 +650,9 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
                 }
             }
         }
+#ifdef TRANSFORMER_BREAKDOWN
+        transformer_profiles.ffn1_reorder_latency += W_time() - ffn1_reorder_t0;
+#endif
     }
     else
     {
@@ -666,9 +670,7 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
     time1 = W_time();
 #endif
     // step 8: ffn2 lut
-#ifdef PIMDL_COSIM_DUMP
     setenv("PIMDL_COSIM_DUMP_TAG", "ffn2", 1);
-#endif
 #ifdef TRANSFORMER_BREAKDOWN
     alloc_t0 = W_time();
 #endif
@@ -678,9 +680,7 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
 #endif
     load_binary(dpu_set, ffn2_pim_bin);
     amm_host(dpu_set, ((float*)lut_ffn1_activated_reshaped->data), ((float*)layer_weight->ffn2_centroid->data), ((lut_data_type*)layer_weight->ffn2_lut_table->data), ((float*)layer_weight->ffn2_bias->data), ((float*)lut_ffn2->data), ffn2_params.index_params, ffn2_params.lut_params);
-#ifdef PIMDL_COSIM_DUMP
     unsetenv("PIMDL_COSIM_DUMP_TAG");
-#endif
 #ifdef TRANSFORMER_BREAKDOWN
     time2 = W_time();
     transformer_profiles.amm_latency += time2 - time1;
@@ -701,6 +701,7 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
 #ifdef TRANSFORMER_BREAKDOWN
     transformer_profiles.tensor_allocation_overhead_latency += W_time() - alloc_t0;
     double post_ffn2_t0 = W_time();
+    double ffn2_reorder_t0 = W_time();
 #endif
 
     // data reorder
@@ -728,6 +729,9 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
             }
         }
     }
+#ifdef TRANSFORMER_BREAKDOWN
+    transformer_profiles.ffn2_reorder_latency += W_time() - ffn2_reorder_t0;
+#endif
 
     if(!cosim_dump_only)
     {
@@ -757,6 +761,9 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
     double non_amm_iter = transformer_profiles.non_amm_latency - non_amm_base;
     double attn_reorder_iter = transformer_profiles.attention_reorder_latency - attn_reorder_base;
     double attn_cpu_iter = transformer_profiles.attention_cpu_compute_latency - attn_cpu_base;
+    double o_reorder_iter = transformer_profiles.o_reorder_latency - o_reorder_base;
+    double ffn1_reorder_iter = transformer_profiles.ffn1_reorder_latency - ffn1_reorder_base;
+    double ffn2_reorder_iter = transformer_profiles.ffn2_reorder_latency - ffn2_reorder_base;
     double post_o_iter = transformer_profiles.post_o_reorder_norm_residual_latency - post_o_base;
     double gelu_ffn1_reorder_iter = transformer_profiles.gelu_plus_ffn1_reorder_latency - gelu_ffn1_reorder_base;
     double post_ffn2_iter = transformer_profiles.post_ffn2_reorder_norm_residual_latency - post_ffn2_base;
@@ -768,6 +775,12 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
     printf("post o reorder+norm+residual time %.6f, gelu+ffn1 reorder time %.6f, post ffn2 reorder+norm+residual time %.6f\n",
            post_o_iter, gelu_ffn1_reorder_iter, post_ffn2_iter);
     printf("tensor allocation overhead time %.6f, other non amm time %.6f\n", alloc_overhead_iter, other_non_amm_iter);
+    double reorder_iter = attn_reorder_iter + o_reorder_iter + ffn1_reorder_iter + ffn2_reorder_iter;
+    double other_host_iter = non_amm_iter - attn_cpu_iter - reorder_iter;
+    printf("reorder breakdown: qkv_to_attention %.6f, o %.6f, ffn1 %.6f, ffn2 %.6f\n",
+           attn_reorder_iter, o_reorder_iter, ffn1_reorder_iter, ffn2_reorder_iter);
+    printf("host breakdown: attention %.6f, reorder %.6f, other %.6f\n",
+           attn_cpu_iter, reorder_iter, other_host_iter);
 #elif defined(TRANSFORMER_BREAKDOWN_AMM)
     printf("qkv projection time %.6f, o projection time %.6f, ffn1 time %.6f, ffn2 time %.6f\n", 
             transformer_amm_profiles.qkv_projection_latency, transformer_amm_profiles.o_projection_latency, transformer_amm_profiles.ffn1_latency, transformer_amm_profiles.ffn2_latency);

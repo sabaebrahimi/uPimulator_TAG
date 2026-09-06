@@ -1,0 +1,13 @@
+{
+  "anchor": "MRAM_BASE",
+  "segments": [
+    {
+      "symbol": "lut_table",
+      "path": "pimdl_segments/lut_table.bin"
+    },
+    {
+      "symbol": "input_index",
+      "path": "pimdl_segments/input_index.bin"
+    }
+  ]
+}

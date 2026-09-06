@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <cstdlib>
 extern "C"{
     #include <dpu.h>
 }
@@ -37,6 +38,8 @@ static void free_dpu_set(dpu_set_t* dpu_set)
 
 static void load_binary(dpu_set_t* dpu_set, std::string binary_name="")
 {
+    if(std::getenv("PIMDL_HOST_REPLAY_DIR") != nullptr)
+        return;
     if(binary_name != "")
     {
 #ifdef DEBUG

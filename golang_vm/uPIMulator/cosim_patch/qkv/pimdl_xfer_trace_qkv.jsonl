@@ -1,0 +1,25 @@
+{"version": 1, "type": "header", "num_dpus": 8}
+{"version":1,"type":"transfer","boundary":"qkv","batch":0,"direction":"h2d","dpu":0,"symbol":"lut_table","mram_offset":0,"bytes":24576,"host_offset":0,"kind":"lut"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":0,"direction":"h2d","dpu":1,"symbol":"lut_table","mram_offset":0,"bytes":24576,"host_offset":24576,"kind":"lut"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":0,"direction":"h2d","dpu":2,"symbol":"lut_table","mram_offset":0,"bytes":24576,"host_offset":49152,"kind":"lut"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":0,"direction":"h2d","dpu":3,"symbol":"lut_table","mram_offset":0,"bytes":24576,"host_offset":73728,"kind":"lut"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":0,"direction":"h2d","dpu":4,"symbol":"lut_table","mram_offset":0,"bytes":24576,"host_offset":98304,"kind":"lut"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":0,"direction":"h2d","dpu":5,"symbol":"lut_table","mram_offset":0,"bytes":24576,"host_offset":122880,"kind":"lut"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":0,"direction":"h2d","dpu":6,"symbol":"lut_table","mram_offset":0,"bytes":24576,"host_offset":147456,"kind":"lut"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":0,"direction":"h2d","dpu":7,"symbol":"lut_table","mram_offset":0,"bytes":24576,"host_offset":172032,"kind":"lut"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":1,"direction":"h2d","dpu":0,"symbol":"input_index","mram_offset":0,"bytes":4096,"host_offset":0,"kind":"index"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":1,"direction":"h2d","dpu":1,"symbol":"input_index","mram_offset":0,"bytes":4096,"host_offset":0,"kind":"index"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":1,"direction":"h2d","dpu":2,"symbol":"input_index","mram_offset":0,"bytes":4096,"host_offset":0,"kind":"index"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":1,"direction":"h2d","dpu":3,"symbol":"input_index","mram_offset":0,"bytes":4096,"host_offset":0,"kind":"index"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":1,"direction":"h2d","dpu":4,"symbol":"input_index","mram_offset":0,"bytes":4096,"host_offset":0,"kind":"index"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":1,"direction":"h2d","dpu":5,"symbol":"input_index","mram_offset":0,"bytes":4096,"host_offset":0,"kind":"index"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":1,"direction":"h2d","dpu":6,"symbol":"input_index","mram_offset":0,"bytes":4096,"host_offset":0,"kind":"index"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":1,"direction":"h2d","dpu":7,"symbol":"input_index","mram_offset":0,"bytes":4096,"host_offset":0,"kind":"index"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":2,"direction":"d2h","dpu":0,"symbol":"output_data","mram_offset":0,"bytes":12288,"host_offset":0,"kind":"output"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":2,"direction":"d2h","dpu":1,"symbol":"output_data","mram_offset":0,"bytes":12288,"host_offset":12288,"kind":"output"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":2,"direction":"d2h","dpu":2,"symbol":"output_data","mram_offset":0,"bytes":12288,"host_offset":24576,"kind":"output"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":2,"direction":"d2h","dpu":3,"symbol":"output_data","mram_offset":0,"bytes":12288,"host_offset":36864,"kind":"output"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":2,"direction":"d2h","dpu":4,"symbol":"output_data","mram_offset":0,"bytes":12288,"host_offset":49152,"kind":"output"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":2,"direction":"d2h","dpu":5,"symbol":"output_data","mram_offset":0,"bytes":12288,"host_offset":61440,"kind":"output"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":2,"direction":"d2h","dpu":6,"symbol":"output_data","mram_offset":0,"bytes":12288,"host_offset":73728,"kind":"output"}
+{"version":1,"type":"transfer","boundary":"qkv","batch":2,"direction":"d2h","dpu":7,"symbol":"output_data","mram_offset":0,"bytes":12288,"host_offset":86016,"kind":"output"}

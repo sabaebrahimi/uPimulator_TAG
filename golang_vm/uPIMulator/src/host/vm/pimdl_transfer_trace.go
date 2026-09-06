@@ -44,9 +44,10 @@ type pimdlTransferTrace struct {
 }
 
 type pimdlTransferTraceHeaderLine struct {
-	Version *int64  `json:"version"`
-	Type    *string `json:"type"`
-	NumDpus *int64  `json:"num_dpus"`
+	Version  *int64  `json:"version"`
+	Type     *string `json:"type"`
+	Boundary *string `json:"boundary"`
+	NumDpus  *int64  `json:"num_dpus"`
 }
 
 type pimdlTransferTraceEventLine struct {
@@ -107,6 +108,12 @@ func loadPimdlTransferTrace(path string) (*pimdlTransferTrace, error) {
 				return nil, errors.New("pimdl transfer trace: invalid version-1 header")
 			}
 			trace.NumDpus = *header.NumDpus
+			if header.Boundary != nil {
+				if *header.Boundary == "" {
+					return nil, errors.New("pimdl transfer trace: empty header boundary")
+				}
+				trace.Boundary = *header.Boundary
+			}
 			continue
 		}
 
