@@ -628,6 +628,8 @@ void init_single_model_params(string input_path, vector<AMMParams>& amm_param_li
         network_params.seq_len = config["network_params"]["seq_len"].as<int>();
         network_params.batch_size = config["network_params"]["batch_size"].as<int>();
         network_params.head_num = config["network_params"]["head_num"].as<int>();
+        network_params.kv_head_num = config["network_params"]["kv_head_num"]
+            ? config["network_params"]["kv_head_num"].as<int>() : network_params.head_num;
         network_params.head_dim = config["network_params"]["head_dim"].as<int>();
         network_params.token_dim = config["network_params"]["token_dim"].as<int>();
         network_params.ffn_hidden_dim = config["network_params"]["ffn_hidden_dim"].as<int>();
@@ -635,7 +637,8 @@ void init_single_model_params(string input_path, vector<AMMParams>& amm_param_li
 
         amm_param_list[0].n = network_params.seq_len*network_params.batch_size;
         amm_param_list[0].input_feature_len = network_params.token_dim;  
-        amm_param_list[0].output_feature_len = network_params.token_dim*3;
+        amm_param_list[0].output_feature_len = network_params.token_dim
+                                            + 2 * network_params.kv_head_num * network_params.head_dim;
         amm_param_list[0].num_codebook = config["kernel_params"]["qkv_num_codebook"].as<int>();        
         amm_param_list[0].num_centroid = config["kernel_params"]["qkv_num_centroid"].as<int>();
 
@@ -669,6 +672,7 @@ void dump_single_model_params(string output_path, vector<AMMParams>& amm_param_l
     output_file << "  seq_len: " << network_params.seq_len << "\n";
     output_file << "  batch_size: " << network_params.batch_size << "\n";
     output_file << "  head_num: " << network_params.head_num << "\n";
+    output_file << "  kv_head_num: " << network_params.kv_head_num << "\n";
     output_file << "  head_dim: " << network_params.head_dim << "\n";
     output_file << "  token_dim: " << network_params.token_dim << "\n";
     output_file << "  ffn_hidden_dim: " << network_params.ffn_hidden_dim << "\n";

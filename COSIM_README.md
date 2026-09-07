@@ -119,3 +119,15 @@ This runs the production host path with identical one-thread settings for both
 layouts, reports all four reorder sites separately, and writes their total and
 percentage of host time to `cosim_results/host_only/results.csv`. The default
 result is the median of nine interleaved processes per layout.
+
+The realistic MHA host replay uses one 12-head, 768-wide, 3072-FFN layer and
+synthetic fixed-shape DPU output shards (no PIM or uPimulator execution):
+
+```bash
+python3 tools/host_results.py --model mha
+```
+
+Its 1-DPU and 8-DPU configurations are `configs/host_replay_mha_1dpu.yaml`
+and `configs/host_replay_mha_8dpu.yaml`. `kv_head_num` defaults to `head_num`
+for old MHA configurations; setting it lower prepares generalized GQA QKV
+geometry and reordering, while grouped-head attention compute remains a later step.

@@ -101,113 +101,77 @@ ggml_tensor* pim_lut_attention(ggml_context* ctx, ggml_tensor* lut_qkv, ggml_ten
     #pragma omp parallel for num_threads(attention_params.num_threads)
     for(uint32_t tmp_dpu=0; tmp_dpu<attention_params.dpu_num; ++tmp_dpu)
     {
-        uint32_t tmp_dpu_tensor_offset = tmp_dpu * attention_params.n_tile_size * attention_params.token_tile_size * 3;
+        uint32_t tmp_dpu_tensor_offset = tmp_dpu * attention_params.n_tile_size
+                                       * (attention_params.q_tile_size + 2 * attention_params.kv_tile_size);
         uint32_t tmp_n_tile_id = tmp_dpu / attention_params.lut_parallelism;
         uint32_t tmp_feature_tile_id = tmp_dpu % attention_params.lut_parallelism;
 
         // copy Q
         float* tmp_dpu_q_tile = ((float*)lut_qkv->data) + tmp_dpu_tensor_offset;
-        uint32_t tmp_head_dim_offset = tmp_feature_tile_id * attention_params.token_tile_size % attention_params.head_dim;
-        uint32_t tmp_head_offset = tmp_feature_tile_id * attention_params.token_tile_size / attention_params.head_dim;
-        for(uint32_t tmp_dim=0; tmp_dim<attention_params.token_tile_size; tmp_dim+=feature_mtile_size)
+        for(uint32_t tmp_dim=0; tmp_dim<attention_params.q_tile_size; tmp_dim+=feature_mtile_size)
         {
-            uint32_t tmp_seq_offset = tmp_n_tile_id * attention_params.n_tile_size % attention_params.seq_len;
-            uint32_t tmp_batch_offset = tmp_n_tile_id * attention_params.n_tile_size / attention_params.seq_len;
+            uint32_t tmp_feature = tmp_feature_tile_id * attention_params.q_tile_size + tmp_dim;
+            uint32_t tmp_head = tmp_feature / attention_params.head_dim;
+            uint32_t tmp_head_dim = tmp_feature % attention_params.head_dim;
             for(uint32_t tmp_row=0; tmp_row<attention_params.n_tile_size; ++tmp_row)
             {
                 uint32_t q_dpu_offset = tmp_dim * attention_params.n_tile_size
                                       + tmp_row * feature_mtile_size;
-                uint32_t q_offset = tmp_head_dim_offset 
-                                  + tmp_seq_offset * attention_params.head_dim
-                                  + tmp_head_offset * attention_params.head_dim * attention_params.seq_len
-                                  + tmp_batch_offset * attention_params.head_dim * attention_params.seq_len * attention_params.head_num;
+                uint32_t tmp_token = tmp_n_tile_id * attention_params.n_tile_size + tmp_row;
+                uint32_t tmp_seq = tmp_token % attention_params.seq_len;
+                uint32_t tmp_batch = tmp_token / attention_params.seq_len;
+                uint32_t q_offset = tmp_head_dim
+                                  + tmp_seq * attention_params.head_dim
+                                  + tmp_head * attention_params.head_dim * attention_params.seq_len
+                                  + tmp_batch * attention_params.head_dim * attention_params.seq_len * attention_params.head_num;
                 memcpy(((float*)Q->data)+q_offset, tmp_dpu_q_tile+q_dpu_offset, sizeof(float)*feature_mtile_size);
-
-                tmp_seq_offset++;
-                if(tmp_seq_offset >= attention_params.seq_len)
-                {
-                    tmp_seq_offset = 0;
-                    tmp_batch_offset++;
-                }
-            }
-
-            tmp_head_dim_offset += feature_mtile_size;
-            if(tmp_head_dim_offset >= attention_params.head_dim)
-            {
-                tmp_head_dim_offset = 0;
-                tmp_head_offset++;
             }
         }
 
         // copy K
-        float* tmp_dpu_k_tile = tmp_dpu_q_tile + attention_params.n_tile_size * attention_params.token_tile_size;
-        tmp_head_dim_offset = tmp_feature_tile_id * attention_params.token_tile_size % attention_params.head_dim;
-        tmp_head_offset = tmp_feature_tile_id * attention_params.token_tile_size / attention_params.head_dim;
-        for(uint32_t tmp_dim=0; tmp_dim<attention_params.token_tile_size; tmp_dim+=feature_mtile_size)
+        float* tmp_dpu_k_tile = tmp_dpu_q_tile + attention_params.n_tile_size * attention_params.q_tile_size;
+        for(uint32_t tmp_dim=0; tmp_dim<attention_params.kv_tile_size; tmp_dim+=feature_mtile_size)
         {
-            uint32_t tmp_seq_offset = tmp_n_tile_id * attention_params.n_tile_size % attention_params.seq_len;
-            uint32_t tmp_batch_offset = tmp_n_tile_id * attention_params.n_tile_size / attention_params.seq_len;
+            uint32_t tmp_feature = tmp_feature_tile_id * attention_params.kv_tile_size + tmp_dim;
+            uint32_t tmp_head = tmp_feature / attention_params.head_dim;
+            uint32_t tmp_head_dim = tmp_feature % attention_params.head_dim;
             for(uint32_t tmp_row=0; tmp_row<attention_params.n_tile_size; ++tmp_row)
             {
                 uint32_t k_dpu_offset = tmp_dim * attention_params.n_tile_size
                                       + tmp_row * feature_mtile_size;
-                uint32_t k_offset = tmp_head_dim_offset 
-                                  + tmp_seq_offset * attention_params.head_dim
-                                  + tmp_head_offset * attention_params.head_dim * attention_params.seq_len
-                                  + tmp_batch_offset * attention_params.head_dim * attention_params.seq_len * attention_params.head_num;
+                uint32_t tmp_token = tmp_n_tile_id * attention_params.n_tile_size + tmp_row;
+                uint32_t tmp_seq = tmp_token % attention_params.seq_len;
+                uint32_t tmp_batch = tmp_token / attention_params.seq_len;
+                uint32_t k_offset = tmp_head_dim
+                                  + tmp_seq * attention_params.head_dim
+                                  + tmp_head * attention_params.head_dim * attention_params.seq_len
+                                  + tmp_batch * attention_params.head_dim * attention_params.seq_len * attention_params.kv_head_num;
                 memcpy(((float*)K->data)+k_offset, tmp_dpu_k_tile+k_dpu_offset, sizeof(float)*feature_mtile_size);
-
-                tmp_seq_offset++;
-                if(tmp_seq_offset >= attention_params.seq_len)
-                {
-                    tmp_seq_offset = 0;
-                    tmp_batch_offset++;
-                }
-            }
-
-            tmp_head_dim_offset += feature_mtile_size;
-            if(tmp_head_dim_offset >= attention_params.head_dim)
-            {
-                tmp_head_dim_offset = 0;
-                tmp_head_offset++;
             }
         }
 
         // copy V
-        float* tmp_dpu_v_tile = tmp_dpu_k_tile + attention_params.n_tile_size * attention_params.token_tile_size;
-        tmp_head_dim_offset = tmp_feature_tile_id * attention_params.token_tile_size % attention_params.head_dim;
-        tmp_head_offset = tmp_feature_tile_id * attention_params.token_tile_size / attention_params.head_dim;
-        for(uint32_t tmp_dim=0; tmp_dim<attention_params.token_tile_size; tmp_dim+=feature_mtile_size)
+        float* tmp_dpu_v_tile = tmp_dpu_k_tile + attention_params.n_tile_size * attention_params.kv_tile_size;
+        for(uint32_t tmp_dim=0; tmp_dim<attention_params.kv_tile_size; tmp_dim+=feature_mtile_size)
         {
-            uint32_t tmp_seq_offset = tmp_n_tile_id * attention_params.n_tile_size % attention_params.seq_len;
-            uint32_t tmp_batch_offset = tmp_n_tile_id * attention_params.n_tile_size / attention_params.seq_len;
+            uint32_t tmp_feature = tmp_feature_tile_id * attention_params.kv_tile_size + tmp_dim;
+            uint32_t tmp_head = tmp_feature / attention_params.head_dim;
+            uint32_t tmp_head_dim = tmp_feature % attention_params.head_dim;
             for(uint32_t tmp_row=0; tmp_row<attention_params.n_tile_size; ++tmp_row)
             {
                 uint32_t v_dpu_offset = tmp_dim * attention_params.n_tile_size
                                       + tmp_row * feature_mtile_size;
-                uint32_t v_offset = tmp_head_dim_offset 
-                                  + tmp_seq_offset * attention_params.head_dim
-                                  + tmp_head_offset * attention_params.head_dim * attention_params.seq_len
-                                  + tmp_batch_offset * attention_params.head_dim * attention_params.seq_len * attention_params.head_num;
-                
+                uint32_t tmp_token = tmp_n_tile_id * attention_params.n_tile_size + tmp_row;
+                uint32_t tmp_seq = tmp_token % attention_params.seq_len;
+                uint32_t tmp_batch = tmp_token / attention_params.seq_len;
+                uint32_t v_offset = tmp_seq
+                                  + tmp_head_dim * attention_params.seq_len
+                                  + tmp_head * attention_params.head_dim * attention_params.seq_len
+                                  + tmp_batch * attention_params.head_dim * attention_params.seq_len * attention_params.kv_head_num;
                 for(uint32_t tmp_offset=0; tmp_offset<feature_mtile_size; ++tmp_offset)
                 {
                     ((float*)V->data)[v_offset + tmp_offset*attention_params.seq_len] = tmp_dpu_v_tile[v_dpu_offset + tmp_offset];
                 }
-
-                tmp_seq_offset++;
-                if(tmp_seq_offset >= attention_params.seq_len)
-                {
-                    tmp_seq_offset = 0;
-                    tmp_batch_offset++;
-                }
-            }
-
-            tmp_head_dim_offset += feature_mtile_size;
-            if(tmp_head_dim_offset >= attention_params.head_dim)
-            {
-                tmp_head_dim_offset = 0;
-                tmp_head_offset++;
             }
         }
     }
@@ -218,6 +182,7 @@ ggml_tensor* pim_lut_attention(ggml_context* ctx, ggml_tensor* lut_qkv, ggml_ten
 #endif
 
     // step 2: attention
+    assert(attention_params.head_num == attention_params.kv_head_num && "GQA attention compute is not implemented yet");
     ggml_cgraph gf = {};
     gf.n_threads = attention_params.num_threads;
 
@@ -333,7 +298,9 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
 #ifdef TRANSFORMER_BREAKDOWN
     alloc_t0 = W_time();
 #endif
-    struct ggml_tensor* lut_qkv = ggml_new_tensor_3d(ctx, GGML_TYPE_F32, attn_params.token_tile_size * 3, attn_params.n_tile_size, qkv_params.lut_params.dpu_num);
+    struct ggml_tensor* lut_qkv = ggml_new_tensor_3d(ctx, GGML_TYPE_F32,
+                                                     attn_params.q_tile_size + 2 * attn_params.kv_tile_size,
+                                                     attn_params.n_tile_size, qkv_params.lut_params.dpu_num);
 #ifdef TRANSFORMER_BREAKDOWN
     transformer_profiles.tensor_allocation_overhead_latency += W_time() - alloc_t0;
 #endif
@@ -361,8 +328,8 @@ ggml_tensor* pim_lut_transformer_layer(dpu_set_t* dpu_set, ggml_context* ctx, Tr
     if(!cosim_dump_only)
     {
         struct ggml_tensor* Q = ggml_new_tensor_4d(ctx, GGML_TYPE_F32, attn_params.head_dim, attn_params.seq_len, attn_params.head_num, attn_params.batch_size);
-        struct ggml_tensor* K = ggml_new_tensor_4d(ctx, GGML_TYPE_F32, attn_params.head_dim, attn_params.seq_len, attn_params.head_num, attn_params.batch_size);
-        struct ggml_tensor* V = ggml_new_tensor_4d(ctx, GGML_TYPE_F32, attn_params.seq_len, attn_params.head_dim, attn_params.head_num, attn_params.batch_size);
+        struct ggml_tensor* K = ggml_new_tensor_4d(ctx, GGML_TYPE_F32, attn_params.head_dim, attn_params.seq_len, attn_params.kv_head_num, attn_params.batch_size);
+        struct ggml_tensor* V = ggml_new_tensor_4d(ctx, GGML_TYPE_F32, attn_params.seq_len, attn_params.head_dim, attn_params.kv_head_num, attn_params.batch_size);
 #ifdef TRANSFORMER_BREAKDOWN
         transformer_profiles.tensor_allocation_overhead_latency += W_time() - alloc_t0;
 #endif

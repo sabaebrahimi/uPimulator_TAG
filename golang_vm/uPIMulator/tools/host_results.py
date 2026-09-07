@@ -8,6 +8,7 @@ from pathlib import Path
 import re
 import statistics
 import subprocess
+import yaml
 
 
 def run(command, cwd, env):
@@ -54,11 +55,37 @@ def parse_host(text):
     }
 
 
+def create_replay_shards(config, dump_dir):
+    with config.open(encoding="utf-8") as stream:
+        cfg = yaml.safe_load(stream)
+    network = cfg["network_params"]
+    kernel = cfg["kernel_params"]
+    n = network["seq_len"] * network["batch_size"]
+    kv_heads = network.get("kv_head_num", network["head_num"])
+    outputs = {
+        "qkv": network["token_dim"] + 2 * kv_heads * network["head_dim"],
+        "o": network["token_dim"],
+        "ffn1": network["ffn_hidden_dim"],
+        "ffn2": network["token_dim"],
+    }
+    dump_dir.mkdir(parents=True, exist_ok=True)
+    for name, output_features in outputs.items():
+        n_tile = n // kernel[f"{name}_input_parallelism"]
+        feature_tile = output_features // kernel[f"{name}_lut_parallelism"]
+        codebooks = kernel[f"{name}_num_codebook"]
+        path = dump_dir / f"output_{name}_cb{codebooks}_fs{feature_tile}.bin"
+        size = n_tile * feature_tile * 4
+        if not path.exists() or path.stat().st_size != size:
+            with path.open("wb") as stream:
+                stream.truncate(size)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--upmem-home", type=Path,
                         default=Path("/home/saba/master/upmem-2025.1.0-Linux-x86_64"))
-    parser.add_argument("--results-dir", type=Path, default=Path("cosim_results/host_only"))
+    parser.add_argument("--model", choices=("tiny", "mha"), default="tiny")
+    parser.add_argument("--results-dir", type=Path)
     parser.add_argument("--no-build", action="store_true")
     parser.add_argument("--runs", type=int, default=9,
                         help="interleaved host processes per layout (default: 9)")
@@ -69,7 +96,8 @@ def main():
     upim = Path(__file__).resolve().parents[1]
     repo = upim.parents[1]
     pimdl = repo / "PIM-DL-ASPLOS/inference-engine"
-    results = (upim / args.results_dir).resolve()
+    results_dir = args.results_dir or Path("cosim_results/host_only" if args.model == "tiny" else "cosim_results/host_mha")
+    results = (upim / results_dir).resolve()
     results.mkdir(parents=True, exist_ok=True)
     python_lib = Path("/home/saba/.pyenv/versions/3.10.16/lib")
 
@@ -80,7 +108,7 @@ def main():
         "LD_LIBRARY_PATH": f"{args.upmem_home / 'lib'}:{python_lib}:{pimdl / 'build/lib'}",
         "LIBRARY_PATH": f"{args.upmem_home / 'lib'}:{python_lib}",
         "PKG_CONFIG_PATH": str(args.upmem_home / "share/pkgconfig"),
-        "PIMDL_LAYER_CTX_MB": "64",
+        "PIMDL_LAYER_CTX_MB": "256" if args.model == "mha" else "64",
         "PIMDL_DATA_CTX_MB": "64",
     })
     if not args.no_build:
@@ -94,8 +122,13 @@ def main():
     for sample in range(args.runs):
         for dpus in (1, 8):
             print(f"[{dpus} DPU] host replay {sample + 1}/{args.runs}")
-            config = pimdl / f"configs/cosim_results_{dpus}dpu.yaml"
-            dumps = upim / f"cosim_results/{dpus}dpu/dumps"
+            config_name = f"cosim_results_{dpus}dpu.yaml" if args.model == "tiny" else f"host_replay_mha_{dpus}dpu.yaml"
+            config = pimdl / "configs" / config_name
+            if args.model == "tiny":
+                dumps = upim / f"cosim_results/{dpus}dpu/dumps"
+            else:
+                dumps = results / f"dumps_{dpus}dpu"
+                create_replay_shards(config, dumps)
             outputs[dpus].append(run([str(binary), str(config)], pimdl,
                                      env | {"PIMDL_HOST_REPLAY_DIR": str(dumps)}))
 
@@ -114,7 +147,7 @@ def main():
 
     csv_path = results / "results.csv"
     with csv_path.open("w", newline="", encoding="utf-8") as stream:
-        writer = csv.DictWriter(stream, fieldnames=rows[0].keys())
+        writer = csv.DictWriter(stream, fieldnames=rows[0].keys(), lineterminator="\n")
         writer.writeheader()
         writer.writerows({key: value if key == "dpus" else f"{value:.6f}"
                           for key, value in row.items()} for row in rows)

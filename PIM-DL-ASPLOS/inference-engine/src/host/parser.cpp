@@ -100,6 +100,15 @@ void parse_transformer_configs(TransformerParams& transformer_params, std::strin
     // parse yaml configs
     try
     {
+        const uint32_t head_num = config["network_params"]["head_num"].as<uint32_t>();
+        const uint32_t head_dim = config["network_params"]["head_dim"].as<uint32_t>();
+        const uint32_t token_dim = config["network_params"]["token_dim"].as<uint32_t>();
+        const uint32_t kv_head_num = config["network_params"]["kv_head_num"]
+            ? config["network_params"]["kv_head_num"].as<uint32_t>() : head_num;
+        assert(token_dim == head_num * head_dim);
+        assert(kv_head_num > 0 && head_num % kv_head_num == 0);
+        const uint32_t kv_dim = kv_head_num * head_dim;
+
         // thread num
         transformer_params.num_threads = config["system_params"]["num_threads"].as<uint32_t>();
 
@@ -115,7 +124,7 @@ void parse_transformer_configs(TransformerParams& transformer_params, std::strin
         // qkv lut
         // lut param
         transformer_params.amm_param_list[0].lut_params.n = config["network_params"]["seq_len"].as<uint32_t>() * config["network_params"]["batch_size"].as<uint32_t>();
-        transformer_params.amm_param_list[0].lut_params.output_feature_len = config["network_params"]["token_dim"].as<uint32_t>() * 3; // QKV
+        transformer_params.amm_param_list[0].lut_params.output_feature_len = token_dim + 2 * kv_dim; // QKV
         transformer_params.amm_param_list[0].lut_params.num_codebook = config["kernel_params"]["qkv_num_codebook"].as<uint32_t>();
         transformer_params.amm_param_list[0].lut_params.num_centroid = config["kernel_params"]["qkv_num_centroid"].as<uint32_t>();
         transformer_params.amm_param_list[0].lut_params.scale = config["kernel_params"]["qkv_scale"].as<float>();
@@ -326,14 +335,21 @@ void parse_transformer_configs(TransformerParams& transformer_params, std::strin
         transformer_params.attention_params.seq_len = config["network_params"]["seq_len"].as<uint32_t>();
         transformer_params.attention_params.batch_size = config["network_params"]["batch_size"].as<uint32_t>();
         transformer_params.attention_params.n = transformer_params.attention_params.seq_len * transformer_params.attention_params.batch_size;
-        transformer_params.attention_params.head_num = config["network_params"]["head_num"].as<uint32_t>();
-        transformer_params.attention_params.head_dim = config["network_params"]["head_dim"].as<uint32_t>();
-        transformer_params.attention_params.token_dim = config["network_params"]["token_dim"].as<uint32_t>();
+        transformer_params.attention_params.head_num = head_num;
+        transformer_params.attention_params.kv_head_num = kv_head_num;
+        transformer_params.attention_params.head_dim = head_dim;
+        transformer_params.attention_params.token_dim = token_dim;
         transformer_params.attention_params.dpu_num = config["system_params"]["dpu_num"].as<uint32_t>();
         transformer_params.attention_params.input_parallelism = config["kernel_params"]["qkv_input_parallelism"].as<uint32_t>();
         transformer_params.attention_params.lut_parallelism = config["kernel_params"]["qkv_lut_parallelism"].as<uint32_t>();
         transformer_params.attention_params.n_tile_size = transformer_params.amm_param_list[0].lut_params.n_stile_size;
-        transformer_params.attention_params.token_tile_size = transformer_params.amm_param_list[0].lut_params.feature_stile_size / 3;
+        assert(token_dim % transformer_params.attention_params.lut_parallelism == 0);
+        assert(kv_dim % transformer_params.attention_params.lut_parallelism == 0);
+        assert(head_dim % transformer_params.amm_param_list[0].lut_params.feature_mtile_size == 0);
+        transformer_params.attention_params.q_tile_size = token_dim / transformer_params.attention_params.lut_parallelism;
+        transformer_params.attention_params.kv_tile_size = kv_dim / transformer_params.attention_params.lut_parallelism;
+        assert(transformer_params.attention_params.q_tile_size % transformer_params.amm_param_list[0].lut_params.feature_mtile_size == 0);
+        assert(transformer_params.attention_params.kv_tile_size % transformer_params.amm_param_list[0].lut_params.feature_mtile_size == 0);
         transformer_params.attention_params.num_threads = config["system_params"]["num_threads"].as<uint32_t>();
 
     }catch(YAML::TypedBadConversion<std::string> &e){
@@ -404,9 +420,9 @@ void parse_transformer_configs(TransformerParams& transformer_params, std::strin
     
     printf("----------Attention Params----------\n");
     printf("seq len %d, batch size %d, n %d\n", transformer_params.attention_params.seq_len, transformer_params.attention_params.batch_size, transformer_params.attention_params.n);
-    printf("head num %d, head dim %d, token dim %d\n", transformer_params.attention_params.head_num, transformer_params.attention_params.head_dim, transformer_params.attention_params.token_dim);
+    printf("query heads %d, kv heads %d, head dim %d, token dim %d\n", transformer_params.attention_params.head_num, transformer_params.attention_params.kv_head_num, transformer_params.attention_params.head_dim, transformer_params.attention_params.token_dim);
     printf("dpu num %d, input parallelism %d, lut parallelism %d\n", transformer_params.attention_params.dpu_num, transformer_params.attention_params.input_parallelism, transformer_params.attention_params.lut_parallelism);
-    printf("n tile size %d, token tile size %d\n", transformer_params.attention_params.n_tile_size, transformer_params.attention_params.token_tile_size);
+    printf("n tile size %d, q tile size %d, kv tile size %d\n", transformer_params.attention_params.n_tile_size, transformer_params.attention_params.q_tile_size, transformer_params.attention_params.kv_tile_size);
     printf("num threads %d\n", transformer_params.attention_params.num_threads);
     
     printf("-----------------------------------\n");

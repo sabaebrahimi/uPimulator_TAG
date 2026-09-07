@@ -12,6 +12,7 @@ struct NetworkParams
     int seq_len;
     int batch_size;
     int head_num;
+    int kv_head_num;
     int head_dim;
     int token_dim;
     int ffn_hidden_dim;

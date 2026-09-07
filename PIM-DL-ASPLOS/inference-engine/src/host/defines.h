@@ -62,6 +62,7 @@ struct AttentionParams
     uint32_t n;
 
     uint32_t head_num;
+    uint32_t kv_head_num;
     uint32_t head_dim;
     uint32_t token_dim;
 
@@ -70,7 +71,8 @@ struct AttentionParams
     uint32_t lut_parallelism;
 
     uint32_t n_tile_size;
-    uint32_t token_tile_size;
+    uint32_t q_tile_size;
+    uint32_t kv_tile_size;
 
     uint32_t num_threads;
 };
@@ -90,5 +92,4 @@ struct TransformerParams
 typedef struct {
     uint32_t input_height;
 } dpu_arguments_t;
-
 

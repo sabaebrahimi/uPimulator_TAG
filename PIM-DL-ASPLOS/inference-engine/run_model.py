@@ -27,6 +27,10 @@ def compile(args):
     batch_size_var = yaml_data['network_params']['batch_size']
     n_var = seq_len_var * batch_size_var
     token_dim_var = yaml_data['network_params']['token_dim']
+    head_num_var = yaml_data['network_params']['head_num']
+    head_dim_var = yaml_data['network_params']['head_dim']
+    kv_head_num_var = yaml_data['network_params'].get('kv_head_num', head_num_var)
+    qkv_output_dim_var = token_dim_var + 2 * kv_head_num_var * head_dim_var
     ffn_hidden_dim_var = yaml_data['network_params']['ffn_hidden_dim']
 
     ## QKV LUT
@@ -40,7 +44,7 @@ def compile(args):
     input_parallelism_var_qkv = yaml_data['kernel_params']['qkv_input_parallelism']
     lut_parallelism_var_qkv = yaml_data['kernel_params']['qkv_lut_parallelism']
     n_stile_var_qkv = int(n_var / input_parallelism_var_qkv)
-    feature_stile_var_qkv = int(token_dim_var*3 / lut_parallelism_var_qkv)
+    feature_stile_var_qkv = int(qkv_output_dim_var / lut_parallelism_var_qkv)
     n_mtile_var_qkv = yaml_data['kernel_params']['qkv_n_mtile_size']
     feature_mtile_var_qkv = yaml_data['kernel_params']['qkv_feature_mtile_size']
     cb_mtile_var_qkv = yaml_data['kernel_params']['qkv_cb_mtile_size']

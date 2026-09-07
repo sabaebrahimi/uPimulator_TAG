@@ -16,7 +16,7 @@ import types
 import yaml
 
 PROJECTIONS = {
-    "qkv": ("PIMDL", lambda n: 3 * n["token_dim"]),
+    "qkv": ("PIMDL", lambda n: n["token_dim"] + 2 * n.get("kv_head_num", n["head_num"]) * n["head_dim"]),
     "o": ("PIMDL_O", lambda n: n["token_dim"]),
     "ffn1": ("PIMDL_FFN1", lambda n: n["ffn_hidden_dim"]),
     "ffn2": ("PIMDL_FFN2", lambda n: n["token_dim"]),
