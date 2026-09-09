@@ -9,8 +9,9 @@ uPIMulator, anchored to real files and timing primitives that already exist.
 
 ## 1. Problem definition
 
-### 1.1 The measured overhead
-From the PIM-DL breakdown of **host-side (non-AMM)** time in one transformer layer:
+### 1.1 The original fused-stage breakdown
+
+The original PIM-DL breakdown of **host-side (non-AMM)** time in one transformer layer was:
 
 | Host-side component                        | % of non-AMM |
 |--------------------------------------------|--------------|
@@ -22,9 +23,19 @@ From the PIM-DL breakdown of **host-side (non-AMM)** time in one transformer lay
 | tensor allocation overhead                 | 0.07%        |
 | other                                      | 0.18%        |
 
-Summing the reorder/relayout components (gelu+FFN1 reorder, post-FFN2, post-O, attention
-reorder) gives **≈ 71.6% of host-side time spent reordering data** — more than the actual
-attention compute (28.1%). This is the overhead TAG removes.
+This table groups entire stages that contain a reorder with the reorder itself. In particular,
+the 60.18% entry includes GELU, while the post-O and post-FFN2 entries include normalization
+and residual computation. Therefore, their **≈71.6%** sum is an upper bound for
+reorder-related stages, not measured pure reordering, and TAG cannot remove the included
+compute.
+
+Follow-up measurements time only the four layout loops. Full MHA host replay measures
+0.2225 ms at 1 DPU and 0.2245 ms at 8 DPUs, about 1.1% of reported host time. Medium MHA
+measures 0.0145 and 0.0155 ms in controlled host replay. The corresponding 1-DPU and 8-DPU
+layouts have identical payload and microtile counts, which explains the flat result. See
+`golang_vm/uPIMulator/cosim_results/mha_medium/reorder_analysis.md` for the measurements and
+operation-count analysis. TAG evaluation must use the pure reorder timer and transfer-pattern
+cost rather than claim the fused-stage sum as removable overhead.
 
 ### 1.2 Where the overhead comes from
 Each PIM projection leaves its result in **DPU-tiled, DPU-local layout** in MRAM. The
@@ -33,12 +44,12 @@ tiles within each DPU. Today PIM-DL:
 1. **reads back** every DPU's output in parallel (`dpu_push_xfer FROM_DPU`,
    `pim_lut_host.cpp:172-181`) into a DPU-major buffer, then
 2. **reorders** it on the CPU with strided `memcpy`s into the contiguous logical layout
-   (`transformer_layer.cpp:100-211` for QKV; four more sites for O, FFN1, FFN2).
+   (`transformer_layer.cpp:100-211` for QKV; three more sites for O, FFN1, FFN2).
 
 The reorder is software address generation: for every element it computes "where in the
 logical tensor does this DPU-tiled element belong" via the `q/k/v_offset` formulas
-(`transformer_layer.cpp:114-122, 148-156, 182-190`). It is memory-bound, strided, and has
-poor row-buffer locality — hence its dominance.
+(`transformer_layer.cpp:114-122, 148-156, 182-190`). It contains strided host-memory accesses,
+but the isolated measurements show that it is a small part of current end-to-end execution.
 
 ### 1.3 What UPMEM offers today (the two existing read methods)
 TAG is framed against UPMEM's existing DPU→host read methods:
@@ -50,9 +61,9 @@ TAG is framed against UPMEM's existing DPU→host read methods:
 
 ### 1.4 The precise problem statement
 > Reading DPU MRAM in its stored (DPU-tiled) order forces a subsequent CPU scatter/gather to
-> reach logical layout. That scatter/gather is ~72% of host-side time. We need a **third read
-> method** that produces the **logically-ordered** stream directly during the transfer, so the
-> CPU reorder disappears.
+> reach logical layout. A **third read method** could produce the **logically-ordered** stream
+> directly during transfer, but its benefit must be compared with the measured pure CPU reorder
+> cost and any extra transfer cost caused by strided MRAM access.
 
 ---
 
@@ -99,7 +110,7 @@ is built to measure.
 - **`tag=on`:** one descriptor-driven strided transfer; the reorder is folded in, the separate
   CPU-reorder cost is removed. TAG's own timing (address-gen throughput, setup latency) is charged.
 
-The headline result is `cycles(tag=off) − cycles(tag=on)` at each of the 5 reorder sites, and
+The headline result is `cycles(tag=off) − cycles(tag=on)` at each of the 4 reorder sites, and
 the functional anchor is that `tag=on`'s reordered output **bit-matches** the CPU reorder.
 
 ---
@@ -144,20 +155,21 @@ Phase-1 co-sim vehicle.
 - **Test:** `o` projection: H2D 12288 B → 29220 cycles, D2H 4096 B → 11677 cycles; bit-match PASS.
 
 ### Phase B — Model the baseline CPU reorder as a transfer/DRAM cost
-**Goal:** the number TAG will attack, inside the simulator, anchored to the §1.1 fractions.
+**Goal:** represent the exact reorder access pattern and calibrate its host cost against the
+isolated native timers.
 - New package `src/host/vm/tag/` with a **descriptor** type capturing one reorder site:
   `AccessPattern{ segments []Segment }`, `Segment{ dpu int; mramAddr, sizeBytes int64;
   logicalAddr int64 }`. A builder `BuildReorderPattern(params, site)` enumerates segments by
   porting the `q/k/v_offset` loops (`transformer_layer.cpp`) — one segment per
   `feature_mtile_size` run.
-- A cost model `ReorderCost(pattern)` that charges the DRAM model per segment: small strided
-  reads with poor row-buffer reuse (reuse `RowBuffer` accounting semantics — each stride that
-  crosses a wordline forces an activation+precharge).
+- A cost model `ReorderCost(pattern)` calibrated to the native CPU reorder measurements. CPU
+  reordering accesses host memory, so DPU MRAM row-buffer timing must not be used as its baseline
+  cost. The DPU DRAM model is used separately for TAG's gather reads.
 - Expose site parameters to the host: pass `AttentionParams` fields via `dpu_arguments` /
   a sidecar JSON in the patch dir (co-sim already has a patch dir), so uPIMulator knows the
   geometry without running ggml.
-- **Deliverable:** per-site `reorder_baseline_cycles` in `log.txt`; their ratios should track the
-  §1.1 breakdown (gelu+FFN1 largest, attention reorder smallest).
+- **Deliverable:** per-site `reorder_baseline_cycles` in `log.txt`; their ratios and total must
+  track the four pure reorder timers, excluding GELU, normalization, and residual compute.
 - **Test:** a Go unit test on `BuildReorderPattern` — the enumerated `(logicalAddr → dpu,mramAddr)`
   map must be a bijection identical to the C++ reorder for a small config (compare against a
   reference table generated from the PIM-DL formulas).
@@ -188,18 +200,18 @@ Phase-1 co-sim vehicle.
   of the **post-reorder** logical tensor (a second tap in `transformer_layer.cpp` after the
   reorder loop, guarded by `PIMDL_COSIM_DUMP`). `cosim_check.py` gains a `--reordered` mode that
   compares TAG's gathered buffer against PIM-DL's post-reorder reference.
-- **Deliverable:** `PASS [<site>] reorder bit-match` for all 5 sites.
+- **Deliverable:** `PASS [<site>] reorder bit-match` for all 4 sites.
 - **Test:** the existing PASS/FAIL harness, extended; a deliberate stride error must FAIL.
 
 ### Phase E — Evaluation sweeps
 **Goal:** the paper numbers.
 - Sweep `seq_len, head_dim, batch, n_tile_size, lut_parallelism` and report, per site and summed:
   baseline (parallel read + reorder) vs TAG total cycles, and the reorder/transfer component.
-- Show the baseline reorder cost **scales** with the access pattern (segment count) while TAG
-  stays flat (descriptor-driven), reproducing the §1.1 story that reorder dominates — and that
-  TAG removes it.
+- Show how both the baseline reorder and TAG gather costs scale with payload, segment count, and
+  MRAM locality. A descriptor removes host address-generation work, but does not make the bytes
+  or gather operations free.
 - **Deliverable:** a results table + the `off`-vs-`on` speedup on the reorder component;
-  cross-checked that total non-AMM time drops by ~the reorder fraction.
+  cross-checked against the measured pure-reorder fraction of end-to-end time.
 
 ---
 
@@ -225,10 +237,10 @@ Both are single files/functions; swapping the spec in does not touch Phases A/B/
 | Phase | Adds | Key file(s) | Proves |
 |-------|------|-------------|--------|
 | A | readback costs cycles | `virtual_machine.go` (enable `SimulateMemory`) | transfer has a measurable cost |
-| B | baseline reorder cost model | `src/host/vm/tag/pattern.go`, `cost.go` | the ~72% overhead, in-sim |
+| B | baseline reorder cost model | `src/host/vm/tag/pattern.go`, `cost.go` | isolated CPU reorder cost, in-sim |
 | C | TAG engine + `--tag` switch | `src/host/vm/tag/engine.go`, `main.go` | third read method exists |
 | D | reorder bit-match | native post-reorder tap, `cosim_check.py` | TAG is functionally exact |
-| E | sweeps | scripts under `tools/` | TAG removes the overhead, scales flat |
+| E | sweeps | scripts under `tools/` | measured TAG benefit and scaling |
 
 The functional anchor throughout is the Phase-1 bit-match, now extended from DPU-tiled output to
 post-reorder logical output — TAG is correct iff it reproduces PIM-DL's reorder byte-for-byte.

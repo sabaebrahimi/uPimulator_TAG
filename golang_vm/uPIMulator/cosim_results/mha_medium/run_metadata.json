@@ -1,0 +1,6 @@
+{
+  "pim_aggregation": "sum projections; each projection uses the maximum DPU logic cycles; the kernel loop drains DPU-local memory before ending",
+  "transfer_aggregation": "sum projection HostTransfer wall cycles",
+  "multi_dpu_validation": "timing launches every DPU; output bit-match currently covers DPU 0 shard",
+  "warning": "Compare runs only when xfer_model matches"
+}

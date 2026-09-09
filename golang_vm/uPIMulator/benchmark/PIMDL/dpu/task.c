@@ -50,6 +50,23 @@
 #define MAX_OUTPUT_PER_RW (2048 / OUTPUT_SIZE)
 #define MAX_LUT_PER_RW (2048 / LUT_SIZE)
 #define N_PER_TASKLET (N_MTILE_SIZE / NR_TASKLETS)
+#define LUT_CACHE_CB 4
+#if LUT_LOAD_TYPE == 2
+#define LUT_CACHE_FEATURE FEATURE_LOAD_TILE_SIZE
+#else
+#define LUT_CACHE_FEATURE FEATURE_MTILE_SIZE
+#endif
+#define LUT_CACHE_SIZE (LUT_CACHE_FEATURE * LUT_CACHE_CB * NUM_CENTROID)
+
+#if (CB_MTILE_SIZE % LUT_CACHE_CB) != 0
+#error "CB_MTILE_SIZE must be divisible by LUT_CACHE_CB"
+#endif
+#if (N_MTILE_SIZE % NR_TASKLETS) != 0
+#error "N_MTILE_SIZE must be divisible by NR_TASKLETS"
+#endif
+#if (LUT_CACHE_FEATURE * LUT_SIZE) > 2048
+#error "A streamed LUT feature slice must fit in one MRAM DMA"
+#endif
 
 
 /*------------------LUT table-----------------------*/
@@ -68,7 +85,7 @@ __host dpu_arguments_t dpu_arguments;
 /*------------------WRAM Buffers (shared by all tasklets)-----------------------*/
 __dma_aligned index_data_type input_index_buffer[INPUT_MTILE_SIZE];
 __dma_aligned output_data_type output_result_buffer[OUTPUT_MTILE_SIZE];
-__dma_aligned lut_data_type lut_table_buffer[FEATURE_STILE_SIZE * NUM_CODEBOOK * NUM_CENTROID];
+__dma_aligned lut_data_type lut_cache[LUT_CACHE_SIZE];
 
 
 /*------------------Barrier for tasklet sync-----------------------*/
@@ -93,24 +110,6 @@ void lut_kernel()
     // on-chip buffer offsets of each tasklet
     uint32_t output_buffer_offset = OUTPUT_BUFFER_SIZE_PER_TASKLET * tasklet_id;
     uint32_t input_buffer_offset = INPUT_BUFFER_SIZE_PER_TASKLET * tasklet_id;
-    uint32_t lut_buffer_offset = LUT_BUFFER_SIZE_PER_TASKLET * tasklet_id;
-
-    // load lut table first
-    uint32_t lut_tensor_offset = lut_buffer_offset;
-#if LUT_BUFFER_BYTE_PER_TASKLET > 2048
-    uint32_t tmp_lut_offset = 0;
-    uint32_t tmp_lut_byte_offset = 0;
-    for(tmp_lut_byte_offset=0; tmp_lut_byte_offset<LUT_BUFFER_BYTE_PER_TASKLET-2048; tmp_lut_byte_offset+=2048)
-    {
-        mram_read(&lut_table[lut_tensor_offset+tmp_lut_offset], &lut_table_buffer[lut_buffer_offset+tmp_lut_offset], 2048);
-        tmp_lut_offset += MAX_LUT_PER_RW;
-    }
-    mram_read(&lut_table[lut_tensor_offset+tmp_lut_offset], &lut_table_buffer[lut_buffer_offset+tmp_lut_offset], LUT_BUFFER_BYTE_PER_TASKLET-2048);
-#else
-    mram_read(&lut_table[lut_tensor_offset], &lut_table_buffer[lut_buffer_offset], LUT_BUFFER_BYTE_PER_TASKLET);
-#endif
-    barrier_wait(&lut_load_barrier);
-
     // tile offset, changing along with loop iteration
     uint32_t input_mtile_offset = 0; // each mtile's size is N_MTILE_SIZE * CB_MTILE_SIZE
     uint32_t output_mtile_offset = 0; // each mtile's size is N_MTILE_SIZE * FEATURE_MTILE_SIZE
@@ -143,25 +142,56 @@ void lut_kernel()
                 mram_read(&input_index[input_tensor_offset], &input_index_buffer[input_buffer_offset], INPUT_BUFFER_BYTE_PER_TASKLET);
 #endif
 
-                // read lut and compute
-                uint32_t tmp_input_row_offset = 0;
-                uint32_t tmp_output_row_offset = 0;
-                for(uint32_t tmp_row=0; tmp_row<N_PER_TASKLET; ++tmp_row)
+                // Stream one small feature/codebook chunk from MRAM into WRAM.
+                // Coarse-grain and static LUT modes use different MRAM orders.
+                for(uint32_t tmp_cache_feature=0; tmp_cache_feature<FEATURE_MTILE_SIZE; tmp_cache_feature+=LUT_CACHE_FEATURE)
                 {
-                    uint32_t lut_cbtile_offset = 0;
-                    for(uint32_t tmp_cb=0; tmp_cb<CB_MTILE_SIZE; ++tmp_cb)
+                  for(uint32_t tmp_cache_cb=0; tmp_cache_cb<CB_MTILE_SIZE; tmp_cache_cb+=LUT_CACHE_CB)
+                  {
+                    if(tasklet_id == 0)
                     {
-                        uint32_t tmp_index = input_index_buffer[input_buffer_offset + tmp_input_row_offset + tmp_cb];
-                        for(uint32_t tmp_f=0; tmp_f<FEATURE_MTILE_SIZE; ++tmp_f)
+                        for(uint32_t tmp_cb=0; tmp_cb<LUT_CACHE_CB; ++tmp_cb)
                         {
-                            output_result_buffer[output_buffer_offset + tmp_output_row_offset + tmp_f] += lut_table_buffer[lut_cbmtile_offset + lut_cbtile_offset + tmp_index + tmp_init_feature + tmp_f];
+                            for(uint32_t tmp_centroid=0; tmp_centroid<NUM_CENTROID; ++tmp_centroid)
+                            {
+#if LUT_LOAD_TYPE == 2
+                                uint32_t mram_offset = (tmp_init_feature + tmp_cache_feature) * NUM_CODEBOOK * NUM_CENTROID
+                                                     + (tmp_init_cb + tmp_cache_cb + tmp_cb) * NUM_CENTROID * FEATURE_LOAD_TILE_SIZE
+                                                     + tmp_centroid * FEATURE_LOAD_TILE_SIZE;
+#else
+                                uint32_t mram_offset = (tmp_init_cb + tmp_cache_cb + tmp_cb) * NUM_CENTROID * FEATURE_STILE_SIZE
+                                                     + tmp_centroid * FEATURE_STILE_SIZE + tmp_init_feature + tmp_cache_feature;
+#endif
+                                uint32_t cache_offset = (tmp_cb * NUM_CENTROID + tmp_centroid) * LUT_CACHE_FEATURE;
+                                mram_read(&lut_table[mram_offset], &lut_cache[cache_offset], LUT_CACHE_FEATURE * LUT_SIZE);
+                            }
                         }
-
-                        lut_cbtile_offset += LUT_CBTILE_SIZE;
                     }
+                    barrier_wait(&lut_load_barrier);
 
-                    tmp_input_row_offset += CB_MTILE_SIZE;
-                    tmp_output_row_offset += FEATURE_MTILE_SIZE;
+                    uint32_t tmp_input_row_offset = 0;
+                    uint32_t tmp_output_row_offset = 0;
+                    for(uint32_t tmp_row=0; tmp_row<N_PER_TASKLET; ++tmp_row)
+                    {
+                        for(uint32_t tmp_cb=0; tmp_cb<LUT_CACHE_CB; ++tmp_cb)
+                        {
+                            uint32_t tmp_index = input_index_buffer[input_buffer_offset + tmp_input_row_offset + tmp_cache_cb + tmp_cb];
+#if LUT_LOAD_TYPE == 2
+                            uint32_t tmp_centroid = (tmp_index % (NUM_CENTROID * FEATURE_LOAD_TILE_SIZE)) / FEATURE_LOAD_TILE_SIZE;
+#else
+                            uint32_t tmp_centroid = tmp_index / FEATURE_STILE_SIZE;
+#endif
+                            if(tmp_centroid >= NUM_CENTROID)
+                                continue;
+                            uint32_t cache_offset = (tmp_cb * NUM_CENTROID + tmp_centroid) * LUT_CACHE_FEATURE;
+                            for(uint32_t tmp_f=0; tmp_f<LUT_CACHE_FEATURE; ++tmp_f)
+                                output_result_buffer[output_buffer_offset + tmp_output_row_offset + tmp_cache_feature + tmp_f] += lut_cache[cache_offset + tmp_f];
+                        }
+                        tmp_input_row_offset += CB_MTILE_SIZE;
+                        tmp_output_row_offset += FEATURE_MTILE_SIZE;
+                    }
+                    barrier_wait(&lut_load_barrier);
+                  }
                 }
 
                 // update input's stile offset
@@ -179,7 +209,8 @@ void lut_kernel()
                 mram_write(&output_result_buffer[output_buffer_offset+tmp_output_offset], &output_data[output_tensor_offset+tmp_output_offset], 2048);
                 tmp_output_offset += MAX_OUTPUT_PER_RW;
             }
-            mram_write(&output_result_buffer[output_buffer_offset+tmp_output_offset], &output_data[output_tensor_offset+tmp_output_offset], OUTPUT_BUFFER_BYTE_PER_TASKLET-2048);
+            mram_write(&output_result_buffer[output_buffer_offset+tmp_output_offset], &output_data[output_tensor_offset+tmp_output_offset],
+                       OUTPUT_BUFFER_BYTE_PER_TASKLET-tmp_output_byte_offset);
 #else
             mram_write(&output_result_buffer[output_buffer_offset], &output_data[output_tensor_offset], OUTPUT_BUFFER_BYTE_PER_TASKLET);
 #endif

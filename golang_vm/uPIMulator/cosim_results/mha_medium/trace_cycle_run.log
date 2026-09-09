@@ -1,0 +1,16 @@
+[1 DPU] uPIMulator kernels and transfers
+
+DPUs  Host(ms)  Transfer(ms)  PIM(ms)  Attention(ms)  Reorder(ms)  Other host(ms)  Total(ms)
+   1     1.404         1.119  200.420          0.112        0.022           1.271    202.943
+   8     1.378         0.968   24.987          0.102        0.021           1.255     27.333
+
+Wrote /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/mha_medium/results.csv
+Wrote /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/mha_medium/projection_results.csv
+[8 DPU] uPIMulator kernels and transfers
+
+DPUs  Host(ms)  Transfer(ms)  PIM(ms)  Attention(ms)  Reorder(ms)  Other host(ms)  Total(ms)
+   1     1.404         1.119  200.420          0.112        0.022           1.271    202.943
+   8     1.378         1.050   28.164          0.102        0.021           1.255     30.591
+
+Wrote /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/mha_medium/results.csv
+Wrote /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/mha_medium/projection_results.csv

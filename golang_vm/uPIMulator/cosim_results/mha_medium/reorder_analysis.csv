@@ -1,0 +1,10 @@
+experiment,dpus,pure_reorder_ms,reorder_related_stages_ms,host_ms,total_ms,microtile_qkv,microtile_o,microtile_ffn1,microtile_ffn2,reordered_payload_bytes,aggregate_block_iterations
+normal_small_cycle_accurate,1,0.0145,,0.8123,5.3915,16,16,16,16,57344,896
+normal_small_cycle_accurate,8,0.0275,,0.8921,1.7627,4,4,8,4,57344,3072
+medium_mha_cycle_accurate,1,0.0220,,1.4041,202.9435,16,16,16,16,229376,3584
+medium_mha_cycle_accurate,8,0.0205,,1.3776,27.4149,16,16,16,16,229376,3584
+medium_mha_host_replay,1,0.0145,0.0505,,,16,16,16,16,229376,3584
+medium_mha_host_replay,8,0.0155,0.0520,,,16,16,16,16,229376,3584
+full_mha_host_replay,1,0.2225,0.6730,20.9099,,32,32,32,32,3538944,27648
+full_mha_host_replay,8,0.2245,0.6750,20.6130,,32,32,32,32,3538944,27648
+full_mha_host_replay,16,0.2600,0.7245,20.6123,,16,16,16,16,3538944,55296

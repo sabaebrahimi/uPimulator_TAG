@@ -1,0 +1,38 @@
+error obtaining VCS status: exit status 128
+	Use -buildvcs=false to disable VCS stamping.
+
+Traceback (most recent call last):
+  File "/home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/tools/cosim_results.py", line 301, in <module>
+    main()
+    ~~~~^^
+  File "/home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/tools/cosim_results.py", line 240, in main
+    run(["go", "build", "-o", "build/uPIMulator", "./src"], upim,
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        env | {"GOCACHE": "/tmp/cosim-go-cache"})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/tools/cosim_results.py", line 36, in run
+    raise subprocess.CalledProcessError(result.returncode, command)
+subprocess.CalledProcessError: Command '['go', 'build', '-o', 'build/uPIMulator', './src']' returned non-zero exit status 1.
+[1 DPU] uPIMulator kernels and transfers
+Traceback (most recent call last):
+  File "/home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/tools/cosim_results.py", line 301, in <module>
+    main()
+    ~~~~^^
+  File "/home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/tools/cosim_results.py", line 280, in main
+    pim_ms, transfer_ms = run_upim(upim, cfg, dump_dir, result_dir, build_dir, env)
+                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/tools/cosim_results.py", line 187, in run_upim
+    raise ValueError(f"{dpus}-DPU output mismatch")
+ValueError: 1-DPU output mismatch
+=== retry with host CB tile layout ===
+[1 DPU] uPIMulator kernels and transfers
+Traceback (most recent call last):
+  File "/home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/tools/cosim_results.py", line 301, in <module>
+    main()
+    ~~~~^^
+  File "/home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/tools/cosim_results.py", line 280, in main
+    pim_ms, transfer_ms = run_upim(upim, cfg, dump_dir, result_dir, build_dir, env)
+                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/tools/cosim_results.py", line 187, in run_upim
+    raise ValueError(f"{dpus}-DPU output mismatch: {', '.join(mismatches)}")
+ValueError: 1-DPU output mismatch: qkv, o, ffn1, ffn2

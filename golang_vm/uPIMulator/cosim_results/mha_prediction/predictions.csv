@@ -1,0 +1,13 @@
+kind,batch,seq_len,token_dim,ffn_hidden_dim,dpus,payload_bytes,pure_reorder_ms_low,pure_reorder_ms_high,status
+measured,1,128,768,3072,1,3538944,0.2225,0.2225,measured
+measured,1,128,768,3072,8,3538944,0.2245,0.2245,measured
+measured,1,512,768,3072,1,14155776,1.5085,1.5085,measured
+measured,1,512,768,3072,8,14155776,1.4905,1.4905,measured
+measured,1,1024,768,3072,1,28311552,3.6790,3.6790,measured
+measured,1,1024,768,3072,8,28311552,3.6495,3.6495,measured
+predicted,1,2048,768,3072,1_or_8,56623104,7.3,9.0,sequence_extrapolation
+predicted,1,4096,768,3072,1_or_8,113246208,14.7,21.9,sequence_extrapolation
+predicted,1,512,1024,4096,1_or_8,18874368,1.8,2.3,width_extrapolation
+predicted,1,2048,4096,16384,1_or_8,301989888,39,48,width_and_sequence_extrapolation
+predicted,8,512,768,3072,1_or_8,113246208,12,15,batch_extrapolation
+predicted,64,512,768,3072,1_or_8,905969664,96,120,batch_extrapolation

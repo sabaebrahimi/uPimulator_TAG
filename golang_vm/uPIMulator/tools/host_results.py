@@ -99,7 +99,11 @@ def main():
     results_dir = args.results_dir or Path("cosim_results/host_only" if args.model == "tiny" else "cosim_results/host_mha")
     results = (upim / results_dir).resolve()
     results.mkdir(parents=True, exist_ok=True)
-    python_lib = Path("/home/saba/.pyenv/versions/3.10.16/lib")
+    python_lib = Path(os.environ.get("PIMDL_PYTHON_LIB", "/home/saba/.pyenv/versions/3.10.16/lib"))
+    if not (python_lib / "libpython3.10.so.1.0").exists():
+        fallback = Path("/home/saba/.pyenv/versions/3.10.14/lib")
+        if (fallback / "libpython3.10.so.1.0").exists():
+            python_lib = fallback
 
     env = os.environ.copy()
     env.update({
@@ -118,12 +122,24 @@ def main():
              "test_transformer_layer", "-j"], repo, env)
 
     binary = pimdl / "build/bin/test_transformer_layer"
-    outputs = {1: [], 8: []}
+    dpus_list = (1, 8, 16) if args.model == "mha" else (1, 8)
+    outputs = {dpus: [] for dpus in dpus_list}
     for sample in range(args.runs):
-        for dpus in (1, 8):
+        for dpus in dpus_list:
             print(f"[{dpus} DPU] host replay {sample + 1}/{args.runs}")
-            config_name = f"cosim_results_{dpus}dpu.yaml" if args.model == "tiny" else f"host_replay_mha_{dpus}dpu.yaml"
-            config = pimdl / "configs" / config_name
+            if args.model == "mha" and dpus == 16:
+                config = results / "host_replay_mha_16dpu.yaml"
+                if not config.exists():
+                    with (pimdl / "configs/host_replay_mha_8dpu.yaml").open(encoding="utf-8") as stream:
+                        cfg = yaml.safe_load(stream)
+                    cfg["system_params"]["dpu_num"] = 16
+                    for name in ("qkv", "o", "ffn1", "ffn2"):
+                        cfg["kernel_params"][f"{name}_lut_parallelism"] = 16
+                        cfg["kernel_params"][f"{name}_feature_mtile_size"] = 16
+                    config.write_text(yaml.safe_dump(cfg, sort_keys=False), encoding="utf-8")
+            else:
+                config_name = f"cosim_results_{dpus}dpu.yaml" if args.model == "tiny" else f"host_replay_mha_{dpus}dpu.yaml"
+                config = pimdl / "configs" / config_name
             if args.model == "tiny":
                 dumps = upim / f"cosim_results/{dpus}dpu/dumps"
             else:
@@ -133,7 +149,7 @@ def main():
                                      env | {"PIMDL_HOST_REPLAY_DIR": str(dumps)}))
 
     rows = []
-    for dpus in (1, 8):
+    for dpus in dpus_list:
         (results / f"host_{dpus}dpu.log").write_text("\n".join(outputs[dpus]), encoding="utf-8")
         samples = [parse_host(output) for output in outputs[dpus]]
         row = {key: statistics.median(sample[key] for sample in samples)

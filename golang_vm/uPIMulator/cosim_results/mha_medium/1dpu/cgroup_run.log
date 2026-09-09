@@ -1,0 +1,324 @@
+Traceback (most recent call last):
+  File "/home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/tools/cosim_results.py", line 334, in <module>
+    main()
+    ~~~~^^
+  File "/home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/tools/cosim_results.py", line 260, in main
+    selected_cfg = yaml.safe_load(stream)
+                   ^^^^
+UnboundLocalError: cannot access local variable 'yaml' where it is not associated with a value
+=== corrected runner retry ===
+[1 DPU] PIM-DL host measurement
+OPENMP FOUND
+CMake Deprecation Warning at 3rd/ggml/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- CMAKE_SYSTEM_PROCESSOR: x86_64
+-- x86 detected
+-- Linux detected
+CMake Deprecation Warning at 3rd/cnpy/CMakeLists.txt:1 (CMAKE_MINIMUM_REQUIRED):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+CMAKE C FLAGS:  -fopenmp -fPIC  -DNR_TASKLETS=16 -O3
+CMAKE CXX FLAGS:  -fopenmp -std=c++11 -Wall -g -O3 
+CMAKE CXX FLAGS:  -fopenmp -std=c++11 -Wall -g -O3 
+-- Configuring done (0.0s)
+CMake Warning at src/dpu/CMakeLists.txt:57 (target_link_libraries):
+  Target "dpu_bin_qkv" requests linking to directory
+  "/home/saba/master/upmem-2025.1.0-Linux-x86_64/lib".  Targets may link only
+  to libraries.  CMake is dropping the item.
+
+
+CMake Warning at src/dpu/CMakeLists.txt:93 (target_link_libraries):
+  Target "dpu_bin_o" requests linking to directory
+  "/home/saba/master/upmem-2025.1.0-Linux-x86_64/lib".  Targets may link only
+  to libraries.  CMake is dropping the item.
+
+
+CMake Warning at src/dpu/CMakeLists.txt:129 (target_link_libraries):
+  Target "dpu_bin_ffn1" requests linking to directory
+  "/home/saba/master/upmem-2025.1.0-Linux-x86_64/lib".  Targets may link only
+  to libraries.  CMake is dropping the item.
+
+
+CMake Warning at src/dpu/CMakeLists.txt:165 (target_link_libraries):
+  Target "dpu_bin_ffn2" requests linking to directory
+  "/home/saba/master/upmem-2025.1.0-Linux-x86_64/lib".  Targets may link only
+  to libraries.  CMake is dropping the item.
+
+
+-- Generating done (0.0s)
+-- Build files have been written to: /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/build
+[  1%] Building C object src/dpu/CMakeFiles/dpu_bin_qkv.dir/pim_lut_kernel.c.o
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+[  4%] Built target ggml
+[  7%] Built target cnpy
+[  8%] Building C object src/dpu/CMakeFiles/dpu_bin_ffn1.dir/pim_lut_kernel.c.o
+[ 10%] Building C object src/dpu/CMakeFiles/dpu_bin_o.dir/pim_lut_kernel.c.o
+[ 13%] Built target cnpy-static
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+[ 59%] Built target yaml-cpp
+[ 62%] Built target example1
+[ 65%] Building C object src/dpu/CMakeFiles/dpu_bin_ffn2.dir/pim_lut_kernel.c.o
+[ 66%] Built target yaml-cpp-read
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+[ 69%] Built target yaml-cpp-parse
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+[ 72%] Built target yaml-cpp-sandbox
+[ 73%] Building CXX object src/host/CMakeFiles/host.dir/amm_host.cpp.o
+[ 76%] Built target tuner
+[ 78%] Building CXX object src/host/CMakeFiles/host.dir/index_calc_host.cpp.o
+[ 79%] Building CXX object src/host/CMakeFiles/host.dir/parser.cpp.o
+[ 81%] Building CXX object src/host/CMakeFiles/host.dir/pim_lut_host.cpp.o
+[ 82%] Building CXX object src/host/CMakeFiles/host.dir/transformer_layer.cpp.o
+[ 84%] Building CXX object src/host/CMakeFiles/host.dir/transformer_model.cpp.o
+[ 85%] Linking C executable ../../bin/dpu_bin_qkv
+[ 86%] Linking C executable ../../bin/dpu_bin_ffn1
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/ld.lld: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/ld.lld: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/ld.lld: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/ld.lld: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+[ 88%] Linking C executable ../../bin/dpu_bin_o
+[ 89%] Linking C executable ../../bin/dpu_bin_ffn2
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+[ 89%] Built target dpu_bin_ffn1
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/clang: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/ld.lld: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/ld.lld: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+[ 89%] Built target dpu_bin_qkv
+[ 89%] Built target dpu_bin_ffn2
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/ld.lld: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+/home/saba/master/upmem-2025.1.0-Linux-x86_64/bin/ld.lld: /lib/x86_64-linux-gnu/libxml2.so.2: no version information available (required by /home/saba/master/upmem-2025.1.0-Linux-x86_64/lib/libLLVM-12.so)
+[ 89%] Built target dpu_bin_o
+In file included from /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/transformer_layer.cpp:3:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h:34:13: warning: ‘void free_dpu_set(dpu_set_t*)’ defined but not used [-Wunused-function]
+   34 | static void free_dpu_set(dpu_set_t* dpu_set)
+      |             ^~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h:23:17: warning: ‘uint32_t allocate_rank(dpu_set_t*, uint32_t)’ defined but not used [-Wunused-function]
+   23 | static uint32_t allocate_rank(dpu_set_t* dpu_set, uint32_t rank_num)
+      |                 ^~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h:12:17: warning: ‘uint32_t allocate_dpu(dpu_set_t*, uint32_t)’ defined but not used [-Wunused-function]
+   12 | static uint32_t allocate_dpu(dpu_set_t* dpu_set, uint32_t dpu_num)
+      |                 ^~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/pim_lut_host.cpp: In function ‘void prepare_parameters(dpu_set_t*, dpu_arguments_t*)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/pim_lut_host.cpp:160:14: warning: variable ‘each_dpu’ set but not used [-Wunused-but-set-variable]
+  160 |     uint32_t each_dpu;
+      |              ^~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/pim_lut_host.cpp: In function ‘void pim_lut(LUTParams, dpu_set_t*, index_data_type*, lut_data_type*, float*, float*)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/pim_lut_host.cpp:399:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  399 |     for(int dpu_id=0; dpu_id<lut_params.dpu_num; ++dpu_id)
+      |                       ~~~~~~^~~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/pim_lut_host.cpp:403:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  403 |         for(int i=0; i<output_offset; ++i)
+      |                      ~^~~~~~~~~~~~~~
+In file included from /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/pim_lut_host.cpp:14:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h: At global scope:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h:39:13: warning: ‘void load_binary(dpu_set_t*, std::string)’ defined but not used [-Wunused-function]
+   39 | static void load_binary(dpu_set_t* dpu_set, std::string binary_name="")
+      |             ^~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h:34:13: warning: ‘void free_dpu_set(dpu_set_t*)’ defined but not used [-Wunused-function]
+   34 | static void free_dpu_set(dpu_set_t* dpu_set)
+      |             ^~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h:23:17: warning: ‘uint32_t allocate_rank(dpu_set_t*, uint32_t)’ defined but not used [-Wunused-function]
+   23 | static uint32_t allocate_rank(dpu_set_t* dpu_set, uint32_t rank_num)
+      |                 ^~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h:12:17: warning: ‘uint32_t allocate_dpu(dpu_set_t*, uint32_t)’ defined but not used [-Wunused-function]
+   12 | static uint32_t allocate_dpu(dpu_set_t* dpu_set, uint32_t dpu_num)
+      |                 ^~~~~~~~~~~~
+In file included from /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/pim_lut_host.cpp:13:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/utils.h:51:15: warning: ‘double W_time()’ defined but not used [-Wunused-function]
+   51 | static double W_time() {
+      |               ^~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/transformer_model.cpp: In function ‘ggml_tensor* transformer_inference(dpu_set_t*, ggml_context*, Transformer*, ggml_tensor*, TransformerParams&)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/transformer_model.cpp:32:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   32 |     for(int i=0; i<model_weight->layer_num; ++i)
+      |                  ~^~~~~~~~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/transformer_model.cpp:35:14: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   35 |         if(i < model_weight->layer_num-1)
+      |            ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/transformer_model.cpp:2:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/utils.h: At global scope:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/utils.h:51:15: warning: ‘double W_time()’ defined but not used [-Wunused-function]
+   51 | static double W_time() {
+      |               ^~~~~~
+In file included from /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/amm_host.cpp:4:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/utils.h:51:15: warning: ‘double W_time()’ defined but not used [-Wunused-function]
+   51 | static double W_time() {
+      |               ^~~~~~
+[ 91%] Linking CXX shared library ../../lib/libhost.so
+[ 91%] Built target host
+[ 95%] Building CXX object test/CMakeFiles/test_amm.dir/test_amm.cpp.o
+[ 95%] Building CXX object test/CMakeFiles/test_transformer_layer.dir/test_transformer_layer.cpp.o
+[ 95%] Building CXX object test/CMakeFiles/test_transformer.dir/test_transformer.cpp.o
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp: In function ‘void generate_input_tensor(float*, uint32_t, uint32_t)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:32:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   32 |     for(int i=0; i<input_tensor_size; ++i)
+      |                  ~^~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp: In function ‘void generate_centroid_tensor(float*, uint32_t, uint32_t)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:42:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   42 |     for(int i=0; i<centroid_tensor_size; ++i)
+      |                  ~^~~~~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp: In function ‘void generate_lut_data(lut_data_type*, uint32_t, uint32_t)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:55:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   55 |     for(int i=0; i<lut_table_size; ++i)
+      |                  ~^~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp: In function ‘void generate_bias_tensor(float*, uint32_t, uint32_t)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:65:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   65 |     for(int i=0; i<bias_tensor_size; ++i)
+      |                  ~^~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp: In function ‘void amm_cpu(float*, float*, lut_data_type*, float*, float*, IndexCalcParams, LUTParams)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:179:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  179 |     for(int i=0; i<lut_params.n; ++i)
+      |                  ~^~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:180:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  180 |         for(int j=0; j<lut_params.output_feature_len; ++j)
+      |                      ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp: In function ‘void check_dpu_result(float*, float*, LUTParams)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:189:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  189 |     for(int i=0; i<lut_params.n; ++i)
+      |                  ~^~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:191:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  191 |         for(int j=0; j<lut_params.output_feature_len; ++j)
+      |                      ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp: In function ‘void dump_result(float*, float*, LUTParams)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:218:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  218 |     for(int i=0; i<lut_params.dpu_num; ++i)
+      |                  ~^~~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:220:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  220 |         for(int j=0; j<lut_params.n_stile_size; ++j)
+      |                      ~^~~~~~~~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:222:27: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  222 |             for(int k=0; k<lut_params.feature_stile_size; ++k)
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:230:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  230 |     for(int i=0; i<lut_params.n; ++i)
+      |                  ~^~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:232:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  232 |         for(int j=0; j<lut_params.output_feature_len; ++j)
+      |                      ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp: In function ‘int main(int, char**)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:276:14: warning: variable ‘allocated_dpu_num’ set but not used [-Wunused-but-set-variable]
+  276 |     uint32_t allocated_dpu_num;
+      |              ^~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:289:12: warning: unused variable ‘cpu_total’ [-Wunused-variable]
+  289 |     double cpu_total = 0.0;
+      |            ^~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer_layer.cpp: In function ‘void generate_float_tensor(ggml_tensor*, uint32_t, uint32_t)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer_layer.cpp:93:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   93 |     for(int i=0; i<float_tensor_size; ++i)
+      |                  ~^~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer_layer.cpp: In function ‘void generate_lut_tensor(ggml_tensor*, uint32_t, uint32_t)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer_layer.cpp:108:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  108 |     for(int i=0; i<lut_table_size; ++i)
+      |                  ~^~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer_layer.cpp: In function ‘int main(int, char**)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer_layer.cpp:370:29: warning: unused variable ‘layer_output’ [-Wunused-variable]
+  370 |         struct ggml_tensor* layer_output = pim_lut_transformer_layer(&dpu_set, ctx0, &transformer_layer, input_tensor, transformer_params);
+      |                             ^~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer_layer.cpp:324:14: warning: variable ‘allocated_dpu_num’ set but not used [-Wunused-but-set-variable]
+  324 |     uint32_t allocated_dpu_num;
+      |              ^~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp: In function ‘void generate_float_tensor(ggml_tensor*, uint32_t, uint32_t)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp:74:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   74 |     for(int i=0; i<float_tensor_size; ++i)
+      |                  ~^~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp: In function ‘void generate_lut_tensor(ggml_tensor*, uint32_t, uint32_t)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp:89:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   89 |     for(int i=0; i<lut_table_size; ++i)
+      |                  ~^~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp: In function ‘void load_float_tensor(ggml_tensor*, uint32_t, const cnpy::npz_t&, std::string)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp:263:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<long unsigned int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  263 |     for(int i=0; i<npy_tensor.shape.size(); ++i)
+      |                  ~^~~~~~~~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp: In function ‘void load_lut_tensor(ggml_tensor*, uint32_t, const cnpy::npz_t&, std::string)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp:274:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<long unsigned int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  274 |     for(int i=0; i<npy_tensor.shape.size(); ++i)
+      |                  ~^~~~~~~~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp: In function ‘void generate_transformer_model_weight(Transformer&, TransformerParams&, std::string)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp:515:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  515 |         for(int i=0; i<transformer.layer_num; ++i)
+      |                      ~^~~~~~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp:525:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  525 |         for(int i=0; i<transformer.layer_num; ++i)
+      |                      ~^~~~~~~~~~~~~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp: In function ‘int main(int, char**)’:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp:571:14: warning: variable ‘allocated_dpu_num’ set but not used [-Wunused-but-set-variable]
+  571 |     uint32_t allocated_dpu_num;
+      |              ^~~~~~~~~~~~~~~~~
+In file included from /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_amm.cpp:12:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h: At global scope:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h:34:13: warning: ‘void free_dpu_set(dpu_set_t*)’ defined but not used [-Wunused-function]
+   34 | static void free_dpu_set(dpu_set_t* dpu_set)
+      |             ^~~~~~~~~~~~
+In file included from /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer_layer.cpp:20:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h: At global scope:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h:39:13: warning: ‘void load_binary(dpu_set_t*, std::string)’ defined but not used [-Wunused-function]
+   39 | static void load_binary(dpu_set_t* dpu_set, std::string binary_name="")
+      |             ^~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h:34:13: warning: ‘void free_dpu_set(dpu_set_t*)’ defined but not used [-Wunused-function]
+   34 | static void free_dpu_set(dpu_set_t* dpu_set)
+      |             ^~~~~~~~~~~~
+In file included from /home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/test/test_transformer.cpp:21:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h: At global scope:
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h:39:13: warning: ‘void load_binary(dpu_set_t*, std::string)’ defined but not used [-Wunused-function]
+   39 | static void load_binary(dpu_set_t* dpu_set, std::string binary_name="")
+      |             ^~~~~~~~~~~
+/home/saba/master/uPimulator_TAG/PIM-DL-ASPLOS/inference-engine/src/host/dpu_common.h:34:13: warning: ‘void free_dpu_set(dpu_set_t*)’ defined but not used [-Wunused-function]
+   34 | static void free_dpu_set(dpu_set_t* dpu_set)
+      |             ^~~~~~~~~~~~
+[ 97%] Linking CXX executable ../bin/test_transformer_layer
+[ 97%] Built target test_transformer_layer
+[ 98%] Linking CXX executable ../bin/test_amm
+[ 98%] Built target test_amm
+[100%] Linking CXX executable ../bin/test_transformer
+[100%] Built target test_transformer
+tasklet num 16
+n 64, seq len 64, batch size 1
+token din 128, ffn hidden dim 256
+----------QKV LUT Params----------
+num codebook 64, num centroid 16, loop order 0, lut load type 2
+input parallelism 1, lut parallelism 1, n stile 64, feature stile 384
+n mtile 64, feature mtile 16, cb mtile 32
+feature load tile 8, cb load tile 32
+----------O LUT Params----------
+num codebook 64, num centroid 16, loop order 0, lut load type 2
+input parallelism 1, lut parallelism 1, n stile 64, feature stile 128
+n mtile 64, feature mtile 16, cb mtile 32
+feature load tile 8, cb load tile 32
+----------FFN1 LUT Params----------
+num codebook 64, num centroid 16, loop order 0, lut load type 2
+input parallelism 1, lut parallelism 1, n stile 64, feature stile 256
+n mtile 64, feature mtile 16, cb mtile 32
+feature load tile 8, cb load tile 32
+----------FFN2 LUT Params----------
+num codebook 128, num centroid 16, loop order 0, lut load type 2
+input parallelism 1, lut parallelism 1, n stile 64, feature stile 128
+n mtile 64, feature mtile 16, cb mtile 32
+feature load tile 8, cb load tile 32
+[1 DPU] uPIMulator kernels and transfers
+
+DPUs  Host(ms)  Transfer(ms)  PIM(ms)  Attention(ms)  Reorder(ms)  Other host(ms)  Total(ms)
+   1     1.404         6.839  200.420          0.112        0.022           1.271    208.663
+
+Wrote /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/mha_medium/results.csv

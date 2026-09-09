@@ -3901,29 +3901,28 @@ func (this *VirtualMachine) PrepareByteStream(
 
 func (this *VirtualMachine) SimulateMemory() int64 {
 	cycles := int64(0)
+	// The old loop allocated a ThreadPool, one job per bank/DPU, and one
+	// goroutine per job on every simulated memory cycle. Long PIM-DL transfers
+	// execute millions of cycles, so that allocation churn could exhaust host
+	// RAM even though the simulated memory footprint itself was modest. Banks
+	// and DPUs do not share cycle-local mutable state, and the old pool waited at
+	// the end of every cycle, so cycle them directly and reuse the topology
+	// slices for the duration of this transfer.
+	banks := this.Banks()
+	dpus := this.Dpus()
+	vm_channels := this.memory_controller.VmChannels()
 	for len(this.push_xfer) > 0 {
 		cycles++
 
-		thread_pool := new(core.ThreadPool)
-		thread_pool.Init()
-
-		for _, bank_ := range this.Banks() {
-			bank_cycle_job := new(BankCycleJob)
-			bank_cycle_job.Init(bank_)
-
-			thread_pool.Enque(bank_cycle_job)
+		for _, bank_ := range banks {
+			bank_.Cycle()
 		}
 
-		for _, dpu_ := range this.Dpus() {
-			dpu_cycle_job := new(DpuCycleJob)
-			dpu_cycle_job.Init(dpu_)
-
-			thread_pool.Enque(dpu_cycle_job)
+		for _, dpu_ := range dpus {
+			dpu_.Cycle()
 		}
 
-		thread_pool.Start()
-
-		for _, vm_channel_ := range this.memory_controller.VmChannels() {
+		for _, vm_channel_ := range vm_channels {
 			vm_channel_.Cycle()
 		}
 

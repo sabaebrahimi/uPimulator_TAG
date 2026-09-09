@@ -1,0 +1,29 @@
+OPTIONS
+num_pipeline_stages  -->  14
+t_bl  -->  8
+benchmark  -->  PIMDL_FFN2
+num_ranks_per_channel  -->  1
+num_vm_channels  -->  1
+num_vm_banks_per_rank  -->  16
+logic_frequency  -->  350
+t_cl  -->  32
+num_dpus_per_rank  -->  1
+num_tasklets  -->  16
+data_prep_params  -->  65536
+bin_dirpath  -->  /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/mha_debug/1dpu/bin_cosim
+skip_compile  -->  1
+memory_frequency  -->  2400
+wordline_size  -->  1024
+t_ras  -->  78
+num_vm_ranks_per_channel  -->  2
+pimdl_patch_dirpath  -->  /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/mha_debug/1dpu/patch_ffn2
+pimdl_xfer_trace_path  -->  /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator/cosim_results/mha_debug/1dpu/patch_ffn2/pimdl_xfer_trace_ffn2.jsonl
+num_revolver_scheduling_cycles  -->  11
+min_access_granularity  -->  8
+reorder_window_size  -->  256
+t_rcd  -->  32
+t_rp  -->  32
+verbose  -->  0
+num_channels  -->  1
+root_dirpath  -->  /home/saba/master/uPimulator_TAG/golang_vm/uPIMulator
+

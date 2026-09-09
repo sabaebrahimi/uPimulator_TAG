@@ -1,0 +1,4 @@
+{"version":1,"type":"header","boundary":"o","num_dpus":1}
+{"version":1,"type":"transfer","boundary":"o","batch":0,"direction":"h2d","dpu":0,"symbol":"lut_table","mram_offset":0,"bytes":6291456,"host_offset":0,"kind":"lut"}
+{"version":1,"type":"transfer","boundary":"o","batch":1,"direction":"h2d","dpu":0,"symbol":"input_index","mram_offset":0,"bytes":131072,"host_offset":0,"kind":"index"}
+{"version":1,"type":"transfer","boundary":"o","batch":2,"direction":"d2h","dpu":0,"symbol":"output_data","mram_offset":0,"bytes":393216,"host_offset":0,"kind":"output"}

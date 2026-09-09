@@ -61,263 +61,2855 @@ dpu num 8, input parallelism 1, lut parallelism 8
 n tile size 128, q tile size 96, kv tile size 96
 num threads 1
 -----------------------------------
-parameter parsing time 0.001011
-weight initialization time 0.553971
+parameter parsing time 0.000410
+weight initialization time 0.176607
+dpu allocate time 0.000001
+--------------------------------------------
+input initialization time 0.000324
+index calculation time 0.002651
+other latency 0.000983, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.004197
+other latency 0.001334, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.006736
+other latency 0.002640, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.015946
+other latency 0.002977, data transfer latency 0.000000, pim kernel latency 0.000000
+amm time 0.019991, non amm time 0.003221
+attention reorder time 0.000256, attention cpu compute time 0.001773
+post o reorder+norm+residual time 0.000301, gelu+ffn1 reorder time 0.000547, post ffn2 reorder+norm+residual time 0.000307
+tensor allocation overhead time 0.000006, other non amm time 0.000031
+reorder breakdown: qkv_to_attention 0.000256, o 0.000093, ffn1 0.000331, ffn2 0.000093
+host breakdown: attention 0.001773, reorder 0.000773, other 0.000675
+iteration 0, inference time 0.023220
+--------------------------------------------
+input initialization time 0.000244
+index calculation time 0.018549
+other latency 0.003752, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.020185
+other latency 0.004025, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.022707
+other latency 0.005037, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.031901
+other latency 0.005311, data transfer latency 0.000000, pim kernel latency 0.000000
+amm time 0.018824, non amm time 0.002377
+attention reorder time 0.000087, attention cpu compute time 0.001660
+post o reorder+norm+residual time 0.000161, gelu+ffn1 reorder time 0.000309, post ffn2 reorder+norm+residual time 0.000153
+tensor allocation overhead time 0.000003, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000087, o 0.000023, ffn1 0.000093, ffn2 0.000019
+host breakdown: attention 0.001660, reorder 0.000222, other 0.000495
+iteration 1, inference time 0.021205
+--------------------------------------------
+input initialization time 0.000244
+index calculation time 0.034498
+other latency 0.006071, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.036090
+other latency 0.006341, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.038648
+other latency 0.007354, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.048173
+other latency 0.007611, data transfer latency 0.000000, pim kernel latency 0.000001
+amm time 0.018976, non amm time 0.002327
+attention reorder time 0.000076, attention cpu compute time 0.001628
+post o reorder+norm+residual time 0.000157, gelu+ffn1 reorder time 0.000307, post ffn2 reorder+norm+residual time 0.000156
+tensor allocation overhead time 0.000000, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000076, o 0.000019, ffn1 0.000113, ffn2 0.000021
+host breakdown: attention 0.001628, reorder 0.000229, other 0.000470
+iteration 2, inference time 0.021306
+--------------------------------------------
+input initialization time 0.000244
+index calculation time 0.050765
+other latency 0.008373, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.052282
+other latency 0.008642, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.054833
+other latency 0.009653, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.064198
+other latency 0.009924, data transfer latency 0.000000, pim kernel latency 0.000001
+amm time 0.018739, non amm time 0.002291
+attention reorder time 0.000093, attention cpu compute time 0.001594
+post o reorder+norm+residual time 0.000162, gelu+ffn1 reorder time 0.000272, post ffn2 reorder+norm+residual time 0.000164
+tensor allocation overhead time 0.000001, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000093, o 0.000022, ffn1 0.000089, ffn2 0.000025
+host breakdown: attention 0.001594, reorder 0.000229, other 0.000468
+iteration 3, inference time 0.021034
+--------------------------------------------
+input initialization time 0.000248
+index calculation time 0.066801
+other latency 0.010686, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.068308
+other latency 0.010967, data transfer latency 0.000001, pim kernel latency 0.000001
+index calculation time 0.070835
+other latency 0.011981, data transfer latency 0.000001, pim kernel latency 0.000001
+index calculation time 0.079977
+other latency 0.012241, data transfer latency 0.000001, pim kernel latency 0.000001
+amm time 0.018516, non amm time 0.002316
+attention reorder time 0.000085, attention cpu compute time 0.001616
+post o reorder+norm+residual time 0.000168, gelu+ffn1 reorder time 0.000284, post ffn2 reorder+norm+residual time 0.000156
+tensor allocation overhead time 0.000001, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000085, o 0.000023, ffn1 0.000098, ffn2 0.000021
+host breakdown: attention 0.001616, reorder 0.000227, other 0.000473
+iteration 4, inference time 0.020836
+--------------------------------------------
+input initialization time 0.000250
+index calculation time 0.082565
+other latency 0.013000, data transfer latency 0.000001, pim kernel latency 0.000001
+index calculation time 0.084249
+other latency 0.013269, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.086780
+other latency 0.014284, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.095906
+other latency 0.014561, data transfer latency 0.000002, pim kernel latency 0.000001
+amm time 0.018661, non amm time 0.002285
+attention reorder time 0.000078, attention cpu compute time 0.001593
+post o reorder+norm+residual time 0.000155, gelu+ffn1 reorder time 0.000297, post ffn2 reorder+norm+residual time 0.000159
+tensor allocation overhead time 0.000000, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000078, o 0.000017, ffn1 0.000134, ffn2 0.000022
+host breakdown: attention 0.001593, reorder 0.000251, other 0.000441
+iteration 5, inference time 0.020949
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.098507
+other latency 0.015320, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.100212
+other latency 0.015589, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.102731
+other latency 0.016609, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.112015
+other latency 0.016870, data transfer latency 0.000002, pim kernel latency 0.000001
+amm time 0.018805, non amm time 0.002338
+attention reorder time 0.000088, attention cpu compute time 0.001638
+post o reorder+norm+residual time 0.000160, gelu+ffn1 reorder time 0.000294, post ffn2 reorder+norm+residual time 0.000153
+tensor allocation overhead time 0.000002, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000088, o 0.000018, ffn1 0.000086, ffn2 0.000019
+host breakdown: attention 0.001638, reorder 0.000211, other 0.000489
+iteration 6, inference time 0.021148
+--------------------------------------------
+input initialization time 0.000244
+index calculation time 0.114613
+other latency 0.017629, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.116139
+other latency 0.017897, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.118675
+other latency 0.018909, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.127886
+other latency 0.019176, data transfer latency 0.000003, pim kernel latency 0.000001
+amm time 0.018574, non amm time 0.002293
+attention reorder time 0.000087, attention cpu compute time 0.001604
+post o reorder+norm+residual time 0.000163, gelu+ffn1 reorder time 0.000277, post ffn2 reorder+norm+residual time 0.000157
+tensor allocation overhead time 0.000000, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000087, o 0.000022, ffn1 0.000091, ffn2 0.000022
+host breakdown: attention 0.001604, reorder 0.000222, other 0.000467
+iteration 7, inference time 0.020872
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.130485
+other latency 0.019936, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.132000
+other latency 0.020204, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.134555
+other latency 0.021214, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.143716
+other latency 0.021483, data transfer latency 0.000003, pim kernel latency 0.000001
+amm time 0.018530, non amm time 0.002272
+attention reorder time 0.000079, attention cpu compute time 0.001609
+post o reorder+norm+residual time 0.000155, gelu+ffn1 reorder time 0.000255, post ffn2 reorder+norm+residual time 0.000169
+tensor allocation overhead time 0.000001, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000079, o 0.000017, ffn1 0.000095, ffn2 0.000024
+host breakdown: attention 0.001609, reorder 0.000215, other 0.000448
+iteration 8, inference time 0.020805
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.146315
+other latency 0.022252, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.148055
+other latency 0.022523, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.150570
+other latency 0.023535, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.159729
+other latency 0.023819, data transfer latency 0.000003, pim kernel latency 0.000001
+amm time 0.018793, non amm time 0.002367
+attention reorder time 0.000094, attention cpu compute time 0.001638
+post o reorder+norm+residual time 0.000163, gelu+ffn1 reorder time 0.000292, post ffn2 reorder+norm+residual time 0.000169
+tensor allocation overhead time 0.000001, other non amm time 0.000010
+reorder breakdown: qkv_to_attention 0.000094, o 0.000023, ffn1 0.000103, ffn2 0.000027
+host breakdown: attention 0.001638, reorder 0.000247, other 0.000482
+iteration 9, inference time 0.021164
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.162349
+other latency 0.024579, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.163924
+other latency 0.024848, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.166544
+other latency 0.025865, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.175786
+other latency 0.026139, data transfer latency 0.000003, pim kernel latency 0.000001
+amm time 0.018877, non amm time 0.002380
+attention reorder time 0.000095, attention cpu compute time 0.001640
+post o reorder+norm+residual time 0.000172, gelu+ffn1 reorder time 0.000301, post ffn2 reorder+norm+residual time 0.000164
+tensor allocation overhead time 0.000001, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000095, o 0.000028, ffn1 0.000130, ffn2 0.000025
+host breakdown: attention 0.001640, reorder 0.000278, other 0.000462
+iteration 10, inference time 0.021262
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.178396
+other latency 0.026905, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.180063
+other latency 0.027188, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.182603
+other latency 0.028214, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.191693
+other latency 0.028471, data transfer latency 0.000003, pim kernel latency 0.000001
+amm time 0.018700, non amm time 0.002346
+attention reorder time 0.000094, attention cpu compute time 0.001609
+post o reorder+norm+residual time 0.000176, gelu+ffn1 reorder time 0.000293, post ffn2 reorder+norm+residual time 0.000165
+tensor allocation overhead time 0.000000, other non amm time 0.000009
+reorder breakdown: qkv_to_attention 0.000094, o 0.000028, ffn1 0.000106, ffn2 0.000026
+host breakdown: attention 0.001609, reorder 0.000254, other 0.000483
+iteration 11, inference time 0.021051
+--------------------------------------------
+input initialization time 0.000246
+index calculation time 0.194300
+other latency 0.029235, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.195833
+other latency 0.029507, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.198359
+other latency 0.030518, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.207452
+other latency 0.030776, data transfer latency 0.000003, pim kernel latency 0.000001
+amm time 0.018505, non amm time 0.002317
+attention reorder time 0.000095, attention cpu compute time 0.001614
+post o reorder+norm+residual time 0.000162, gelu+ffn1 reorder time 0.000281, post ffn2 reorder+norm+residual time 0.000158
+tensor allocation overhead time 0.000001, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000095, o 0.000023, ffn1 0.000098, ffn2 0.000023
+host breakdown: attention 0.001614, reorder 0.000239, other 0.000465
+iteration 12, inference time 0.020828
+--------------------------------------------
+input initialization time 0.000253
+index calculation time 0.210060
+other latency 0.031540, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.211599
+other latency 0.031811, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.214142
+other latency 0.032824, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.223310
+other latency 0.033088, data transfer latency 0.000004, pim kernel latency 0.000001
+amm time 0.018625, non amm time 0.002335
+attention reorder time 0.000085, attention cpu compute time 0.001628
+post o reorder+norm+residual time 0.000167, gelu+ffn1 reorder time 0.000285, post ffn2 reorder+norm+residual time 0.000164
+tensor allocation overhead time 0.000000, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000085, o 0.000024, ffn1 0.000110, ffn2 0.000024
+host breakdown: attention 0.001628, reorder 0.000243, other 0.000464
+iteration 13, inference time 0.020963
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.225904
+other latency 0.033847, data transfer latency 0.000005, pim kernel latency 0.000001
+index calculation time 0.227427
+other latency 0.034115, data transfer latency 0.000005, pim kernel latency 0.000001
+index calculation time 0.229985
+other latency 0.035127, data transfer latency 0.000005, pim kernel latency 0.000001
+index calculation time 0.239228
+other latency 0.035413, data transfer latency 0.000005, pim kernel latency 0.000001
+amm time 0.018699, non amm time 0.002266
+attention reorder time 0.000088, attention cpu compute time 0.001589
+post o reorder+norm+residual time 0.000162, gelu+ffn1 reorder time 0.000262, post ffn2 reorder+norm+residual time 0.000159
+tensor allocation overhead time 0.000000, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000088, o 0.000022, ffn1 0.000100, ffn2 0.000023
+host breakdown: attention 0.001589, reorder 0.000233, other 0.000444
+iteration 14, inference time 0.020971
+--------------------------------------------
+10 rounds' average inference time 0.021001
+
+----------Transformer Params----------
+thread num 1
+layer num 1
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 2304, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 288, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------O LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 3072, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 384, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 3072
+num codebook 2048, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 2048, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------Attention Params----------
+seq len 128, batch size 1, n 128
+query heads 12, kv heads 12, head dim 64, token dim 768
+dpu num 8, input parallelism 1, lut parallelism 8
+n tile size 128, q tile size 96, kv tile size 96
+num threads 1
+-----------------------------------
+parameter parsing time 0.000393
+weight initialization time 0.174484
 dpu allocate time 0.000002
 --------------------------------------------
-input initialization time 0.000848
-index calculation time 0.007347
-other latency 0.002386, data transfer latency 0.000000, pim kernel latency 0.000000
-index calculation time 0.014256
-other latency 0.003184, data transfer latency 0.000000, pim kernel latency 0.000000
-index calculation time 0.021795
-other latency 0.006267, data transfer latency 0.000000, pim kernel latency 0.000000
-index calculation time 0.053498
-other latency 0.007127, data transfer latency 0.000000, pim kernel latency 0.000000
-amm time 0.062953, non amm time 0.008508
-attention reorder time 0.000652, attention cpu compute time 0.004704
-post o reorder+norm+residual time 0.000951, gelu+ffn1 reorder time 0.001222, post ffn2 reorder+norm+residual time 0.000906
-tensor allocation overhead time 0.000011, other non amm time 0.000062
-reorder breakdown: qkv_to_attention 0.000652, o 0.000209, ffn1 0.000758, ffn2 0.000226
-host breakdown: attention 0.004704, reorder 0.001845, other 0.001959
-iteration 0, inference time 0.071476
+input initialization time 0.000356
+index calculation time 0.002592
+other latency 0.000964, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.004105
+other latency 0.001307, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.006692
+other latency 0.002586, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.015930
+other latency 0.002918, data transfer latency 0.000000, pim kernel latency 0.000000
+amm time 0.019887, non amm time 0.003251
+attention reorder time 0.000322, attention cpu compute time 0.001790
+post o reorder+norm+residual time 0.000319, gelu+ffn1 reorder time 0.000499, post ffn2 reorder+norm+residual time 0.000288
+tensor allocation overhead time 0.000003, other non amm time 0.000030
+reorder breakdown: qkv_to_attention 0.000322, o 0.000091, ffn1 0.000317, ffn2 0.000087
+host breakdown: attention 0.001790, reorder 0.000817, other 0.000644
+iteration 0, inference time 0.023145
 --------------------------------------------
-input initialization time 0.000698
-index calculation time 0.061602
-other latency 0.009153, data transfer latency 0.000000, pim kernel latency 0.000000
-index calculation time 0.068769
-other latency 0.009788, data transfer latency 0.000000, pim kernel latency 0.000000
-index calculation time 0.076610
-other latency 0.012386, data transfer latency 0.000000, pim kernel latency 0.000000
-index calculation time 0.107310
-other latency 0.013144, data transfer latency 0.000000, pim kernel latency 0.000000
-amm time 0.061042, non amm time 0.006818
-attention reorder time 0.000280, attention cpu compute time 0.004571
-post o reorder+norm+residual time 0.000515, gelu+ffn1 reorder time 0.000761, post ffn2 reorder+norm+residual time 0.000677
-tensor allocation overhead time 0.000005, other non amm time 0.000009
-reorder breakdown: qkv_to_attention 0.000280, o 0.000058, ffn1 0.000267, ffn2 0.000131
-host breakdown: attention 0.004571, reorder 0.000736, other 0.001511
-iteration 1, inference time 0.067870
+input initialization time 0.000256
+index calculation time 0.018492
+other latency 0.003662, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.020030
+other latency 0.003933, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.022515
+other latency 0.004921, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.031735
+other latency 0.005193, data transfer latency 0.000000, pim kernel latency 0.000000
+amm time 0.018574, non amm time 0.002237
+attention reorder time 0.000075, attention cpu compute time 0.001603
+post o reorder+norm+residual time 0.000155, gelu+ffn1 reorder time 0.000250, post ffn2 reorder+norm+residual time 0.000150
+tensor allocation overhead time 0.000002, other non amm time 0.000002
+reorder breakdown: qkv_to_attention 0.000075, o 0.000017, ffn1 0.000067, ffn2 0.000018
+host breakdown: attention 0.001603, reorder 0.000177, other 0.000457
+iteration 1, inference time 0.020814
 --------------------------------------------
-input initialization time 0.000668
-index calculation time 0.114713
-other latency 0.014987, data transfer latency 0.000000, pim kernel latency 0.000000
-index calculation time 0.121489
-other latency 0.015602, data transfer latency 0.000000, pim kernel latency 0.000000
-index calculation time 0.128920
-other latency 0.018087, data transfer latency 0.000000, pim kernel latency 0.000000
-index calculation time 0.158438
-other latency 0.018702, data transfer latency 0.000000, pim kernel latency 0.000000
-amm time 0.057501, non amm time 0.006323
-attention reorder time 0.000226, attention cpu compute time 0.004338
-post o reorder+norm+residual time 0.000469, gelu+ffn1 reorder time 0.000766, post ffn2 reorder+norm+residual time 0.000512
-tensor allocation overhead time 0.000003, other non amm time 0.000009
-reorder breakdown: qkv_to_attention 0.000226, o 0.000054, ffn1 0.000289, ffn2 0.000051
-host breakdown: attention 0.004338, reorder 0.000620, other 0.001365
-iteration 2, inference time 0.063835
+input initialization time 0.000237
+index calculation time 0.034266
+other latency 0.005937, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.035808
+other latency 0.006207, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.038319
+other latency 0.007196, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.047343
+other latency 0.007472, data transfer latency 0.000002, pim kernel latency 0.000000
+amm time 0.018242, non amm time 0.002222
+attention reorder time 0.000073, attention cpu compute time 0.001589
+post o reorder+norm+residual time 0.000151, gelu+ffn1 reorder time 0.000249, post ffn2 reorder+norm+residual time 0.000155
+tensor allocation overhead time 0.000000, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000073, o 0.000016, ffn1 0.000067, ffn2 0.000017
+host breakdown: attention 0.001589, reorder 0.000173, other 0.000460
+iteration 2, inference time 0.020466
 --------------------------------------------
-input initialization time 0.000643
-index calculation time 0.165907
-other latency 0.020553, data transfer latency 0.000001, pim kernel latency 0.000000
-index calculation time 0.172760
-other latency 0.021169, data transfer latency 0.000001, pim kernel latency 0.000000
-index calculation time 0.180113
-other latency 0.023592, data transfer latency 0.000001, pim kernel latency 0.000000
-index calculation time 0.209445
-other latency 0.024206, data transfer latency 0.000001, pim kernel latency 0.000000
-amm time 0.057302, non amm time 0.006302
-attention reorder time 0.000225, attention cpu compute time 0.004407
-post o reorder+norm+residual time 0.000467, gelu+ffn1 reorder time 0.000679, post ffn2 reorder+norm+residual time 0.000512
+input initialization time 0.000238
+index calculation time 0.049937
+other latency 0.008214, data transfer latency 0.000003, pim kernel latency 0.000000
+index calculation time 0.051505
+other latency 0.008482, data transfer latency 0.000003, pim kernel latency 0.000000
+index calculation time 0.054017
+other latency 0.009473, data transfer latency 0.000003, pim kernel latency 0.000000
+index calculation time 0.063230
+other latency 0.009724, data transfer latency 0.000003, pim kernel latency 0.000000
+amm time 0.018525, non amm time 0.002277
+attention reorder time 0.000073, attention cpu compute time 0.001652
+post o reorder+norm+residual time 0.000153, gelu+ffn1 reorder time 0.000250, post ffn2 reorder+norm+residual time 0.000145
+tensor allocation overhead time 0.000001, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000073, o 0.000020, ffn1 0.000067, ffn2 0.000017
+host breakdown: attention 0.001652, reorder 0.000177, other 0.000448
+iteration 3, inference time 0.020804
+--------------------------------------------
+input initialization time 0.000244
+index calculation time 0.065760
+other latency 0.010466, data transfer latency 0.000004, pim kernel latency 0.000000
+index calculation time 0.067322
+other latency 0.010735, data transfer latency 0.000004, pim kernel latency 0.000000
+index calculation time 0.069857
+other latency 0.011725, data transfer latency 0.000004, pim kernel latency 0.000000
+index calculation time 0.079012
+other latency 0.011981, data transfer latency 0.000004, pim kernel latency 0.000000
+amm time 0.018383, non amm time 0.002223
+attention reorder time 0.000075, attention cpu compute time 0.001592
+post o reorder+norm+residual time 0.000152, gelu+ffn1 reorder time 0.000256, post ffn2 reorder+norm+residual time 0.000145
+tensor allocation overhead time 0.000000, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000075, o 0.000016, ffn1 0.000073, ffn2 0.000016
+host breakdown: attention 0.001592, reorder 0.000180, other 0.000451
+iteration 4, inference time 0.020610
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.081599
+other latency 0.012726, data transfer latency 0.000004, pim kernel latency 0.000000
+index calculation time 0.083151
+other latency 0.012994, data transfer latency 0.000005, pim kernel latency 0.000000
+index calculation time 0.085641
+other latency 0.013985, data transfer latency 0.000005, pim kernel latency 0.000000
+index calculation time 0.094608
+other latency 0.014246, data transfer latency 0.000005, pim kernel latency 0.000000
+amm time 0.018220, non amm time 0.002207
+attention reorder time 0.000075, attention cpu compute time 0.001586
+post o reorder+norm+residual time 0.000151, gelu+ffn1 reorder time 0.000246, post ffn2 reorder+norm+residual time 0.000144
+tensor allocation overhead time 0.000001, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000075, o 0.000017, ffn1 0.000066, ffn2 0.000016
+host breakdown: attention 0.001586, reorder 0.000174, other 0.000447
+iteration 5, inference time 0.020431
+--------------------------------------------
+input initialization time 0.000239
+index calculation time 0.097159
+other latency 0.014987, data transfer latency 0.000005, pim kernel latency 0.000000
+index calculation time 0.098730
+other latency 0.015255, data transfer latency 0.000005, pim kernel latency 0.000000
+index calculation time 0.101268
+other latency 0.016243, data transfer latency 0.000005, pim kernel latency 0.000000
+index calculation time 0.110139
+other latency 0.016502, data transfer latency 0.000005, pim kernel latency 0.000000
+amm time 0.018135, non amm time 0.002207
+attention reorder time 0.000075, attention cpu compute time 0.001587
+post o reorder+norm+residual time 0.000150, gelu+ffn1 reorder time 0.000248, post ffn2 reorder+norm+residual time 0.000143
+tensor allocation overhead time 0.000000, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000075, o 0.000016, ffn1 0.000065, ffn2 0.000015
+host breakdown: attention 0.001587, reorder 0.000171, other 0.000449
+iteration 6, inference time 0.020345
+--------------------------------------------
+input initialization time 0.000239
+index calculation time 0.112688
+other latency 0.017245, data transfer latency 0.000005, pim kernel latency 0.000000
+index calculation time 0.114490
+other latency 0.017513, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.116960
+other latency 0.018502, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.125869
+other latency 0.018763, data transfer latency 0.000006, pim kernel latency 0.000000
+amm time 0.018345, non amm time 0.002231
+attention reorder time 0.000074, attention cpu compute time 0.001609
+post o reorder+norm+residual time 0.000151, gelu+ffn1 reorder time 0.000249, post ffn2 reorder+norm+residual time 0.000144
+tensor allocation overhead time 0.000001, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000074, o 0.000017, ffn1 0.000066, ffn2 0.000016
+host breakdown: attention 0.001609, reorder 0.000173, other 0.000449
+iteration 7, inference time 0.020578
+--------------------------------------------
+input initialization time 0.000237
+index calculation time 0.128510
+other latency 0.019507, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.130054
+other latency 0.019776, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.132558
+other latency 0.020765, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.142016
+other latency 0.021029, data transfer latency 0.000006, pim kernel latency 0.000000
+amm time 0.018784, non amm time 0.002231
+attention reorder time 0.000073, attention cpu compute time 0.001590
+post o reorder+norm+residual time 0.000152, gelu+ffn1 reorder time 0.000250, post ffn2 reorder+norm+residual time 0.000161
+tensor allocation overhead time 0.000002, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000073, o 0.000017, ffn1 0.000067, ffn2 0.000019
+host breakdown: attention 0.001590, reorder 0.000176, other 0.000465
+iteration 8, inference time 0.021019
+--------------------------------------------
+input initialization time 0.000252
+index calculation time 0.144606
+other latency 0.021777, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.146317
+other latency 0.022045, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.148832
+other latency 0.023052, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.158098
+other latency 0.023317, data transfer latency 0.000006, pim kernel latency 0.000000
+amm time 0.018744, non amm time 0.002298
+attention reorder time 0.000104, attention cpu compute time 0.001635
+post o reorder+norm+residual time 0.000152, gelu+ffn1 reorder time 0.000254, post ffn2 reorder+norm+residual time 0.000148
+tensor allocation overhead time 0.000001, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000104, o 0.000017, ffn1 0.000073, ffn2 0.000018
+host breakdown: attention 0.001635, reorder 0.000212, other 0.000451
+iteration 9, inference time 0.021045
+--------------------------------------------
+input initialization time 0.000239
+index calculation time 0.160639
+other latency 0.024061, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.162243
+other latency 0.024330, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.164765
+other latency 0.025319, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.173733
+other latency 0.025579, data transfer latency 0.000006, pim kernel latency 0.000000
+amm time 0.018245, non amm time 0.002243
+attention reorder time 0.000074, attention cpu compute time 0.001617
+post o reorder+norm+residual time 0.000152, gelu+ffn1 reorder time 0.000250, post ffn2 reorder+norm+residual time 0.000145
+tensor allocation overhead time 0.000001, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000074, o 0.000017, ffn1 0.000068, ffn2 0.000016
+host breakdown: attention 0.001617, reorder 0.000175, other 0.000451
+iteration 10, inference time 0.020491
+--------------------------------------------
+input initialization time 0.000240
+index calculation time 0.176279
+other latency 0.026321, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.177801
+other latency 0.026592, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.180330
+other latency 0.027582, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.189319
+other latency 0.027859, data transfer latency 0.000006, pim kernel latency 0.000000
+amm time 0.018217, non amm time 0.002297
+attention reorder time 0.000074, attention cpu compute time 0.001676
+post o reorder+norm+residual time 0.000151, gelu+ffn1 reorder time 0.000249, post ffn2 reorder+norm+residual time 0.000144
+tensor allocation overhead time 0.000000, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000074, o 0.000017, ffn1 0.000067, ffn2 0.000016
+host breakdown: attention 0.001676, reorder 0.000174, other 0.000447
+iteration 11, inference time 0.020516
+--------------------------------------------
+input initialization time 0.000237
+index calculation time 0.191880
+other latency 0.028603, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.193485
+other latency 0.028871, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.195971
+other latency 0.029860, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.205039
+other latency 0.030117, data transfer latency 0.000006, pim kernel latency 0.000000
+amm time 0.018329, non amm time 0.002215
+attention reorder time 0.000075, attention cpu compute time 0.001581
+post o reorder+norm+residual time 0.000152, gelu+ffn1 reorder time 0.000248, post ffn2 reorder+norm+residual time 0.000156
+tensor allocation overhead time 0.000000, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000075, o 0.000017, ffn1 0.000068, ffn2 0.000016
+host breakdown: attention 0.001581, reorder 0.000176, other 0.000458
+iteration 12, inference time 0.020547
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.207590
+other latency 0.030861, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.209209
+other latency 0.031131, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.211685
+other latency 0.032119, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.220889
+other latency 0.032392, data transfer latency 0.000007, pim kernel latency 0.000000
+amm time 0.018481, non amm time 0.002205
+attention reorder time 0.000074, attention cpu compute time 0.001584
+post o reorder+norm+residual time 0.000150, gelu+ffn1 reorder time 0.000249, post ffn2 reorder+norm+residual time 0.000145
+tensor allocation overhead time 0.000000, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000074, o 0.000016, ffn1 0.000066, ffn2 0.000016
+host breakdown: attention 0.001584, reorder 0.000172, other 0.000449
+iteration 13, inference time 0.020688
+--------------------------------------------
+input initialization time 0.000237
+index calculation time 0.223464
+other latency 0.033135, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.225053
+other latency 0.033417, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.227574
+other latency 0.034407, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.237001
+other latency 0.034683, data transfer latency 0.000007, pim kernel latency 0.000000
+amm time 0.018763, non amm time 0.002207
+attention reorder time 0.000076, attention cpu compute time 0.001582
+post o reorder+norm+residual time 0.000152, gelu+ffn1 reorder time 0.000248, post ffn2 reorder+norm+residual time 0.000146
+tensor allocation overhead time 0.000001, other non amm time 0.000002
+reorder breakdown: qkv_to_attention 0.000076, o 0.000018, ffn1 0.000066, ffn2 0.000017
+host breakdown: attention 0.001582, reorder 0.000177, other 0.000448
+iteration 14, inference time 0.020974
+--------------------------------------------
+10 rounds' average inference time 0.020663
+
+----------Transformer Params----------
+thread num 1
+layer num 1
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 2304, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 288, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------O LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 3072, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 384, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 3072
+num codebook 2048, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 2048, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------Attention Params----------
+seq len 128, batch size 1, n 128
+query heads 12, kv heads 12, head dim 64, token dim 768
+dpu num 8, input parallelism 1, lut parallelism 8
+n tile size 128, q tile size 96, kv tile size 96
+num threads 1
+-----------------------------------
+parameter parsing time 0.000385
+weight initialization time 0.182099
+dpu allocate time 0.000001
+--------------------------------------------
+input initialization time 0.000353
+index calculation time 0.002675
+other latency 0.001028, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.004284
+other latency 0.001378, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.006899
+other latency 0.002684, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.016660
+other latency 0.003017, data transfer latency 0.000001, pim kernel latency 0.000000
+amm time 0.020772, non amm time 0.003269
+attention reorder time 0.000281, attention cpu compute time 0.001770
+post o reorder+norm+residual time 0.000307, gelu+ffn1 reorder time 0.000587, post ffn2 reorder+norm+residual time 0.000292
+tensor allocation overhead time 0.000006, other non amm time 0.000026
+reorder breakdown: qkv_to_attention 0.000281, o 0.000091, ffn1 0.000355, ffn2 0.000087
+host breakdown: attention 0.001770, reorder 0.000814, other 0.000685
+iteration 0, inference time 0.024052
+--------------------------------------------
+input initialization time 0.000274
+index calculation time 0.019279
+other latency 0.003778, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.021011
+other latency 0.004048, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.023683
+other latency 0.005087, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.033274
+other latency 0.005347, data transfer latency 0.000001, pim kernel latency 0.000000
+amm time 0.019502, non amm time 0.002400
+attention reorder time 0.000077, attention cpu compute time 0.001662
+post o reorder+norm+residual time 0.000157, gelu+ffn1 reorder time 0.000312, post ffn2 reorder+norm+residual time 0.000186
+tensor allocation overhead time 0.000001, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000077, o 0.000018, ffn1 0.000100, ffn2 0.000022
+host breakdown: attention 0.001662, reorder 0.000217, other 0.000521
+iteration 1, inference time 0.021906
+--------------------------------------------
+input initialization time 0.000246
+index calculation time 0.035886
+other latency 0.006114, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.037563
+other latency 0.006385, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.040124
+other latency 0.007401, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.049385
+other latency 0.007658, data transfer latency 0.000002, pim kernel latency 0.000000
+amm time 0.018843, non amm time 0.002364
+attention reorder time 0.000083, attention cpu compute time 0.001689
+post o reorder+norm+residual time 0.000158, gelu+ffn1 reorder time 0.000262, post ffn2 reorder+norm+residual time 0.000168
+tensor allocation overhead time 0.000000, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000083, o 0.000020, ffn1 0.000076, ffn2 0.000022
+host breakdown: attention 0.001689, reorder 0.000201, other 0.000474
+iteration 2, inference time 0.021211
+--------------------------------------------
+input initialization time 0.000263
+index calculation time 0.052077
+other latency 0.008435, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.053586
+other latency 0.008703, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.056114
+other latency 0.009713, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.065384
+other latency 0.009972, data transfer latency 0.000002, pim kernel latency 0.000000
+amm time 0.018709, non amm time 0.002304
+attention reorder time 0.000097, attention cpu compute time 0.001618
+post o reorder+norm+residual time 0.000157, gelu+ffn1 reorder time 0.000259, post ffn2 reorder+norm+residual time 0.000167
+tensor allocation overhead time 0.000001, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000097, o 0.000018, ffn1 0.000077, ffn2 0.000021
+host breakdown: attention 0.001618, reorder 0.000213, other 0.000473
+iteration 3, inference time 0.021016
+--------------------------------------------
+input initialization time 0.000249
+index calculation time 0.067986
+other latency 0.010761, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.069502
+other latency 0.011031, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.072133
+other latency 0.012071, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.081559
+other latency 0.012357, data transfer latency 0.000002, pim kernel latency 0.000000
+amm time 0.018955, non amm time 0.002371
+attention reorder time 0.000078, attention cpu compute time 0.001647
+post o reorder+norm+residual time 0.000155, gelu+ffn1 reorder time 0.000307, post ffn2 reorder+norm+residual time 0.000180
+tensor allocation overhead time 0.000000, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000078, o 0.000018, ffn1 0.000087, ffn2 0.000024
+host breakdown: attention 0.001647, reorder 0.000207, other 0.000517
+iteration 4, inference time 0.021330
+--------------------------------------------
+input initialization time 0.000259
+index calculation time 0.084289
+other latency 0.013123, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.085867
+other latency 0.013391, data transfer latency 0.000003, pim kernel latency 0.000000
+index calculation time 0.088542
+other latency 0.014407, data transfer latency 0.000004, pim kernel latency 0.000000
+index calculation time 0.097856
+other latency 0.014669, data transfer latency 0.000004, pim kernel latency 0.000000
+amm time 0.019012, non amm time 0.002357
+attention reorder time 0.000079, attention cpu compute time 0.001629
+post o reorder+norm+residual time 0.000157, gelu+ffn1 reorder time 0.000298, post ffn2 reorder+norm+residual time 0.000187
+tensor allocation overhead time 0.000001, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000079, o 0.000018, ffn1 0.000080, ffn2 0.000023
+host breakdown: attention 0.001629, reorder 0.000200, other 0.000528
+iteration 5, inference time 0.021374
+--------------------------------------------
+input initialization time 0.000259
+index calculation time 0.100595
+other latency 0.015452, data transfer latency 0.000005, pim kernel latency 0.000000
+index calculation time 0.102175
+other latency 0.015722, data transfer latency 0.000005, pim kernel latency 0.000000
+index calculation time 0.104760
+other latency 0.016760, data transfer latency 0.000005, pim kernel latency 0.000000
+index calculation time 0.114471
+other latency 0.017020, data transfer latency 0.000005, pim kernel latency 0.000000
+amm time 0.019356, non amm time 0.002448
+attention reorder time 0.000124, attention cpu compute time 0.001748
+post o reorder+norm+residual time 0.000154, gelu+ffn1 reorder time 0.000256, post ffn2 reorder+norm+residual time 0.000159
+tensor allocation overhead time 0.000000, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000124, o 0.000017, ffn1 0.000073, ffn2 0.000020
+host breakdown: attention 0.001748, reorder 0.000234, other 0.000466
+iteration 6, inference time 0.021807
+--------------------------------------------
+input initialization time 0.000244
+index calculation time 0.117061
+other latency 0.017780, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.118808
+other latency 0.018052, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.121366
+other latency 0.019074, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.130677
+other latency 0.019332, data transfer latency 0.000006, pim kernel latency 0.000000
+amm time 0.018967, non amm time 0.002431
+attention reorder time 0.000075, attention cpu compute time 0.001740
+post o reorder+norm+residual time 0.000153, gelu+ffn1 reorder time 0.000297, post ffn2 reorder+norm+residual time 0.000160
+tensor allocation overhead time 0.000001, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000075, o 0.000017, ffn1 0.000082, ffn2 0.000021
+host breakdown: attention 0.001740, reorder 0.000195, other 0.000496
+iteration 7, inference time 0.021401
+--------------------------------------------
+input initialization time 0.000260
+index calculation time 0.133300
+other latency 0.020103, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.135040
+other latency 0.020372, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.137631
+other latency 0.021384, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.146841
+other latency 0.021664, data transfer latency 0.000006, pim kernel latency 0.000000
+amm time 0.018881, non amm time 0.002275
+attention reorder time 0.000081, attention cpu compute time 0.001631
+post o reorder+norm+residual time 0.000154, gelu+ffn1 reorder time 0.000254, post ffn2 reorder+norm+residual time 0.000149
+tensor allocation overhead time 0.000001, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000081, o 0.000018, ffn1 0.000077, ffn2 0.000017
+host breakdown: attention 0.001631, reorder 0.000193, other 0.000451
+iteration 8, inference time 0.021159
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.149515
+other latency 0.022430, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.151038
+other latency 0.022698, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.153601
+other latency 0.023735, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.162997
+other latency 0.023995, data transfer latency 0.000007, pim kernel latency 0.000000
+amm time 0.018884, non amm time 0.002264
+attention reorder time 0.000095, attention cpu compute time 0.001609
+post o reorder+norm+residual time 0.000151, gelu+ffn1 reorder time 0.000257, post ffn2 reorder+norm+residual time 0.000148
+tensor allocation overhead time 0.000000, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000095, o 0.000017, ffn1 0.000069, ffn2 0.000016
+host breakdown: attention 0.001609, reorder 0.000197, other 0.000458
+iteration 9, inference time 0.021155
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.165666
+other latency 0.024755, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.167179
+other latency 0.025025, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.169743
+other latency 0.026034, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.178970
+other latency 0.026285, data transfer latency 0.000008, pim kernel latency 0.000000
+amm time 0.018661, non amm time 0.002262
+attention reorder time 0.000075, attention cpu compute time 0.001610
+post o reorder+norm+residual time 0.000155, gelu+ffn1 reorder time 0.000253, post ffn2 reorder+norm+residual time 0.000164
+tensor allocation overhead time 0.000000, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000075, o 0.000017, ffn1 0.000069, ffn2 0.000022
+host breakdown: attention 0.001610, reorder 0.000183, other 0.000469
+iteration 10, inference time 0.020926
+--------------------------------------------
+input initialization time 0.000251
+index calculation time 0.181540
+other latency 0.027048, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.183168
+other latency 0.027321, data transfer latency 0.000010, pim kernel latency 0.000000
+index calculation time 0.185703
+other latency 0.028348, data transfer latency 0.000010, pim kernel latency 0.000000
+index calculation time 0.197953
+other latency 0.028623, data transfer latency 0.000011, pim kernel latency 0.000000
+amm time 0.021721, non amm time 0.002466
+attention reorder time 0.000074, attention cpu compute time 0.001620
+post o reorder+norm+residual time 0.000154, gelu+ffn1 reorder time 0.000418, post ffn2 reorder+norm+residual time 0.000195
+tensor allocation overhead time 0.000001, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000074, o 0.000018, ffn1 0.000095, ffn2 0.000025
+host breakdown: attention 0.001620, reorder 0.000212, other 0.000634
+iteration 11, inference time 0.024193
+--------------------------------------------
+input initialization time 0.000310
+index calculation time 0.200580
+other latency 0.029388, data transfer latency 0.000012, pim kernel latency 0.000000
+index calculation time 0.202101
+other latency 0.029657, data transfer latency 0.000012, pim kernel latency 0.000000
+index calculation time 0.204661
+other latency 0.030670, data transfer latency 0.000012, pim kernel latency 0.000000
+index calculation time 0.213818
+other latency 0.030945, data transfer latency 0.000012, pim kernel latency 0.000000
+amm time 0.018588, non amm time 0.002301
+attention reorder time 0.000085, attention cpu compute time 0.001640
+post o reorder+norm+residual time 0.000157, gelu+ffn1 reorder time 0.000263, post ffn2 reorder+norm+residual time 0.000148
+tensor allocation overhead time 0.000001, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000085, o 0.000020, ffn1 0.000082, ffn2 0.000017
+host breakdown: attention 0.001640, reorder 0.000204, other 0.000457
+iteration 12, inference time 0.020893
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.216466
+other latency 0.031693, data transfer latency 0.000012, pim kernel latency 0.000000
+index calculation time 0.218055
+other latency 0.031962, data transfer latency 0.000012, pim kernel latency 0.000000
+index calculation time 0.220584
+other latency 0.032992, data transfer latency 0.000013, pim kernel latency 0.000000
+index calculation time 0.229806
+other latency 0.033250, data transfer latency 0.000013, pim kernel latency 0.000000
+amm time 0.018719, non amm time 0.002498
+attention reorder time 0.000075, attention cpu compute time 0.001810
+post o reorder+norm+residual time 0.000172, gelu+ffn1 reorder time 0.000281, post ffn2 reorder+norm+residual time 0.000157
+tensor allocation overhead time 0.000001, other non amm time 0.000002
+reorder breakdown: qkv_to_attention 0.000075, o 0.000030, ffn1 0.000091, ffn2 0.000024
+host breakdown: attention 0.001810, reorder 0.000220, other 0.000468
+iteration 13, inference time 0.021222
+--------------------------------------------
+input initialization time 0.000245
+index calculation time 0.232406
+other latency 0.034012, data transfer latency 0.000013, pim kernel latency 0.000000
+index calculation time 0.233946
+other latency 0.034282, data transfer latency 0.000013, pim kernel latency 0.000000
+index calculation time 0.236506
+other latency 0.035295, data transfer latency 0.000013, pim kernel latency 0.000000
+index calculation time 0.245598
+other latency 0.035568, data transfer latency 0.000013, pim kernel latency 0.000000
+amm time 0.018505, non amm time 0.002247
+attention reorder time 0.000085, attention cpu compute time 0.001602
+post o reorder+norm+residual time 0.000155, gelu+ffn1 reorder time 0.000250, post ffn2 reorder+norm+residual time 0.000151
+tensor allocation overhead time 0.000000, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000085, o 0.000019, ffn1 0.000074, ffn2 0.000018
+host breakdown: attention 0.001602, reorder 0.000196, other 0.000449
+iteration 14, inference time 0.020755
+--------------------------------------------
+10 rounds' average inference time 0.021489
+
+----------Transformer Params----------
+thread num 1
+layer num 1
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 2304, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 288, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------O LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 3072, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 384, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 3072
+num codebook 2048, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 2048, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------Attention Params----------
+seq len 128, batch size 1, n 128
+query heads 12, kv heads 12, head dim 64, token dim 768
+dpu num 8, input parallelism 1, lut parallelism 8
+n tile size 128, q tile size 96, kv tile size 96
+num threads 1
+-----------------------------------
+parameter parsing time 0.000404
+weight initialization time 0.174710
+dpu allocate time 0.000002
+--------------------------------------------
+input initialization time 0.000314
+index calculation time 0.002602
+other latency 0.000960, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.004342
+other latency 0.001286, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.007121
+other latency 0.002590, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.018730
+other latency 0.002948, data transfer latency 0.000002, pim kernel latency 0.000000
+amm time 0.022806, non amm time 0.003221
+attention reorder time 0.000278, attention cpu compute time 0.001755
+post o reorder+norm+residual time 0.000309, gelu+ffn1 reorder time 0.000525, post ffn2 reorder+norm+residual time 0.000316
+tensor allocation overhead time 0.000004, other non amm time 0.000034
+reorder breakdown: qkv_to_attention 0.000278, o 0.000098, ffn1 0.000344, ffn2 0.000101
+host breakdown: attention 0.001755, reorder 0.000821, other 0.000645
+iteration 0, inference time 0.026037
+--------------------------------------------
+input initialization time 0.000254
+index calculation time 0.021331
+other latency 0.003715, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.022876
+other latency 0.003967, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.025445
+other latency 0.004985, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.039942
+other latency 0.005238, data transfer latency 0.000002, pim kernel latency 0.000000
+amm time 0.024114, non amm time 0.002521
+attention reorder time 0.000104, attention cpu compute time 0.001620
+post o reorder+norm+residual time 0.000164, gelu+ffn1 reorder time 0.000458, post ffn2 reorder+norm+residual time 0.000164
+tensor allocation overhead time 0.000003, other non amm time 0.000008
+reorder breakdown: qkv_to_attention 0.000104, o 0.000027, ffn1 0.000111, ffn2 0.000025
+host breakdown: attention 0.001620, reorder 0.000267, other 0.000634
+iteration 1, inference time 0.026639
+--------------------------------------------
+input initialization time 0.000250
+index calculation time 0.043114
+other latency 0.006181, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.044776
+other latency 0.006433, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.047289
+other latency 0.007446, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.056416
+other latency 0.007696, data transfer latency 0.000003, pim kernel latency 0.000000
+amm time 0.019402, non amm time 0.002339
+attention reorder time 0.000117, attention cpu compute time 0.001609
+post o reorder+norm+residual time 0.000162, gelu+ffn1 reorder time 0.000274, post ffn2 reorder+norm+residual time 0.000165
+tensor allocation overhead time 0.000001, other non amm time 0.000011
+reorder breakdown: qkv_to_attention 0.000117, o 0.000028, ffn1 0.000105, ffn2 0.000024
+host breakdown: attention 0.001609, reorder 0.000274, other 0.000456
+iteration 2, inference time 0.021747
+--------------------------------------------
+input initialization time 0.000249
+index calculation time 0.059005
+other latency 0.008458, data transfer latency 0.000003, pim kernel latency 0.000000
+index calculation time 0.060482
+other latency 0.008716, data transfer latency 0.000003, pim kernel latency 0.000000
+index calculation time 0.063005
+other latency 0.009728, data transfer latency 0.000004, pim kernel latency 0.000000
+index calculation time 0.072286
+other latency 0.009980, data transfer latency 0.000005, pim kernel latency 0.000000
+amm time 0.018626, non amm time 0.002313
+attention reorder time 0.000100, attention cpu compute time 0.001587
+post o reorder+norm+residual time 0.000167, gelu+ffn1 reorder time 0.000289, post ffn2 reorder+norm+residual time 0.000160
+tensor allocation overhead time 0.000001, other non amm time 0.000009
+reorder breakdown: qkv_to_attention 0.000100, o 0.000029, ffn1 0.000103, ffn2 0.000023
+host breakdown: attention 0.001587, reorder 0.000255, other 0.000471
+iteration 3, inference time 0.020943
+--------------------------------------------
+input initialization time 0.000245
+index calculation time 0.074895
+other latency 0.010741, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.076427
+other latency 0.011000, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.078943
+other latency 0.012014, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.088081
+other latency 0.012266, data transfer latency 0.000006, pim kernel latency 0.000000
+amm time 0.018515, non amm time 0.002315
+attention reorder time 0.000096, attention cpu compute time 0.001598
+post o reorder+norm+residual time 0.000159, gelu+ffn1 reorder time 0.000285, post ffn2 reorder+norm+residual time 0.000168
+tensor allocation overhead time 0.000000, other non amm time 0.000009
+reorder breakdown: qkv_to_attention 0.000096, o 0.000024, ffn1 0.000111, ffn2 0.000026
+host breakdown: attention 0.001598, reorder 0.000257, other 0.000460
+iteration 4, inference time 0.020834
+--------------------------------------------
+input initialization time 0.000244
+index calculation time 0.090680
+other latency 0.013029, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.092215
+other latency 0.013280, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.094725
+other latency 0.014292, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.104011
+other latency 0.014546, data transfer latency 0.000006, pim kernel latency 0.000000
+amm time 0.018625, non amm time 0.002341
+attention reorder time 0.000100, attention cpu compute time 0.001634
+post o reorder+norm+residual time 0.000158, gelu+ffn1 reorder time 0.000275, post ffn2 reorder+norm+residual time 0.000165
+tensor allocation overhead time 0.000001, other non amm time 0.000008
+reorder breakdown: qkv_to_attention 0.000100, o 0.000025, ffn1 0.000099, ffn2 0.000026
+host breakdown: attention 0.001634, reorder 0.000250, other 0.000457
+iteration 5, inference time 0.020971
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.106623
+other latency 0.015307, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.108080
+other latency 0.015558, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.110597
+other latency 0.016571, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.119702
+other latency 0.016825, data transfer latency 0.000007, pim kernel latency 0.000000
+amm time 0.018432, non amm time 0.002366
+attention reorder time 0.000101, attention cpu compute time 0.001660
+post o reorder+norm+residual time 0.000160, gelu+ffn1 reorder time 0.000272, post ffn2 reorder+norm+residual time 0.000165
+tensor allocation overhead time 0.000001, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000101, o 0.000024, ffn1 0.000109, ffn2 0.000025
+host breakdown: attention 0.001660, reorder 0.000259, other 0.000447
+iteration 6, inference time 0.020804
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.122311
+other latency 0.017601, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.123797
+other latency 0.017853, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.126303
+other latency 0.018866, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.135653
+other latency 0.019118, data transfer latency 0.000007, pim kernel latency 0.000000
+amm time 0.018718, non amm time 0.002381
+attention reorder time 0.000106, attention cpu compute time 0.001652
+post o reorder+norm+residual time 0.000161, gelu+ffn1 reorder time 0.000289, post ffn2 reorder+norm+residual time 0.000162
+tensor allocation overhead time 0.000001, other non amm time 0.000010
+reorder breakdown: qkv_to_attention 0.000106, o 0.000026, ffn1 0.000111, ffn2 0.000024
+host breakdown: attention 0.001652, reorder 0.000267, other 0.000462
+iteration 7, inference time 0.021103
+--------------------------------------------
+input initialization time 0.000244
+index calculation time 0.140127
+other latency 0.019865, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.141743
+other latency 0.020115, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.144308
+other latency 0.021141, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.153432
+other latency 0.021399, data transfer latency 0.000008, pim kernel latency 0.000000
+amm time 0.020524, non amm time 0.002314
+attention reorder time 0.000099, attention cpu compute time 0.001599
+post o reorder+norm+residual time 0.000165, gelu+ffn1 reorder time 0.000278, post ffn2 reorder+norm+residual time 0.000164
+tensor allocation overhead time 0.000002, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000099, o 0.000027, ffn1 0.000098, ffn2 0.000023
+host breakdown: attention 0.001599, reorder 0.000247, other 0.000468
+iteration 8, inference time 0.022842
+--------------------------------------------
+input initialization time 0.000257
+index calculation time 0.155986
+other latency 0.022171, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.157517
+other latency 0.022418, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.159967
+other latency 0.023408, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.168941
+other latency 0.023657, data transfer latency 0.000009, pim kernel latency 0.000000
+amm time 0.018142, non amm time 0.002250
+attention reorder time 0.000094, attention cpu compute time 0.001586
+post o reorder+norm+residual time 0.000149, gelu+ffn1 reorder time 0.000258, post ffn2 reorder+norm+residual time 0.000156
+tensor allocation overhead time 0.000001, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000094, o 0.000018, ffn1 0.000083, ffn2 0.000023
+host breakdown: attention 0.001586, reorder 0.000218, other 0.000446
+iteration 9, inference time 0.020394
+--------------------------------------------
+input initialization time 0.000237
+index calculation time 0.171499
+other latency 0.024403, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.173117
+other latency 0.024649, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.175570
+other latency 0.025638, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.184613
+other latency 0.025888, data transfer latency 0.000009, pim kernel latency 0.000000
+amm time 0.018276, non amm time 0.002226
+attention reorder time 0.000082, attention cpu compute time 0.001566
+post o reorder+norm+residual time 0.000146, gelu+ffn1 reorder time 0.000254, post ffn2 reorder+norm+residual time 0.000172
+tensor allocation overhead time 0.000002, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000082, o 0.000018, ffn1 0.000077, ffn2 0.000036
+host breakdown: attention 0.001566, reorder 0.000213, other 0.000447
+iteration 10, inference time 0.020505
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.187157
+other latency 0.026631, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.188570
+other latency 0.026879, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.191034
+other latency 0.027868, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.199981
+other latency 0.028114, data transfer latency 0.000009, pim kernel latency 0.000000
+amm time 0.018006, non amm time 0.002295
+attention reorder time 0.000083, attention cpu compute time 0.001632
+post o reorder+norm+residual time 0.000147, gelu+ffn1 reorder time 0.000272, post ffn2 reorder+norm+residual time 0.000156
+tensor allocation overhead time 0.000001, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000083, o 0.000019, ffn1 0.000089, ffn2 0.000023
+host breakdown: attention 0.001632, reorder 0.000214, other 0.000449
+iteration 11, inference time 0.020304
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.202528
+other latency 0.028858, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.203950
+other latency 0.029106, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.206424
+other latency 0.030096, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.215588
+other latency 0.030344, data transfer latency 0.000009, pim kernel latency 0.000000
+amm time 0.018211, non amm time 0.002213
+attention reorder time 0.000087, attention cpu compute time 0.001560
+post o reorder+norm+residual time 0.000149, gelu+ffn1 reorder time 0.000254, post ffn2 reorder+norm+residual time 0.000157
+tensor allocation overhead time 0.000001, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000087, o 0.000020, ffn1 0.000086, ffn2 0.000023
+host breakdown: attention 0.001560, reorder 0.000216, other 0.000437
+iteration 12, inference time 0.020427
+--------------------------------------------
+input initialization time 0.000239
+index calculation time 0.218132
+other latency 0.031105, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.219575
+other latency 0.031351, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.222033
+other latency 0.032357, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.231043
+other latency 0.032603, data transfer latency 0.000009, pim kernel latency 0.000000
+amm time 0.018109, non amm time 0.002239
+attention reorder time 0.000087, attention cpu compute time 0.001588
+post o reorder+norm+residual time 0.000150, gelu+ffn1 reorder time 0.000250, post ffn2 reorder+norm+residual time 0.000156
+tensor allocation overhead time 0.000001, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000087, o 0.000022, ffn1 0.000092, ffn2 0.000022
+host breakdown: attention 0.001588, reorder 0.000223, other 0.000428
+iteration 13, inference time 0.020352
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.233638
+other latency 0.033363, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.235300
+other latency 0.033615, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.237806
+other latency 0.034625, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.246884
+other latency 0.034877, data transfer latency 0.000009, pim kernel latency 0.000000
+amm time 0.018502, non amm time 0.002285
+attention reorder time 0.000089, attention cpu compute time 0.001605
+post o reorder+norm+residual time 0.000152, gelu+ffn1 reorder time 0.000272, post ffn2 reorder+norm+residual time 0.000162
+tensor allocation overhead time 0.000001, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000089, o 0.000021, ffn1 0.000092, ffn2 0.000022
+host breakdown: attention 0.001605, reorder 0.000224, other 0.000456
+iteration 14, inference time 0.020790
+--------------------------------------------
+10 rounds' average inference time 0.020849
+
+----------Transformer Params----------
+thread num 1
+layer num 1
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 2304, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 288, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------O LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 3072, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 384, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 3072
+num codebook 2048, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 2048, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------Attention Params----------
+seq len 128, batch size 1, n 128
+query heads 12, kv heads 12, head dim 64, token dim 768
+dpu num 8, input parallelism 1, lut parallelism 8
+n tile size 128, q tile size 96, kv tile size 96
+num threads 1
+-----------------------------------
+parameter parsing time 0.000400
+weight initialization time 0.179074
+dpu allocate time 0.000001
+--------------------------------------------
+input initialization time 0.000540
+index calculation time 0.002708
+other latency 0.000970, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.004291
+other latency 0.001292, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.006783
+other latency 0.002601, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.015870
+other latency 0.002926, data transfer latency 0.000000, pim kernel latency 0.000001
+amm time 0.019878, non amm time 0.004137
+attention reorder time 0.000659, attention cpu compute time 0.002346
+post o reorder+norm+residual time 0.000304, gelu+ffn1 reorder time 0.000497, post ffn2 reorder+norm+residual time 0.000300
+tensor allocation overhead time 0.000005, other non amm time 0.000026
+reorder breakdown: qkv_to_attention 0.000659, o 0.000088, ffn1 0.000327, ffn2 0.000091
+host breakdown: attention 0.002346, reorder 0.001165, other 0.000626
+iteration 0, inference time 0.024028
+--------------------------------------------
+input initialization time 0.000254
+index calculation time 0.021357
+other latency 0.006694, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.025933
+other latency 0.006945, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.031420
+other latency 0.007968, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.049683
+other latency 0.008512, data transfer latency 0.000000, pim kernel latency 0.000001
+amm time 0.040096, non amm time 0.002326
+attention reorder time 0.000114, attention cpu compute time 0.001601
+post o reorder+norm+residual time 0.000164, gelu+ffn1 reorder time 0.000270, post ffn2 reorder+norm+residual time 0.000165
 tensor allocation overhead time 0.000004, other non amm time 0.000008
-reorder breakdown: qkv_to_attention 0.000225, o 0.000054, ffn1 0.000221, ffn2 0.000051
-host breakdown: attention 0.004407, reorder 0.000551, other 0.001344
-iteration 3, inference time 0.063611
+reorder breakdown: qkv_to_attention 0.000114, o 0.000027, ffn1 0.000106, ffn2 0.000028
+host breakdown: attention 0.001601, reorder 0.000275, other 0.000450
+iteration 1, inference time 0.042428
 --------------------------------------------
-input initialization time 0.000672
-index calculation time 0.216852
-other latency 0.026058, data transfer latency 0.000001, pim kernel latency 0.000000
-index calculation time 0.223446
-other latency 0.026726, data transfer latency 0.000001, pim kernel latency 0.000000
-index calculation time 0.231334
-other latency 0.029210, data transfer latency 0.000001, pim kernel latency 0.000000
-index calculation time 0.261714
-other latency 0.029825, data transfer latency 0.000001, pim kernel latency 0.000000
-amm time 0.058769, non amm time 0.006389
-attention reorder time 0.000302, attention cpu compute time 0.004411
-post o reorder+norm+residual time 0.000506, gelu+ffn1 reorder time 0.000647, post ffn2 reorder+norm+residual time 0.000511
+input initialization time 0.000238
+index calculation time 0.054416
+other latency 0.009261, data transfer latency 0.000000, pim kernel latency 0.000002
+index calculation time 0.055918
+other latency 0.009509, data transfer latency 0.000000, pim kernel latency 0.000002
+index calculation time 0.063419
+other latency 0.012537, data transfer latency 0.000000, pim kernel latency 0.000002
+index calculation time 0.080649
+other latency 0.012791, data transfer latency 0.000000, pim kernel latency 0.000002
+amm time 0.035772, non amm time 0.008395
+attention reorder time 0.000097, attention cpu compute time 0.004648
+post o reorder+norm+residual time 0.003172, gelu+ffn1 reorder time 0.000296, post ffn2 reorder+norm+residual time 0.000172
+tensor allocation overhead time 0.000003, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000097, o 0.000025, ffn1 0.000105, ffn2 0.000028
+host breakdown: attention 0.004648, reorder 0.000255, other 0.003492
+iteration 2, inference time 0.044171
+--------------------------------------------
+input initialization time 0.000256
+index calculation time 0.083220
+other latency 0.015875, data transfer latency 0.000000, pim kernel latency 0.000002
+index calculation time 0.084824
+other latency 0.016122, data transfer latency 0.000000, pim kernel latency 0.000002
+index calculation time 0.087300
+other latency 0.017133, data transfer latency 0.000000, pim kernel latency 0.000002
+index calculation time 0.096370
+other latency 0.017383, data transfer latency 0.000000, pim kernel latency 0.000002
+amm time 0.020793, non amm time 0.002290
+attention reorder time 0.000105, attention cpu compute time 0.001585
+post o reorder+norm+residual time 0.000156, gelu+ffn1 reorder time 0.000270, post ffn2 reorder+norm+residual time 0.000164
+tensor allocation overhead time 0.000004, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000105, o 0.000024, ffn1 0.000102, ffn2 0.000025
+host breakdown: attention 0.001585, reorder 0.000256, other 0.000449
+iteration 3, inference time 0.023088
+--------------------------------------------
+input initialization time 0.000239
+index calculation time 0.098991
+other latency 0.018134, data transfer latency 0.000000, pim kernel latency 0.000002
+index calculation time 0.100544
+other latency 0.018381, data transfer latency 0.000000, pim kernel latency 0.000002
+index calculation time 0.103016
+other latency 0.019374, data transfer latency 0.000000, pim kernel latency 0.000002
+index calculation time 0.112027
+other latency 0.019627, data transfer latency 0.000001, pim kernel latency 0.000002
+amm time 0.018407, non amm time 0.002344
+attention reorder time 0.000095, attention cpu compute time 0.001613
+post o reorder+norm+residual time 0.000158, gelu+ffn1 reorder time 0.000301, post ffn2 reorder+norm+residual time 0.000168
+tensor allocation overhead time 0.000002, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000095, o 0.000025, ffn1 0.000126, ffn2 0.000029
+host breakdown: attention 0.001613, reorder 0.000275, other 0.000456
+iteration 4, inference time 0.020756
+--------------------------------------------
+input initialization time 0.000239
+index calculation time 0.114629
+other latency 0.020392, data transfer latency 0.000001, pim kernel latency 0.000002
+index calculation time 0.116026
+other latency 0.020645, data transfer latency 0.000001, pim kernel latency 0.000002
+index calculation time 0.118555
+other latency 0.021659, data transfer latency 0.000002, pim kernel latency 0.000002
+index calculation time 0.130982
+other latency 0.021913, data transfer latency 0.000002, pim kernel latency 0.000002
+amm time 0.021781, non amm time 0.002391
+attention reorder time 0.000104, attention cpu compute time 0.001610
+post o reorder+norm+residual time 0.000175, gelu+ffn1 reorder time 0.000291, post ffn2 reorder+norm+residual time 0.000200
+tensor allocation overhead time 0.000003, other non amm time 0.000008
+reorder breakdown: qkv_to_attention 0.000104, o 0.000030, ffn1 0.000124, ffn2 0.000027
+host breakdown: attention 0.001610, reorder 0.000285, other 0.000496
+iteration 5, inference time 0.024177
+--------------------------------------------
+input initialization time 0.000274
+index calculation time 0.133598
+other latency 0.022675, data transfer latency 0.000002, pim kernel latency 0.000003
+index calculation time 0.134995
+other latency 0.022929, data transfer latency 0.000002, pim kernel latency 0.000003
+index calculation time 0.137526
+other latency 0.023988, data transfer latency 0.000002, pim kernel latency 0.000003
+index calculation time 0.146671
+other latency 0.024241, data transfer latency 0.000002, pim kernel latency 0.000003
+amm time 0.018529, non amm time 0.002365
+attention reorder time 0.000097, attention cpu compute time 0.001645
+post o reorder+norm+residual time 0.000161, gelu+ffn1 reorder time 0.000284, post ffn2 reorder+norm+residual time 0.000168
+tensor allocation overhead time 0.000001, other non amm time 0.000009
+reorder breakdown: qkv_to_attention 0.000097, o 0.000025, ffn1 0.000116, ffn2 0.000027
+host breakdown: attention 0.001645, reorder 0.000265, other 0.000455
+iteration 6, inference time 0.020900
+--------------------------------------------
+input initialization time 0.000247
+index calculation time 0.149293
+other latency 0.025030, data transfer latency 0.000002, pim kernel latency 0.000003
+index calculation time 0.150888
+other latency 0.025282, data transfer latency 0.000002, pim kernel latency 0.000004
+index calculation time 0.153447
+other latency 0.026308, data transfer latency 0.000003, pim kernel latency 0.000004
+index calculation time 0.162625
+other latency 0.026559, data transfer latency 0.000003, pim kernel latency 0.000005
+amm time 0.018792, non amm time 0.002425
+attention reorder time 0.000099, attention cpu compute time 0.001703
+post o reorder+norm+residual time 0.000162, gelu+ffn1 reorder time 0.000290, post ffn2 reorder+norm+residual time 0.000161
+tensor allocation overhead time 0.000001, other non amm time 0.000009
+reorder breakdown: qkv_to_attention 0.000099, o 0.000027, ffn1 0.000103, ffn2 0.000023
+host breakdown: attention 0.001703, reorder 0.000252, other 0.000470
+iteration 7, inference time 0.021222
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.165329
+other latency 0.027323, data transfer latency 0.000004, pim kernel latency 0.000005
+index calculation time 0.166877
+other latency 0.027576, data transfer latency 0.000004, pim kernel latency 0.000005
+index calculation time 0.169426
+other latency 0.028590, data transfer latency 0.000004, pim kernel latency 0.000005
+index calculation time 0.178858
+other latency 0.028844, data transfer latency 0.000004, pim kernel latency 0.000005
+amm time 0.019028, non amm time 0.002861
+attention reorder time 0.000097, attention cpu compute time 0.002132
+post o reorder+norm+residual time 0.000161, gelu+ffn1 reorder time 0.000295, post ffn2 reorder+norm+residual time 0.000162
+tensor allocation overhead time 0.000005, other non amm time 0.000009
+reorder breakdown: qkv_to_attention 0.000097, o 0.000026, ffn1 0.000126, ffn2 0.000024
+host breakdown: attention 0.002132, reorder 0.000273, other 0.000456
+iteration 8, inference time 0.021894
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.181486
+other latency 0.029609, data transfer latency 0.000004, pim kernel latency 0.000005
+index calculation time 0.182894
+other latency 0.029861, data transfer latency 0.000004, pim kernel latency 0.000005
+index calculation time 0.185641
+other latency 0.030874, data transfer latency 0.000005, pim kernel latency 0.000005
+index calculation time 0.194978
+other latency 0.031126, data transfer latency 0.000006, pim kernel latency 0.000005
+amm time 0.018872, non amm time 0.002346
+attention reorder time 0.000099, attention cpu compute time 0.001615
+post o reorder+norm+residual time 0.000162, gelu+ffn1 reorder time 0.000281, post ffn2 reorder+norm+residual time 0.000178
+tensor allocation overhead time 0.000004, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000099, o 0.000028, ffn1 0.000108, ffn2 0.000022
+host breakdown: attention 0.001615, reorder 0.000257, other 0.000474
+iteration 9, inference time 0.021223
+--------------------------------------------
+input initialization time 0.000244
+index calculation time 0.197573
+other latency 0.031887, data transfer latency 0.000006, pim kernel latency 0.000005
+index calculation time 0.199061
+other latency 0.032139, data transfer latency 0.000006, pim kernel latency 0.000005
+index calculation time 0.201566
+other latency 0.033152, data transfer latency 0.000006, pim kernel latency 0.000005
+index calculation time 0.210679
+other latency 0.033403, data transfer latency 0.000007, pim kernel latency 0.000005
+amm time 0.018432, non amm time 0.002306
+attention reorder time 0.000095, attention cpu compute time 0.001603
+post o reorder+norm+residual time 0.000160, gelu+ffn1 reorder time 0.000273, post ffn2 reorder+norm+residual time 0.000164
+tensor allocation overhead time 0.000003, other non amm time 0.000008
+reorder breakdown: qkv_to_attention 0.000095, o 0.000026, ffn1 0.000111, ffn2 0.000024
+host breakdown: attention 0.001603, reorder 0.000256, other 0.000447
+iteration 10, inference time 0.020742
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.213273
+other latency 0.034161, data transfer latency 0.000007, pim kernel latency 0.000005
+index calculation time 0.214686
+other latency 0.034415, data transfer latency 0.000007, pim kernel latency 0.000005
+index calculation time 0.217183
+other latency 0.035434, data transfer latency 0.000008, pim kernel latency 0.000005
+index calculation time 0.226298
+other latency 0.035685, data transfer latency 0.000008, pim kernel latency 0.000005
+amm time 0.018348, non amm time 0.002314
+attention reorder time 0.000097, attention cpu compute time 0.001612
+post o reorder+norm+residual time 0.000157, gelu+ffn1 reorder time 0.000282, post ffn2 reorder+norm+residual time 0.000159
+tensor allocation overhead time 0.000001, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000097, o 0.000024, ffn1 0.000096, ffn2 0.000023
+host breakdown: attention 0.001612, reorder 0.000240, other 0.000462
+iteration 11, inference time 0.020665
+--------------------------------------------
+input initialization time 0.000247
+index calculation time 0.228899
+other latency 0.036446, data transfer latency 0.000008, pim kernel latency 0.000005
+index calculation time 0.230383
+other latency 0.036723, data transfer latency 0.000008, pim kernel latency 0.000005
+index calculation time 0.232894
+other latency 0.037735, data transfer latency 0.000008, pim kernel latency 0.000005
+index calculation time 0.242122
+other latency 0.037987, data transfer latency 0.000008, pim kernel latency 0.000005
+amm time 0.018540, non amm time 0.002346
+attention reorder time 0.000087, attention cpu compute time 0.001636
+post o reorder+norm+residual time 0.000157, gelu+ffn1 reorder time 0.000289, post ffn2 reorder+norm+residual time 0.000172
+tensor allocation overhead time 0.000000, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000087, o 0.000022, ffn1 0.000101, ffn2 0.000024
+host breakdown: attention 0.001636, reorder 0.000234, other 0.000476
+iteration 12, inference time 0.020893
+--------------------------------------------
+input initialization time 0.000243
+index calculation time 0.244719
+other latency 0.038745, data transfer latency 0.000008, pim kernel latency 0.000005
+index calculation time 0.246226
+other latency 0.038996, data transfer latency 0.000008, pim kernel latency 0.000005
+index calculation time 0.248758
+other latency 0.040009, data transfer latency 0.000008, pim kernel latency 0.000005
+index calculation time 0.257905
+other latency 0.040266, data transfer latency 0.000008, pim kernel latency 0.000005
+amm time 0.018490, non amm time 0.002336
+attention reorder time 0.000090, attention cpu compute time 0.001642
+post o reorder+norm+residual time 0.000154, gelu+ffn1 reorder time 0.000284, post ffn2 reorder+norm+residual time 0.000160
+tensor allocation overhead time 0.000000, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000090, o 0.000023, ffn1 0.000098, ffn2 0.000023
+host breakdown: attention 0.001642, reorder 0.000234, other 0.000460
+iteration 13, inference time 0.020831
+--------------------------------------------
+input initialization time 0.000242
+index calculation time 0.260515
+other latency 0.041025, data transfer latency 0.000008, pim kernel latency 0.000005
+index calculation time 0.262137
+other latency 0.041277, data transfer latency 0.000008, pim kernel latency 0.000005
+index calculation time 0.264664
+other latency 0.042291, data transfer latency 0.000008, pim kernel latency 0.000005
+index calculation time 0.273834
+other latency 0.042543, data transfer latency 0.000008, pim kernel latency 0.000005
+amm time 0.018658, non amm time 0.002328
+attention reorder time 0.000096, attention cpu compute time 0.001618
+post o reorder+norm+residual time 0.000157, gelu+ffn1 reorder time 0.000281, post ffn2 reorder+norm+residual time 0.000168
+tensor allocation overhead time 0.000002, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000096, o 0.000024, ffn1 0.000100, ffn2 0.000027
+host breakdown: attention 0.001618, reorder 0.000247, other 0.000463
+iteration 14, inference time 0.020991
+--------------------------------------------
+10 rounds' average inference time 0.021354
+
+----------Transformer Params----------
+thread num 1
+layer num 1
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 2304, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 288, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------O LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 3072, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 384, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 3072
+num codebook 2048, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 2048, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------Attention Params----------
+seq len 128, batch size 1, n 128
+query heads 12, kv heads 12, head dim 64, token dim 768
+dpu num 8, input parallelism 1, lut parallelism 8
+n tile size 128, q tile size 96, kv tile size 96
+num threads 1
+-----------------------------------
+parameter parsing time 0.000457
+weight initialization time 0.237798
+dpu allocate time 0.000002
+--------------------------------------------
+input initialization time 0.000363
+index calculation time 0.002596
+other latency 0.000967, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.004072
+other latency 0.001305, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.006550
+other latency 0.002606, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.016127
+other latency 0.002935, data transfer latency 0.000000, pim kernel latency 0.000000
+amm time 0.020121, non amm time 0.003133
+attention reorder time 0.000260, attention cpu compute time 0.001732
+post o reorder+norm+residual time 0.000301, gelu+ffn1 reorder time 0.000507, post ffn2 reorder+norm+residual time 0.000300
+tensor allocation overhead time 0.000007, other non amm time 0.000026
+reorder breakdown: qkv_to_attention 0.000260, o 0.000091, ffn1 0.000339, ffn2 0.000088
+host breakdown: attention 0.001732, reorder 0.000778, other 0.000623
+iteration 0, inference time 0.023262
+--------------------------------------------
+input initialization time 0.000239
+index calculation time 0.018670
+other latency 0.003680, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.020267
+other latency 0.003929, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.022756
+other latency 0.004920, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.031786
+other latency 0.005167, data transfer latency 0.000001, pim kernel latency 0.000000
+amm time 0.018471, non amm time 0.002293
+attention reorder time 0.000100, attention cpu compute time 0.001590
+post o reorder+norm+residual time 0.000158, gelu+ffn1 reorder time 0.000275, post ffn2 reorder+norm+residual time 0.000160
+tensor allocation overhead time 0.000000, other non amm time 0.000010
+reorder breakdown: qkv_to_attention 0.000100, o 0.000026, ffn1 0.000101, ffn2 0.000024
+host breakdown: attention 0.001590, reorder 0.000251, other 0.000452
+iteration 1, inference time 0.020768
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.034353
+other latency 0.005914, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.035794
+other latency 0.006160, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.038253
+other latency 0.007154, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.047153
+other latency 0.007406, data transfer latency 0.000002, pim kernel latency 0.000000
+amm time 0.018068, non amm time 0.002305
+attention reorder time 0.000108, attention cpu compute time 0.001594
+post o reorder+norm+residual time 0.000160, gelu+ffn1 reorder time 0.000270, post ffn2 reorder+norm+residual time 0.000165
+tensor allocation overhead time 0.000000, other non amm time 0.000008
+reorder breakdown: qkv_to_attention 0.000108, o 0.000026, ffn1 0.000106, ffn2 0.000027
+host breakdown: attention 0.001594, reorder 0.000267, other 0.000444
+iteration 2, inference time 0.020377
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.049712
+other latency 0.008151, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.051137
+other latency 0.008397, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.053818
+other latency 0.009390, data transfer latency 0.000003, pim kernel latency 0.000000
+index calculation time 0.062803
+other latency 0.009637, data transfer latency 0.000003, pim kernel latency 0.000000
+amm time 0.018341, non amm time 0.002266
+attention reorder time 0.000100, attention cpu compute time 0.001562
+post o reorder+norm+residual time 0.000162, gelu+ffn1 reorder time 0.000269, post ffn2 reorder+norm+residual time 0.000163
+tensor allocation overhead time 0.000003, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000100, o 0.000027, ffn1 0.000099, ffn2 0.000024
+host breakdown: attention 0.001562, reorder 0.000250, other 0.000454
+iteration 3, inference time 0.020610
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.065356
+other latency 0.010385, data transfer latency 0.000004, pim kernel latency 0.000000
+index calculation time 0.066751
+other latency 0.010635, data transfer latency 0.000005, pim kernel latency 0.000000
+index calculation time 0.069224
+other latency 0.011626, data transfer latency 0.000005, pim kernel latency 0.000000
+index calculation time 0.078174
+other latency 0.011873, data transfer latency 0.000005, pim kernel latency 0.000000
+amm time 0.018064, non amm time 0.002278
+attention reorder time 0.000096, attention cpu compute time 0.001586
+post o reorder+norm+residual time 0.000157, gelu+ffn1 reorder time 0.000267, post ffn2 reorder+norm+residual time 0.000163
+tensor allocation overhead time 0.000002, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000096, o 0.000024, ffn1 0.000105, ffn2 0.000025
+host breakdown: attention 0.001586, reorder 0.000250, other 0.000442
+iteration 4, inference time 0.020346
+--------------------------------------------
+input initialization time 0.000239
+index calculation time 0.080742
+other latency 0.012631, data transfer latency 0.000005, pim kernel latency 0.000000
+index calculation time 0.082156
+other latency 0.012877, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.084618
+other latency 0.013886, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.093709
+other latency 0.014132, data transfer latency 0.000007, pim kernel latency 0.000000
+amm time 0.018276, non amm time 0.002325
+attention reorder time 0.000104, attention cpu compute time 0.001604
+post o reorder+norm+residual time 0.000168, gelu+ffn1 reorder time 0.000279, post ffn2 reorder+norm+residual time 0.000162
+tensor allocation overhead time 0.000001, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000104, o 0.000026, ffn1 0.000112, ffn2 0.000024
+host breakdown: attention 0.001604, reorder 0.000266, other 0.000454
+iteration 5, inference time 0.020605
+--------------------------------------------
+input initialization time 0.000239
+index calculation time 0.096268
+other latency 0.014882, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.097688
+other latency 0.015129, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.100176
+other latency 0.016124, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.109431
+other latency 0.016371, data transfer latency 0.000007, pim kernel latency 0.000000
+amm time 0.018479, non amm time 0.002307
+attention reorder time 0.000100, attention cpu compute time 0.001593
+post o reorder+norm+residual time 0.000163, gelu+ffn1 reorder time 0.000280, post ffn2 reorder+norm+residual time 0.000163
+tensor allocation overhead time 0.000002, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000100, o 0.000027, ffn1 0.000115, ffn2 0.000026
+host breakdown: attention 0.001593, reorder 0.000268, other 0.000446
+iteration 6, inference time 0.020791
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.112024
+other latency 0.017118, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.113431
+other latency 0.017364, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.115902
+other latency 0.018370, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.125140
+other latency 0.018616, data transfer latency 0.000008, pim kernel latency 0.000000
+amm time 0.018401, non amm time 0.002270
+attention reorder time 0.000100, attention cpu compute time 0.001587
+post o reorder+norm+residual time 0.000159, gelu+ffn1 reorder time 0.000260, post ffn2 reorder+norm+residual time 0.000156
+tensor allocation overhead time 0.000000, other non amm time 0.000008
+reorder breakdown: qkv_to_attention 0.000100, o 0.000025, ffn1 0.000100, ffn2 0.000022
+host breakdown: attention 0.001587, reorder 0.000247, other 0.000436
+iteration 7, inference time 0.020676
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.127695
+other latency 0.019363, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.129093
+other latency 0.019610, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.131566
+other latency 0.020603, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.140564
+other latency 0.020850, data transfer latency 0.000008, pim kernel latency 0.000000
+amm time 0.018055, non amm time 0.002236
+attention reorder time 0.000090, attention cpu compute time 0.001567
+post o reorder+norm+residual time 0.000154, gelu+ffn1 reorder time 0.000256, post ffn2 reorder+norm+residual time 0.000163
+tensor allocation overhead time 0.000000, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000090, o 0.000023, ffn1 0.000099, ffn2 0.000024
+host breakdown: attention 0.001567, reorder 0.000237, other 0.000433
+iteration 8, inference time 0.020296
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.143108
+other latency 0.021599, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.144529
+other latency 0.021850, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.146996
+other latency 0.022840, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.156005
+other latency 0.023086, data transfer latency 0.000008, pim kernel latency 0.000000
+amm time 0.018078, non amm time 0.002242
+attention reorder time 0.000088, attention cpu compute time 0.001587
+post o reorder+norm+residual time 0.000152, gelu+ffn1 reorder time 0.000254, post ffn2 reorder+norm+residual time 0.000154
+tensor allocation overhead time 0.000004, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000088, o 0.000022, ffn1 0.000094, ffn2 0.000021
+host breakdown: attention 0.001587, reorder 0.000225, other 0.000430
+iteration 9, inference time 0.020325
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.158560
+other latency 0.023830, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.159974
+other latency 0.024078, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.162423
+other latency 0.025068, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.171581
+other latency 0.025344, data transfer latency 0.000008, pim kernel latency 0.000000
+amm time 0.018233, non amm time 0.002254
+attention reorder time 0.000094, attention cpu compute time 0.001586
+post o reorder+norm+residual time 0.000154, gelu+ffn1 reorder time 0.000255, post ffn2 reorder+norm+residual time 0.000158
+tensor allocation overhead time 0.000001, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000094, o 0.000022, ffn1 0.000097, ffn2 0.000023
+host breakdown: attention 0.001586, reorder 0.000237, other 0.000432
+iteration 10, inference time 0.020490
+--------------------------------------------
+input initialization time 0.000239
+index calculation time 0.174131
+other latency 0.026110, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.175539
+other latency 0.026356, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.177996
+other latency 0.027344, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.186939
+other latency 0.027590, data transfer latency 0.000009, pim kernel latency 0.000000
+amm time 0.017992, non amm time 0.002214
+attention reorder time 0.000085, attention cpu compute time 0.001570
+post o reorder+norm+residual time 0.000153, gelu+ffn1 reorder time 0.000245, post ffn2 reorder+norm+residual time 0.000154
+tensor allocation overhead time 0.000000, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000085, o 0.000021, ffn1 0.000090, ffn2 0.000022
+host breakdown: attention 0.001570, reorder 0.000218, other 0.000426
+iteration 11, inference time 0.020210
+--------------------------------------------
+input initialization time 0.000248
+index calculation time 0.189497
+other latency 0.028337, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.190928
+other latency 0.028585, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.193402
+other latency 0.029576, data transfer latency 0.000009, pim kernel latency 0.000000
+index calculation time 0.202677
+other latency 0.029823, data transfer latency 0.000009, pim kernel latency 0.000000
+amm time 0.018424, non amm time 0.002304
+attention reorder time 0.000092, attention cpu compute time 0.001609
+post o reorder+norm+residual time 0.000164, gelu+ffn1 reorder time 0.000271, post ffn2 reorder+norm+residual time 0.000163
+tensor allocation overhead time 0.000000, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000092, o 0.000026, ffn1 0.000111, ffn2 0.000026
+host breakdown: attention 0.001609, reorder 0.000255, other 0.000440
+iteration 12, inference time 0.020731
+--------------------------------------------
+input initialization time 0.000242
+index calculation time 0.205222
+other latency 0.030570, data transfer latency 0.000010, pim kernel latency 0.000000
+index calculation time 0.206640
+other latency 0.030817, data transfer latency 0.000010, pim kernel latency 0.000000
+index calculation time 0.209090
+other latency 0.031807, data transfer latency 0.000010, pim kernel latency 0.000000
+index calculation time 0.218025
+other latency 0.032056, data transfer latency 0.000010, pim kernel latency 0.000000
+amm time 0.018103, non amm time 0.002316
+attention reorder time 0.000098, attention cpu compute time 0.001619
+post o reorder+norm+residual time 0.000164, gelu+ffn1 reorder time 0.000264, post ffn2 reorder+norm+residual time 0.000162
+tensor allocation overhead time 0.000001, other non amm time 0.000008
+reorder breakdown: qkv_to_attention 0.000098, o 0.000025, ffn1 0.000103, ffn2 0.000024
+host breakdown: attention 0.001619, reorder 0.000250, other 0.000447
+iteration 13, inference time 0.020423
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.223494
+other latency 0.033354, data transfer latency 0.000011, pim kernel latency 0.000000
+index calculation time 0.227958
+other latency 0.033601, data transfer latency 0.000013, pim kernel latency 0.000000
+index calculation time 0.233596
+other latency 0.034779, data transfer latency 0.000013, pim kernel latency 0.000000
+index calculation time 0.254113
+other latency 0.035027, data transfer latency 0.000013, pim kernel latency 0.000000
+amm time 0.039621, non amm time 0.002594
+attention reorder time 0.000123, attention cpu compute time 0.001823
+post o reorder+norm+residual time 0.000160, gelu+ffn1 reorder time 0.000283, post ffn2 reorder+norm+residual time 0.000192
+tensor allocation overhead time 0.000004, other non amm time 0.000009
+reorder breakdown: qkv_to_attention 0.000123, o 0.000025, ffn1 0.000112, ffn2 0.000025
+host breakdown: attention 0.001823, reorder 0.000285, other 0.000486
+iteration 14, inference time 0.042220
+--------------------------------------------
+10 rounds' average inference time 0.022677
+
+----------Transformer Params----------
+thread num 1
+layer num 1
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 2304, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 288, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------O LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 3072, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 384, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 3072
+num codebook 2048, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 2048, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------Attention Params----------
+seq len 128, batch size 1, n 128
+query heads 12, kv heads 12, head dim 64, token dim 768
+dpu num 8, input parallelism 1, lut parallelism 8
+n tile size 128, q tile size 96, kv tile size 96
+num threads 1
+-----------------------------------
+parameter parsing time 0.000505
+weight initialization time 0.212573
+dpu allocate time 0.000002
+--------------------------------------------
+input initialization time 0.000475
+index calculation time 0.003248
+other latency 0.000985, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.005307
+other latency 0.001341, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.008448
+other latency 0.002749, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.020346
+other latency 0.003098, data transfer latency 0.000001, pim kernel latency 0.000000
+amm time 0.024658, non amm time 0.003941
+attention reorder time 0.000330, attention cpu compute time 0.002195
+post o reorder+norm+residual time 0.000337, gelu+ffn1 reorder time 0.000671, post ffn2 reorder+norm+residual time 0.000364
+tensor allocation overhead time 0.000008, other non amm time 0.000036
+reorder breakdown: qkv_to_attention 0.000330, o 0.000100, ffn1 0.000431, ffn2 0.000123
+host breakdown: attention 0.002195, reorder 0.000984, other 0.000762
+iteration 0, inference time 0.028610
+--------------------------------------------
+input initialization time 0.000339
+index calculation time 0.023284
+other latency 0.003850, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.024884
+other latency 0.004104, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.027488
+other latency 0.005097, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.037010
+other latency 0.005353, data transfer latency 0.000002, pim kernel latency 0.000000
+amm time 0.019461, non amm time 0.002348
+attention reorder time 0.000103, attention cpu compute time 0.001613
+post o reorder+norm+residual time 0.000165, gelu+ffn1 reorder time 0.000302, post ffn2 reorder+norm+residual time 0.000156
+tensor allocation overhead time 0.000002, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000103, o 0.000024, ffn1 0.000118, ffn2 0.000023
+host breakdown: attention 0.001613, reorder 0.000268, other 0.000467
+iteration 1, inference time 0.021814
+--------------------------------------------
+input initialization time 0.000237
+index calculation time 0.039601
+other latency 0.006103, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.041348
+other latency 0.006373, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.044132
+other latency 0.007380, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.053326
+other latency 0.007648, data transfer latency 0.000002, pim kernel latency 0.000000
+amm time 0.019100, non amm time 0.002315
+attention reorder time 0.000079, attention cpu compute time 0.001595
+post o reorder+norm+residual time 0.000159, gelu+ffn1 reorder time 0.000309, post ffn2 reorder+norm+residual time 0.000167
+tensor allocation overhead time 0.000003, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000079, o 0.000019, ffn1 0.000119, ffn2 0.000023
+host breakdown: attention 0.001595, reorder 0.000240, other 0.000480
+iteration 2, inference time 0.021419
+--------------------------------------------
+input initialization time 0.000306
+index calculation time 0.056383
+other latency 0.008420, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.058614
+other latency 0.008681, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.061598
+other latency 0.009716, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.071844
+other latency 0.009977, data transfer latency 0.000002, pim kernel latency 0.000000
+amm time 0.021452, non amm time 0.003010
+attention reorder time 0.000158, attention cpu compute time 0.002023
+post o reorder+norm+residual time 0.000158, gelu+ffn1 reorder time 0.000490, post ffn2 reorder+norm+residual time 0.000170
+tensor allocation overhead time 0.000003, other non amm time 0.000008
+reorder breakdown: qkv_to_attention 0.000158, o 0.000026, ffn1 0.000168, ffn2 0.000024
+host breakdown: attention 0.002023, reorder 0.000376, other 0.000611
+iteration 3, inference time 0.024469
+--------------------------------------------
+input initialization time 0.000248
+index calculation time 0.074662
+other latency 0.010738, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.077440
+other latency 0.010995, data transfer latency 0.000003, pim kernel latency 0.000000
+index calculation time 0.081306
+other latency 0.012022, data transfer latency 0.000003, pim kernel latency 0.000000
+index calculation time 0.095507
+other latency 0.012292, data transfer latency 0.000003, pim kernel latency 0.000000
+amm time 0.026615, non amm time 0.003193
+attention reorder time 0.000128, attention cpu compute time 0.002207
+post o reorder+norm+residual time 0.000188, gelu+ffn1 reorder time 0.000432, post ffn2 reorder+norm+residual time 0.000225
+tensor allocation overhead time 0.000003, other non amm time 0.000010
+reorder breakdown: qkv_to_attention 0.000128, o 0.000032, ffn1 0.000147, ffn2 0.000032
+host breakdown: attention 0.002207, reorder 0.000339, other 0.000647
+iteration 4, inference time 0.029814
+--------------------------------------------
+input initialization time 0.000444
+index calculation time 0.099265
+other latency 0.013072, data transfer latency 0.000004, pim kernel latency 0.000000
+index calculation time 0.102224
+other latency 0.013346, data transfer latency 0.000005, pim kernel latency 0.000000
+index calculation time 0.106000
+other latency 0.014389, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.118157
+other latency 0.014680, data transfer latency 0.000006, pim kernel latency 0.000000
+amm time 0.025682, non amm time 0.003278
+attention reorder time 0.000140, attention cpu compute time 0.002243
+post o reorder+norm+residual time 0.000189, gelu+ffn1 reorder time 0.000505, post ffn2 reorder+norm+residual time 0.000189
 tensor allocation overhead time 0.000003, other non amm time 0.000009
-reorder breakdown: qkv_to_attention 0.000302, o 0.000075, ffn1 0.000205, ffn2 0.000051
-host breakdown: attention 0.004411, reorder 0.000633, other 0.001345
-iteration 4, inference time 0.065166
+reorder breakdown: qkv_to_attention 0.000140, o 0.000029, ffn1 0.000153, ffn2 0.000033
+host breakdown: attention 0.002243, reorder 0.000355, other 0.000680
+iteration 5, inference time 0.028967
 --------------------------------------------
-input initialization time 0.000643
-index calculation time 0.269150
-other latency 0.031682, data transfer latency 0.000001, pim kernel latency 0.000000
-index calculation time 0.275940
-other latency 0.032306, data transfer latency 0.000002, pim kernel latency 0.000000
-index calculation time 0.283361
-other latency 0.034776, data transfer latency 0.000003, pim kernel latency 0.000000
-index calculation time 0.312748
-other latency 0.035392, data transfer latency 0.000003, pim kernel latency 0.000000
-amm time 0.057444, non amm time 0.006499
-attention reorder time 0.000258, attention cpu compute time 0.004370
-post o reorder+norm+residual time 0.000677, gelu+ffn1 reorder time 0.000663, post ffn2 reorder+norm+residual time 0.000519
+input initialization time 0.000423
+index calculation time 0.121658
+other latency 0.015456, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.123464
+other latency 0.015724, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.126041
+other latency 0.016721, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.135384
+other latency 0.016970, data transfer latency 0.000006, pim kernel latency 0.000000
+amm time 0.020005, non amm time 0.002427
+attention reorder time 0.000140, attention cpu compute time 0.001677
+post o reorder+norm+residual time 0.000163, gelu+ffn1 reorder time 0.000279, post ffn2 reorder+norm+residual time 0.000157
+tensor allocation overhead time 0.000003, other non amm time 0.000008
+reorder breakdown: qkv_to_attention 0.000140, o 0.000023, ffn1 0.000120, ffn2 0.000024
+host breakdown: attention 0.001677, reorder 0.000307, other 0.000443
+iteration 6, inference time 0.022438
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.137956
+other latency 0.017720, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.139742
+other latency 0.017995, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.142258
+other latency 0.019032, data transfer latency 0.000006, pim kernel latency 0.000000
+index calculation time 0.153156
+other latency 0.019319, data transfer latency 0.000006, pim kernel latency 0.000000
+amm time 0.020557, non amm time 0.002495
+attention reorder time 0.000088, attention cpu compute time 0.001597
+post o reorder+norm+residual time 0.000165, gelu+ffn1 reorder time 0.000461, post ffn2 reorder+norm+residual time 0.000175
+tensor allocation overhead time 0.000003, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000088, o 0.000025, ffn1 0.000159, ffn2 0.000026
+host breakdown: attention 0.001597, reorder 0.000298, other 0.000600
+iteration 7, inference time 0.023058
+--------------------------------------------
+input initialization time 0.000301
+index calculation time 0.156463
+other latency 0.020079, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.158208
+other latency 0.020350, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.160859
+other latency 0.021350, data transfer latency 0.000007, pim kernel latency 0.000000
+index calculation time 0.170434
+other latency 0.021635, data transfer latency 0.000007, pim kernel latency 0.000000
+amm time 0.020130, non amm time 0.002473
+attention reorder time 0.000127, attention cpu compute time 0.001648
+post o reorder+norm+residual time 0.000180, gelu+ffn1 reorder time 0.000297, post ffn2 reorder+norm+residual time 0.000212
+tensor allocation overhead time 0.000001, other non amm time 0.000008
+reorder breakdown: qkv_to_attention 0.000127, o 0.000025, ffn1 0.000117, ffn2 0.000033
+host breakdown: attention 0.001648, reorder 0.000302, other 0.000523
+iteration 8, inference time 0.022609
+--------------------------------------------
+input initialization time 0.000342
+index calculation time 0.173309
+other latency 0.022429, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.175463
+other latency 0.022697, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.178351
+other latency 0.023733, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.187967
+other latency 0.023989, data transfer latency 0.000008, pim kernel latency 0.000000
+amm time 0.020407, non amm time 0.002826
+attention reorder time 0.000135, attention cpu compute time 0.001960
+post o reorder+norm+residual time 0.000149, gelu+ffn1 reorder time 0.000409, post ffn2 reorder+norm+residual time 0.000161
 tensor allocation overhead time 0.000003, other non amm time 0.000009
-reorder breakdown: qkv_to_attention 0.000258, o 0.000141, ffn1 0.000203, ffn2 0.000051
-host breakdown: attention 0.004370, reorder 0.000653, other 0.001476
-iteration 5, inference time 0.063951
+reorder breakdown: qkv_to_attention 0.000135, o 0.000021, ffn1 0.000151, ffn2 0.000024
+host breakdown: attention 0.001960, reorder 0.000331, other 0.000535
+iteration 9, inference time 0.023238
 --------------------------------------------
-input initialization time 0.000697
-index calculation time 0.320792
-other latency 0.037447, data transfer latency 0.000003, pim kernel latency 0.000000
-index calculation time 0.327603
-other latency 0.038091, data transfer latency 0.000003, pim kernel latency 0.000000
-index calculation time 0.335025
-other latency 0.040576, data transfer latency 0.000004, pim kernel latency 0.000000
-index calculation time 0.364564
-other latency 0.041188, data transfer latency 0.000004, pim kernel latency 0.000000
-amm time 0.058633, non amm time 0.006510
-attention reorder time 0.000230, attention cpu compute time 0.004428
-post o reorder+norm+residual time 0.000651, gelu+ffn1 reorder time 0.000672, post ffn2 reorder+norm+residual time 0.000518
-tensor allocation overhead time 0.000002, other non amm time 0.000009
-reorder breakdown: qkv_to_attention 0.000230, o 0.000156, ffn1 0.000207, ffn2 0.000052
-host breakdown: attention 0.004428, reorder 0.000645, other 0.001437
-iteration 6, inference time 0.065151
+input initialization time 0.000239
+index calculation time 0.190617
+other latency 0.024734, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.192360
+other latency 0.025004, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.195532
+other latency 0.026003, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.208942
+other latency 0.026309, data transfer latency 0.000008, pim kernel latency 0.000000
+amm time 0.023753, non amm time 0.002398
+attention reorder time 0.000094, attention cpu compute time 0.001620
+post o reorder+norm+residual time 0.000160, gelu+ffn1 reorder time 0.000318, post ffn2 reorder+norm+residual time 0.000198
+tensor allocation overhead time 0.000001, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000094, o 0.000022, ffn1 0.000129, ffn2 0.000031
+host breakdown: attention 0.001620, reorder 0.000276, other 0.000502
+iteration 10, inference time 0.026158
 --------------------------------------------
-input initialization time 0.000638
-index calculation time 0.372111
-other latency 0.043821, data transfer latency 0.000004, pim kernel latency 0.000000
-index calculation time 0.378997
-other latency 0.044431, data transfer latency 0.000004, pim kernel latency 0.000000
-index calculation time 0.386156
-other latency 0.047193, data transfer latency 0.000004, pim kernel latency 0.000000
-index calculation time 0.416956
-other latency 0.047864, data transfer latency 0.000004, pim kernel latency 0.000000
-amm time 0.059997, non amm time 0.008090
-attention reorder time 0.000459, attention cpu compute time 0.005372
-post o reorder+norm+residual time 0.000474, gelu+ffn1 reorder time 0.001168, post ffn2 reorder+norm+residual time 0.000598
-tensor allocation overhead time 0.000007, other non amm time 0.000012
-reorder breakdown: qkv_to_attention 0.000459, o 0.000055, ffn1 0.000365, ffn2 0.000098
-host breakdown: attention 0.005372, reorder 0.000977, other 0.001740
-iteration 7, inference time 0.068097
+input initialization time 0.000324
+index calculation time 0.212288
+other latency 0.027083, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.214219
+other latency 0.027357, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.217256
+other latency 0.028362, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.226441
+other latency 0.028638, data transfer latency 0.000008, pim kernel latency 0.000000
+amm time 0.020317, non amm time 0.002907
+attention reorder time 0.000100, attention cpu compute time 0.001946
+post o reorder+norm+residual time 0.000194, gelu+ffn1 reorder time 0.000485, post ffn2 reorder+norm+residual time 0.000170
+tensor allocation overhead time 0.000000, other non amm time 0.000012
+reorder breakdown: qkv_to_attention 0.000100, o 0.000031, ffn1 0.000167, ffn2 0.000024
+host breakdown: attention 0.001946, reorder 0.000322, other 0.000639
+iteration 11, inference time 0.023231
 --------------------------------------------
-input initialization time 0.000701
-index calculation time 0.425796
-other latency 0.050555, data transfer latency 0.000004, pim kernel latency 0.000000
-index calculation time 0.433134
-other latency 0.051190, data transfer latency 0.000004, pim kernel latency 0.000000
-index calculation time 0.441515
-other latency 0.054912, data transfer latency 0.000004, pim kernel latency 0.000000
-index calculation time 0.472980
-other latency 0.055918, data transfer latency 0.000005, pim kernel latency 0.000000
-amm time 0.065718, non amm time 0.008267
-attention reorder time 0.000347, attention cpu compute time 0.005010
-post o reorder+norm+residual time 0.000488, gelu+ffn1 reorder time 0.001683, post ffn2 reorder+norm+residual time 0.000722
-tensor allocation overhead time 0.000009, other non amm time 0.000008
-reorder breakdown: qkv_to_attention 0.000347, o 0.000061, ffn1 0.000771, ffn2 0.000106
-host breakdown: attention 0.005010, reorder 0.001285, other 0.001972
-iteration 8, inference time 0.074000
+input initialization time 0.000250
+index calculation time 0.228989
+other latency 0.029382, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.230641
+other latency 0.029653, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.233185
+other latency 0.030651, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.242801
+other latency 0.030918, data transfer latency 0.000008, pim kernel latency 0.000000
+amm time 0.019072, non amm time 0.002351
+attention reorder time 0.000090, attention cpu compute time 0.001654
+post o reorder+norm+residual time 0.000157, gelu+ffn1 reorder time 0.000289, post ffn2 reorder+norm+residual time 0.000154
+tensor allocation overhead time 0.000000, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000090, o 0.000021, ffn1 0.000106, ffn2 0.000021
+host breakdown: attention 0.001654, reorder 0.000238, other 0.000459
+iteration 12, inference time 0.021428
 --------------------------------------------
-input initialization time 0.001056
-index calculation time 0.482110
-other latency 0.057837, data transfer latency 0.000005, pim kernel latency 0.000000
-index calculation time 0.489006
-other latency 0.058469, data transfer latency 0.000005, pim kernel latency 0.000000
-index calculation time 0.497011
-other latency 0.060943, data transfer latency 0.000005, pim kernel latency 0.000000
-index calculation time 0.527202
-other latency 0.061821, data transfer latency 0.000005, pim kernel latency 0.000001
-amm time 0.061114, non amm time 0.006834
-attention reorder time 0.000218, attention cpu compute time 0.004756
-post o reorder+norm+residual time 0.000473, gelu+ffn1 reorder time 0.000674, post ffn2 reorder+norm+residual time 0.000694
-tensor allocation overhead time 0.000012, other non amm time 0.000007
-reorder breakdown: qkv_to_attention 0.000218, o 0.000055, ffn1 0.000233, ffn2 0.000110
-host breakdown: attention 0.004756, reorder 0.000616, other 0.001462
-iteration 9, inference time 0.067963
+input initialization time 0.000242
+index calculation time 0.245362
+other latency 0.031665, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.247018
+other latency 0.031940, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.249565
+other latency 0.032934, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.258708
+other latency 0.033208, data transfer latency 0.000008, pim kernel latency 0.000000
+amm time 0.018605, non amm time 0.002402
+attention reorder time 0.000090, attention cpu compute time 0.001676
+post o reorder+norm+residual time 0.000159, gelu+ffn1 reorder time 0.000305, post ffn2 reorder+norm+residual time 0.000166
+tensor allocation overhead time 0.000001, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000090, o 0.000021, ffn1 0.000114, ffn2 0.000022
+host breakdown: attention 0.001676, reorder 0.000247, other 0.000479
+iteration 13, inference time 0.021011
 --------------------------------------------
-input initialization time 0.001163
-index calculation time 0.535091
-other latency 0.063605, data transfer latency 0.000005, pim kernel latency 0.000001
-index calculation time 0.541871
-other latency 0.064476, data transfer latency 0.000006, pim kernel latency 0.000001
-index calculation time 0.550310
-other latency 0.066976, data transfer latency 0.000006, pim kernel latency 0.000001
-index calculation time 0.580023
-other latency 0.067569, data transfer latency 0.000006, pim kernel latency 0.000001
-amm time 0.059433, non amm time 0.006381
-attention reorder time 0.000247, attention cpu compute time 0.004315
-post o reorder+norm+residual time 0.000633, gelu+ffn1 reorder time 0.000675, post ffn2 reorder+norm+residual time 0.000500
-tensor allocation overhead time 0.000005, other non amm time 0.000006
-reorder breakdown: qkv_to_attention 0.000247, o 0.000110, ffn1 0.000212, ffn2 0.000053
-host breakdown: attention 0.004315, reorder 0.000622, other 0.001444
-iteration 10, inference time 0.065823
+input initialization time 0.000238
+index calculation time 0.261254
+other latency 0.033953, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.262983
+other latency 0.034221, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.265506
+other latency 0.035216, data transfer latency 0.000008, pim kernel latency 0.000000
+index calculation time 0.276015
+other latency 0.035466, data transfer latency 0.000008, pim kernel latency 0.000000
+amm time 0.019977, non amm time 0.002296
+attention reorder time 0.000079, attention cpu compute time 0.001599
+post o reorder+norm+residual time 0.000154, gelu+ffn1 reorder time 0.000281, post ffn2 reorder+norm+residual time 0.000177
+tensor allocation overhead time 0.000002, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000079, o 0.000017, ffn1 0.000091, ffn2 0.000030
+host breakdown: attention 0.001599, reorder 0.000217, other 0.000480
+iteration 14, inference time 0.022278
 --------------------------------------------
-input initialization time 0.000618
-index calculation time 0.587310
-other latency 0.069362, data transfer latency 0.000007, pim kernel latency 0.000001
-index calculation time 0.594119
-other latency 0.069989, data transfer latency 0.000007, pim kernel latency 0.000001
-index calculation time 0.602045
-other latency 0.073438, data transfer latency 0.000007, pim kernel latency 0.000001
-index calculation time 0.632621
-other latency 0.074055, data transfer latency 0.000007, pim kernel latency 0.000001
-amm time 0.060361, non amm time 0.006898
-attention reorder time 0.000274, attention cpu compute time 0.004605
-post o reorder+norm+residual time 0.000450, gelu+ffn1 reorder time 0.001033, post ffn2 reorder+norm+residual time 0.000522
-tensor allocation overhead time 0.000006, other non amm time 0.000008
-reorder breakdown: qkv_to_attention 0.000274, o 0.000054, ffn1 0.000323, ffn2 0.000051
-host breakdown: attention 0.004605, reorder 0.000702, other 0.001591
-iteration 11, inference time 0.067268
+10 rounds' average inference time 0.023442
+
+----------Transformer Params----------
+thread num 1
+layer num 1
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 2304, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 288, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------O LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 3072, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 384, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 3072
+num codebook 2048, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 2048, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------Attention Params----------
+seq len 128, batch size 1, n 128
+query heads 12, kv heads 12, head dim 64, token dim 768
+dpu num 8, input parallelism 1, lut parallelism 8
+n tile size 128, q tile size 96, kv tile size 96
+num threads 1
+-----------------------------------
+parameter parsing time 0.000381
+weight initialization time 0.174345
+dpu allocate time 0.000001
 --------------------------------------------
-input initialization time 0.000642
-index calculation time 0.640028
-other latency 0.076076, data transfer latency 0.000007, pim kernel latency 0.000001
-index calculation time 0.646849
-other latency 0.076693, data transfer latency 0.000007, pim kernel latency 0.000001
-index calculation time 0.655573
-other latency 0.079669, data transfer latency 0.000007, pim kernel latency 0.000001
-index calculation time 0.687456
-other latency 0.080285, data transfer latency 0.000007, pim kernel latency 0.000001
-amm time 0.062022, non amm time 0.006599
-attention reorder time 0.000282, attention cpu compute time 0.004428
-post o reorder+norm+residual time 0.000500, gelu+ffn1 reorder time 0.000865, post ffn2 reorder+norm+residual time 0.000512
-tensor allocation overhead time 0.000003, other non amm time 0.000009
-reorder breakdown: qkv_to_attention 0.000282, o 0.000055, ffn1 0.000306, ffn2 0.000065
-host breakdown: attention 0.004428, reorder 0.000708, other 0.001463
-iteration 12, inference time 0.068629
+input initialization time 0.000360
+index calculation time 0.002589
+other latency 0.000957, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.004101
+other latency 0.001304, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.006660
+other latency 0.002611, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.015960
+other latency 0.002946, data transfer latency 0.000000, pim kernel latency 0.000000
+amm time 0.019915, non amm time 0.003168
+attention reorder time 0.000241, attention cpu compute time 0.001786
+post o reorder+norm+residual time 0.000303, gelu+ffn1 reorder time 0.000520, post ffn2 reorder+norm+residual time 0.000285
+tensor allocation overhead time 0.000007, other non amm time 0.000026
+reorder breakdown: qkv_to_attention 0.000241, o 0.000089, ffn1 0.000319, ffn2 0.000084
+host breakdown: attention 0.001786, reorder 0.000733, other 0.000649
+iteration 0, inference time 0.023091
 --------------------------------------------
-input initialization time 0.000619
-index calculation time 0.694647
-other latency 0.082135, data transfer latency 0.000008, pim kernel latency 0.000001
-index calculation time 0.701489
-other latency 0.082749, data transfer latency 0.000008, pim kernel latency 0.000001
-index calculation time 0.711299
-other latency 0.085285, data transfer latency 0.000008, pim kernel latency 0.000001
-index calculation time 0.741082
-other latency 0.085908, data transfer latency 0.000008, pim kernel latency 0.000001
-amm time 0.060221, non amm time 0.006589
-attention reorder time 0.000318, attention cpu compute time 0.004606
-post o reorder+norm+residual time 0.000468, gelu+ffn1 reorder time 0.000663, post ffn2 reorder+norm+residual time 0.000518
-tensor allocation overhead time 0.000006, other non amm time 0.000010
-reorder breakdown: qkv_to_attention 0.000318, o 0.000055, ffn1 0.000203, ffn2 0.000050
-host breakdown: attention 0.004606, reorder 0.000626, other 0.001357
-iteration 13, inference time 0.066816
+input initialization time 0.000238
+index calculation time 0.018512
+other latency 0.003703, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.020083
+other latency 0.003974, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.022701
+other latency 0.004965, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.031650
+other latency 0.005227, data transfer latency 0.000000, pim kernel latency 0.000000
+amm time 0.018475, non amm time 0.002309
+attention reorder time 0.000072, attention cpu compute time 0.001629
+post o reorder+norm+residual time 0.000156, gelu+ffn1 reorder time 0.000295, post ffn2 reorder+norm+residual time 0.000153
+tensor allocation overhead time 0.000000, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000072, o 0.000019, ffn1 0.000084, ffn2 0.000020
+host breakdown: attention 0.001629, reorder 0.000195, other 0.000485
+iteration 1, inference time 0.020787
 --------------------------------------------
-input initialization time 0.000638
-index calculation time 0.748326
-other latency 0.087778, data transfer latency 0.000009, pim kernel latency 0.000001
-index calculation time 0.755034
-other latency 0.088368, data transfer latency 0.000009, pim kernel latency 0.000001
-index calculation time 0.764396
-other latency 0.090881, data transfer latency 0.000009, pim kernel latency 0.000001
-index calculation time 0.795520
-other latency 0.091493, data transfer latency 0.000009, pim kernel latency 0.000001
-amm time 0.060901, non amm time 0.006383
-attention reorder time 0.000240, attention cpu compute time 0.004345
-post o reorder+norm+residual time 0.000457, gelu+ffn1 reorder time 0.000796, post ffn2 reorder+norm+residual time 0.000531
-tensor allocation overhead time 0.000004, other non amm time 0.000010
-reorder breakdown: qkv_to_attention 0.000240, o 0.000054, ffn1 0.000313, ffn2 0.000055
-host breakdown: attention 0.004345, reorder 0.000662, other 0.001376
-iteration 14, inference time 0.067292
+input initialization time 0.000238
+index calculation time 0.034235
+other latency 0.005974, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.035988
+other latency 0.006246, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.038483
+other latency 0.007235, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.047734
+other latency 0.007503, data transfer latency 0.000001, pim kernel latency 0.000000
+amm time 0.018741, non amm time 0.002291
+attention reorder time 0.000091, attention cpu compute time 0.001621
+post o reorder+norm+residual time 0.000153, gelu+ffn1 reorder time 0.000255, post ffn2 reorder+norm+residual time 0.000167
+tensor allocation overhead time 0.000000, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000091, o 0.000018, ffn1 0.000072, ffn2 0.000024
+host breakdown: attention 0.001621, reorder 0.000205, other 0.000465
+iteration 2, inference time 0.021035
 --------------------------------------------
-10 rounds' average inference time 0.067499
+input initialization time 0.000331
+index calculation time 0.050281
+other latency 0.008250, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.051984
+other latency 0.008519, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.054472
+other latency 0.009509, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.063569
+other latency 0.009768, data transfer latency 0.000001, pim kernel latency 0.000000
+amm time 0.018469, non amm time 0.002262
+attention reorder time 0.000089, attention cpu compute time 0.001611
+post o reorder+norm+residual time 0.000152, gelu+ffn1 reorder time 0.000250, post ffn2 reorder+norm+residual time 0.000154
+tensor allocation overhead time 0.000001, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000089, o 0.000017, ffn1 0.000071, ffn2 0.000018
+host breakdown: attention 0.001611, reorder 0.000195, other 0.000456
+iteration 3, inference time 0.020736
+--------------------------------------------
+input initialization time 0.000248
+index calculation time 0.066119
+other latency 0.010512, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.067646
+other latency 0.010782, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.070175
+other latency 0.011774, data transfer latency 0.000001, pim kernel latency 0.000000
+index calculation time 0.079425
+other latency 0.012043, data transfer latency 0.000001, pim kernel latency 0.000000
+amm time 0.018500, non amm time 0.002275
+attention reorder time 0.000072, attention cpu compute time 0.001636
+post o reorder+norm+residual time 0.000151, gelu+ffn1 reorder time 0.000251, post ffn2 reorder+norm+residual time 0.000163
+tensor allocation overhead time 0.000001, other non amm time 0.000001
+reorder breakdown: qkv_to_attention 0.000072, o 0.000016, ffn1 0.000067, ffn2 0.000020
+host breakdown: attention 0.001636, reorder 0.000175, other 0.000464
+iteration 4, inference time 0.020779
+--------------------------------------------
+input initialization time 0.000247
+index calculation time 0.082022
+other latency 0.012788, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.083729
+other latency 0.013057, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.086297
+other latency 0.014089, data transfer latency 0.000002, pim kernel latency 0.000000
+index calculation time 0.095869
+other latency 0.014363, data transfer latency 0.000003, pim kernel latency 0.000000
+amm time 0.019238, non amm time 0.002387
+attention reorder time 0.000086, attention cpu compute time 0.001646
+post o reorder+norm+residual time 0.000154, gelu+ffn1 reorder time 0.000323, post ffn2 reorder+norm+residual time 0.000172
+tensor allocation overhead time 0.000000, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000086, o 0.000017, ffn1 0.000143, ffn2 0.000025
+host breakdown: attention 0.001646, reorder 0.000271, other 0.000470
+iteration 5, inference time 0.021628
+--------------------------------------------
+input initialization time 0.000309
+index calculation time 0.098436
+other latency 0.015111, data transfer latency 0.000003, pim kernel latency 0.000000
+index calculation time 0.099996
+other latency 0.015385, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.102498
+other latency 0.016378, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.111468
+other latency 0.016653, data transfer latency 0.000003, pim kernel latency 0.000001
+amm time 0.018284, non amm time 0.002278
+attention reorder time 0.000083, attention cpu compute time 0.001622
+post o reorder+norm+residual time 0.000157, gelu+ffn1 reorder time 0.000257, post ffn2 reorder+norm+residual time 0.000152
+tensor allocation overhead time 0.000000, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000083, o 0.000021, ffn1 0.000078, ffn2 0.000020
+host breakdown: attention 0.001622, reorder 0.000202, other 0.000454
+iteration 6, inference time 0.020565
+--------------------------------------------
+input initialization time 0.000241
+index calculation time 0.114087
+other latency 0.017401, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.115700
+other latency 0.017670, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.118216
+other latency 0.018671, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.127572
+other latency 0.018929, data transfer latency 0.000003, pim kernel latency 0.000001
+amm time 0.018766, non amm time 0.002481
+attention reorder time 0.000081, attention cpu compute time 0.001640
+post o reorder+norm+residual time 0.000157, gelu+ffn1 reorder time 0.000397, post ffn2 reorder+norm+residual time 0.000201
+tensor allocation overhead time 0.000001, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000081, o 0.000017, ffn1 0.000107, ffn2 0.000017
+host breakdown: attention 0.001640, reorder 0.000222, other 0.000619
+iteration 7, inference time 0.021250
+--------------------------------------------
+input initialization time 0.000264
+index calculation time 0.130273
+other latency 0.019675, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.131861
+other latency 0.019943, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.134386
+other latency 0.020941, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.143413
+other latency 0.021214, data transfer latency 0.000003, pim kernel latency 0.000001
+amm time 0.018490, non amm time 0.002286
+attention reorder time 0.000074, attention cpu compute time 0.001642
+post o reorder+norm+residual time 0.000154, gelu+ffn1 reorder time 0.000253, post ffn2 reorder+norm+residual time 0.000158
+tensor allocation overhead time 0.000002, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000074, o 0.000016, ffn1 0.000069, ffn2 0.000018
+host breakdown: attention 0.001642, reorder 0.000177, other 0.000467
+iteration 8, inference time 0.020780
+--------------------------------------------
+input initialization time 0.000250
+index calculation time 0.145957
+other latency 0.021962, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.147478
+other latency 0.022231, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.149977
+other latency 0.023225, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.159279
+other latency 0.023499, data transfer latency 0.000004, pim kernel latency 0.000001
+amm time 0.018534, non amm time 0.002296
+attention reorder time 0.000075, attention cpu compute time 0.001662
+post o reorder+norm+residual time 0.000151, gelu+ffn1 reorder time 0.000259, post ffn2 reorder+norm+residual time 0.000145
+tensor allocation overhead time 0.000000, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000075, o 0.000016, ffn1 0.000067, ffn2 0.000016
+host breakdown: attention 0.001662, reorder 0.000174, other 0.000460
+iteration 9, inference time 0.020835
+--------------------------------------------
+input initialization time 0.000237
+index calculation time 0.161813
+other latency 0.024244, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.163380
+other latency 0.024513, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.165894
+other latency 0.025535, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.175236
+other latency 0.025809, data transfer latency 0.000004, pim kernel latency 0.000001
+amm time 0.018673, non amm time 0.002399
+attention reorder time 0.000075, attention cpu compute time 0.001688
+post o reorder+norm+residual time 0.000156, gelu+ffn1 reorder time 0.000297, post ffn2 reorder+norm+residual time 0.000178
+tensor allocation overhead time 0.000003, other non amm time 0.000002
+reorder breakdown: qkv_to_attention 0.000075, o 0.000017, ffn1 0.000085, ffn2 0.000024
+host breakdown: attention 0.001688, reorder 0.000201, other 0.000510
+iteration 10, inference time 0.021075
+--------------------------------------------
+input initialization time 0.000267
+index calculation time 0.177946
+other latency 0.026559, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.179646
+other latency 0.026827, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.182144
+other latency 0.027823, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.191515
+other latency 0.028126, data transfer latency 0.000004, pim kernel latency 0.000001
+amm time 0.018996, non amm time 0.002327
+attention reorder time 0.000091, attention cpu compute time 0.001644
+post o reorder+norm+residual time 0.000154, gelu+ffn1 reorder time 0.000257, post ffn2 reorder+norm+residual time 0.000175
+tensor allocation overhead time 0.000002, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000091, o 0.000017, ffn1 0.000078, ffn2 0.000029
+host breakdown: attention 0.001644, reorder 0.000215, other 0.000468
+iteration 11, inference time 0.021329
+--------------------------------------------
+input initialization time 0.000271
+index calculation time 0.194175
+other latency 0.028885, data transfer latency 0.000005, pim kernel latency 0.000001
+index calculation time 0.195736
+other latency 0.029157, data transfer latency 0.000005, pim kernel latency 0.000001
+index calculation time 0.198248
+other latency 0.030179, data transfer latency 0.000005, pim kernel latency 0.000001
+index calculation time 0.207311
+other latency 0.030435, data transfer latency 0.000005, pim kernel latency 0.000001
+amm time 0.018547, non amm time 0.002566
+attention reorder time 0.000090, attention cpu compute time 0.001838
+post o reorder+norm+residual time 0.000161, gelu+ffn1 reorder time 0.000282, post ffn2 reorder+norm+residual time 0.000186
+tensor allocation overhead time 0.000002, other non amm time 0.000007
+reorder breakdown: qkv_to_attention 0.000090, o 0.000023, ffn1 0.000096, ffn2 0.000023
+host breakdown: attention 0.001838, reorder 0.000232, other 0.000496
+iteration 12, inference time 0.021118
+--------------------------------------------
+input initialization time 0.000407
+index calculation time 0.209908
+other latency 0.031182, data transfer latency 0.000005, pim kernel latency 0.000001
+index calculation time 0.211713
+other latency 0.031451, data transfer latency 0.000005, pim kernel latency 0.000001
+index calculation time 0.214376
+other latency 0.032450, data transfer latency 0.000005, pim kernel latency 0.000001
+index calculation time 0.223679
+other latency 0.032716, data transfer latency 0.000005, pim kernel latency 0.000001
+amm time 0.019046, non amm time 0.002342
+attention reorder time 0.000095, attention cpu compute time 0.001608
+post o reorder+norm+residual time 0.000152, gelu+ffn1 reorder time 0.000307, post ffn2 reorder+norm+residual time 0.000173
+tensor allocation overhead time 0.000001, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000095, o 0.000016, ffn1 0.000094, ffn2 0.000020
+host breakdown: attention 0.001608, reorder 0.000225, other 0.000509
+iteration 13, inference time 0.021392
+--------------------------------------------
+input initialization time 0.000270
+index calculation time 0.226380
+other latency 0.033461, data transfer latency 0.000006, pim kernel latency 0.000001
+index calculation time 0.227893
+other latency 0.033729, data transfer latency 0.000007, pim kernel latency 0.000001
+index calculation time 0.230385
+other latency 0.034744, data transfer latency 0.000007, pim kernel latency 0.000001
+index calculation time 0.239551
+other latency 0.034997, data transfer latency 0.000007, pim kernel latency 0.000001
+amm time 0.018515, non amm time 0.002275
+attention reorder time 0.000078, attention cpu compute time 0.001641
+post o reorder+norm+residual time 0.000155, gelu+ffn1 reorder time 0.000248, post ffn2 reorder+norm+residual time 0.000149
+tensor allocation overhead time 0.000000, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000078, o 0.000017, ffn1 0.000079, ffn2 0.000019
+host breakdown: attention 0.001641, reorder 0.000193, other 0.000441
+iteration 14, inference time 0.020792
+--------------------------------------------
+10 rounds' average inference time 0.021076
+
+----------Transformer Params----------
+thread num 1
+layer num 1
+PIM LUT binaries ./build/bin/dpu_bin_qkv ./build/bin/dpu_bin_o ./build/bin/dpu_bin_ffn1 ./build/bin/dpu_bin_ffn2
+----------QKV LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 2304, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 288, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------O LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN1 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 768
+num codebook 512, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 3072, num codebook 512, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 384, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------FFN2 LUT Params----------
+index calc params:
+num_threads 1
+n 128, input feature len 3072
+num codebook 2048, num centroid 16, sub vec len 1
+n stile size 128, cb mtile size 128
+lut kernel params:
+n 128, output feature len 768, num codebook 2048, num centroid 16
+scale 0.100000, bias 0.200000
+num threads 1, dpu num 8
+input parallelism 1, lut parallelism 8, feature stile size 96, n stile size 128
+n mtile size 64, feature mtile size 32, cb mtile size 128
+lut load type 2, feature load tile size 8, cb load tile size 128
+----------Attention Params----------
+seq len 128, batch size 1, n 128
+query heads 12, kv heads 12, head dim 64, token dim 768
+dpu num 8, input parallelism 1, lut parallelism 8
+n tile size 128, q tile size 96, kv tile size 96
+num threads 1
+-----------------------------------
+parameter parsing time 0.000385
+weight initialization time 0.177991
+dpu allocate time 0.000001
+--------------------------------------------
+input initialization time 0.000388
+index calculation time 0.002596
+other latency 0.000973, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.004259
+other latency 0.001322, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.006940
+other latency 0.002714, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.016750
+other latency 0.003057, data transfer latency 0.000000, pim kernel latency 0.000000
+amm time 0.020907, non amm time 0.003402
+attention reorder time 0.000282, attention cpu compute time 0.001865
+post o reorder+norm+residual time 0.000343, gelu+ffn1 reorder time 0.000482, post ffn2 reorder+norm+residual time 0.000397
+tensor allocation overhead time 0.000005, other non amm time 0.000028
+reorder breakdown: qkv_to_attention 0.000282, o 0.000122, ffn1 0.000304, ffn2 0.000105
+host breakdown: attention 0.001865, reorder 0.000813, other 0.000724
+iteration 0, inference time 0.024323
+--------------------------------------------
+input initialization time 0.000354
+index calculation time 0.020049
+other latency 0.003831, data transfer latency 0.000000, pim kernel latency 0.000000
+index calculation time 0.021972
+other latency 0.004105, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.024536
+other latency 0.005125, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.033640
+other latency 0.005401, data transfer latency 0.000000, pim kernel latency 0.000001
+amm time 0.019799, non amm time 0.002303
+attention reorder time 0.000094, attention cpu compute time 0.001623
+post o reorder+norm+residual time 0.000154, gelu+ffn1 reorder time 0.000268, post ffn2 reorder+norm+residual time 0.000156
+tensor allocation overhead time 0.000002, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000094, o 0.000021, ffn1 0.000087, ffn2 0.000020
+host breakdown: attention 0.001623, reorder 0.000222, other 0.000458
+iteration 1, inference time 0.022108
+--------------------------------------------
+input initialization time 0.000259
+index calculation time 0.036233
+other latency 0.006149, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.037996
+other latency 0.006420, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.040529
+other latency 0.007436, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.049622
+other latency 0.007692, data transfer latency 0.000000, pim kernel latency 0.000001
+amm time 0.018651, non amm time 0.002265
+attention reorder time 0.000079, attention cpu compute time 0.001630
+post o reorder+norm+residual time 0.000155, gelu+ffn1 reorder time 0.000247, post ffn2 reorder+norm+residual time 0.000148
+tensor allocation overhead time 0.000001, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000079, o 0.000018, ffn1 0.000081, ffn2 0.000018
+host breakdown: attention 0.001630, reorder 0.000196, other 0.000439
+iteration 2, inference time 0.020920
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.052168
+other latency 0.008438, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.053843
+other latency 0.008711, data transfer latency 0.000000, pim kernel latency 0.000001
+index calculation time 0.056345
+other latency 0.009705, data transfer latency 0.000001, pim kernel latency 0.000001
+index calculation time 0.065327
+other latency 0.009964, data transfer latency 0.000001, pim kernel latency 0.000001
+amm time 0.018362, non amm time 0.002281
+attention reorder time 0.000075, attention cpu compute time 0.001608
+post o reorder+norm+residual time 0.000157, gelu+ffn1 reorder time 0.000288, post ffn2 reorder+norm+residual time 0.000148
+tensor allocation overhead time 0.000001, other non amm time 0.000004
+reorder breakdown: qkv_to_attention 0.000075, o 0.000021, ffn1 0.000079, ffn2 0.000018
+host breakdown: attention 0.001608, reorder 0.000193, other 0.000480
+iteration 3, inference time 0.020647
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.067909
+other latency 0.010710, data transfer latency 0.000001, pim kernel latency 0.000001
+index calculation time 0.069438
+other latency 0.010978, data transfer latency 0.000001, pim kernel latency 0.000001
+index calculation time 0.071923
+other latency 0.011973, data transfer latency 0.000001, pim kernel latency 0.000001
+index calculation time 0.081187
+other latency 0.012238, data transfer latency 0.000002, pim kernel latency 0.000001
+amm time 0.018519, non amm time 0.002319
+attention reorder time 0.000079, attention cpu compute time 0.001666
+post o reorder+norm+residual time 0.000155, gelu+ffn1 reorder time 0.000252, post ffn2 reorder+norm+residual time 0.000161
+tensor allocation overhead time 0.000000, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000079, o 0.000018, ffn1 0.000070, ffn2 0.000018
+host breakdown: attention 0.001666, reorder 0.000185, other 0.000468
+iteration 4, inference time 0.020842
+--------------------------------------------
+input initialization time 0.000247
+index calculation time 0.083725
+other latency 0.012984, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.085505
+other latency 0.013255, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.087982
+other latency 0.014275, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.097129
+other latency 0.014554, data transfer latency 0.000002, pim kernel latency 0.000001
+amm time 0.018640, non amm time 0.002287
+attention reorder time 0.000074, attention cpu compute time 0.001608
+post o reorder+norm+residual time 0.000153, gelu+ffn1 reorder time 0.000284, post ffn2 reorder+norm+residual time 0.000164
+tensor allocation overhead time 0.000001, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000074, o 0.000017, ffn1 0.000078, ffn2 0.000022
+host breakdown: attention 0.001608, reorder 0.000191, other 0.000488
+iteration 5, inference time 0.020931
+--------------------------------------------
+input initialization time 0.000240
+index calculation time 0.099738
+other latency 0.015301, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.101513
+other latency 0.015571, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.104283
+other latency 0.016563, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.113618
+other latency 0.016818, data transfer latency 0.000002, pim kernel latency 0.000001
+amm time 0.019156, non amm time 0.002367
+attention reorder time 0.000076, attention cpu compute time 0.001656
+post o reorder+norm+residual time 0.000155, gelu+ffn1 reorder time 0.000298, post ffn2 reorder+norm+residual time 0.000177
+tensor allocation overhead time 0.000000, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000076, o 0.000020, ffn1 0.000083, ffn2 0.000022
+host breakdown: attention 0.001656, reorder 0.000201, other 0.000510
+iteration 6, inference time 0.021528
+--------------------------------------------
+input initialization time 0.000264
+index calculation time 0.116368
+other latency 0.017573, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.117949
+other latency 0.017844, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.120469
+other latency 0.018833, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.129308
+other latency 0.019085, data transfer latency 0.000002, pim kernel latency 0.000001
+amm time 0.018341, non amm time 0.002262
+attention reorder time 0.000095, attention cpu compute time 0.001605
+post o reorder+norm+residual time 0.000155, gelu+ffn1 reorder time 0.000252, post ffn2 reorder+norm+residual time 0.000147
+tensor allocation overhead time 0.000002, other non amm time 0.000006
+reorder breakdown: qkv_to_attention 0.000095, o 0.000018, ffn1 0.000068, ffn2 0.000016
+host breakdown: attention 0.001605, reorder 0.000197, other 0.000460
+iteration 7, inference time 0.020606
+--------------------------------------------
+input initialization time 0.000245
+index calculation time 0.131894
+other latency 0.019828, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.133666
+other latency 0.020097, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.136154
+other latency 0.021086, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.145427
+other latency 0.021359, data transfer latency 0.000002, pim kernel latency 0.000001
+amm time 0.018760, non amm time 0.002210
+attention reorder time 0.000074, attention cpu compute time 0.001587
+post o reorder+norm+residual time 0.000153, gelu+ffn1 reorder time 0.000248, post ffn2 reorder+norm+residual time 0.000145
+tensor allocation overhead time 0.000000, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000074, o 0.000017, ffn1 0.000065, ffn2 0.000016
+host breakdown: attention 0.001587, reorder 0.000172, other 0.000451
+iteration 8, inference time 0.020972
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.147961
+other latency 0.022102, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.149528
+other latency 0.022371, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.152069
+other latency 0.023361, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.161099
+other latency 0.023629, data transfer latency 0.000002, pim kernel latency 0.000001
+amm time 0.018294, non amm time 0.002219
+attention reorder time 0.000073, attention cpu compute time 0.001601
+post o reorder+norm+residual time 0.000152, gelu+ffn1 reorder time 0.000247, post ffn2 reorder+norm+residual time 0.000144
+tensor allocation overhead time 0.000000, other non amm time 0.000002
+reorder breakdown: qkv_to_attention 0.000073, o 0.000016, ffn1 0.000066, ffn2 0.000016
+host breakdown: attention 0.001601, reorder 0.000171, other 0.000447
+iteration 9, inference time 0.020516
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.163657
+other latency 0.024373, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.165436
+other latency 0.024642, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.167926
+other latency 0.025632, data transfer latency 0.000002, pim kernel latency 0.000001
+index calculation time 0.176934
+other latency 0.025906, data transfer latency 0.000002, pim kernel latency 0.000001
+amm time 0.018455, non amm time 0.002216
+attention reorder time 0.000073, attention cpu compute time 0.001579
+post o reorder+norm+residual time 0.000151, gelu+ffn1 reorder time 0.000258, post ffn2 reorder+norm+residual time 0.000150
+tensor allocation overhead time 0.000000, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000073, o 0.000016, ffn1 0.000063, ffn2 0.000019
+host breakdown: attention 0.001579, reorder 0.000171, other 0.000466
+iteration 10, inference time 0.020675
+--------------------------------------------
+input initialization time 0.000238
+index calculation time 0.179596
+other latency 0.026657, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.182011
+other latency 0.026904, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.184636
+other latency 0.027909, data transfer latency 0.000003, pim kernel latency 0.000001
+index calculation time 0.193794
+other latency 0.028161, data transfer latency 0.000003, pim kernel latency 0.000001
+amm time 0.019599, non amm time 0.002626
+attention reorder time 0.000082, attention cpu compute time 0.001945
+post o reorder+norm+residual time 0.000156, gelu+ffn1 reorder time 0.000283, post ffn2 reorder+norm+residual time 0.000153
+tensor allocation overhead time 0.000002, other non amm time 0.000005
+reorder breakdown: qkv_to_attention 0.000082, o 0.000021, ffn1 0.000093, ffn2 0.000023
+host breakdown: attention 0.001945, reorder 0.000219, other 0.000462
+iteration 11, inference time 0.022229
+--------------------------------------------
+input initialization time 0.000242
+index calculation time 0.196358
+other latency 0.028907, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.198066
+other latency 0.029179, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.200550
+other latency 0.030169, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.209478
+other latency 0.030421, data transfer latency 0.000004, pim kernel latency 0.000001
+amm time 0.018343, non amm time 0.002235
+attention reorder time 0.000086, attention cpu compute time 0.001593
+post o reorder+norm+residual time 0.000154, gelu+ffn1 reorder time 0.000250, post ffn2 reorder+norm+residual time 0.000147
+tensor allocation overhead time 0.000002, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000086, o 0.000017, ffn1 0.000066, ffn2 0.000018
+host breakdown: attention 0.001593, reorder 0.000186, other 0.000455
+iteration 12, inference time 0.020582
+--------------------------------------------
+input initialization time 0.000237
+index calculation time 0.212027
+other latency 0.031165, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.213582
+other latency 0.031437, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.216094
+other latency 0.032427, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.225280
+other latency 0.032681, data transfer latency 0.000004, pim kernel latency 0.000001
+amm time 0.018425, non amm time 0.002212
+attention reorder time 0.000074, attention cpu compute time 0.001595
+post o reorder+norm+residual time 0.000156, gelu+ffn1 reorder time 0.000241, post ffn2 reorder+norm+residual time 0.000144
+tensor allocation overhead time 0.000001, other non amm time 0.000001
+reorder breakdown: qkv_to_attention 0.000074, o 0.000017, ffn1 0.000070, ffn2 0.000016
+host breakdown: attention 0.001595, reorder 0.000177, other 0.000440
+iteration 13, inference time 0.020639
+--------------------------------------------
+input initialization time 0.000239
+index calculation time 0.227832
+other latency 0.033423, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.229563
+other latency 0.033692, data transfer latency 0.000004, pim kernel latency 0.000001
+index calculation time 0.232011
+other latency 0.034683, data transfer latency 0.000005, pim kernel latency 0.000001
+index calculation time 0.241420
+other latency 0.034939, data transfer latency 0.000005, pim kernel latency 0.000001
+amm time 0.018813, non amm time 0.002215
+attention reorder time 0.000073, attention cpu compute time 0.001594
+post o reorder+norm+residual time 0.000153, gelu+ffn1 reorder time 0.000247, post ffn2 reorder+norm+residual time 0.000144
+tensor allocation overhead time 0.000001, other non amm time 0.000003
+reorder breakdown: qkv_to_attention 0.000073, o 0.000016, ffn1 0.000065, ffn2 0.000015
+host breakdown: attention 0.001594, reorder 0.000169, other 0.000452
+iteration 14, inference time 0.021031
+--------------------------------------------
+10 rounds' average inference time 0.020971
